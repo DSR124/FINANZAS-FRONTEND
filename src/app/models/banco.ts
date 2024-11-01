@@ -3,9 +3,9 @@ export class Banco {
     nombre: string = '';           
     imageUrl: string = '';          
     balance: number = 0;            
-    tasaNomninal: number = 0;       // Nota: se mantiene "tasaNomninal" con doble 'n' para que coincida con el JSON
+    tasaNomninal: number = 0;       
     tasaEfectiva: number = 0;       
-    cosionExtra: number = 0;        // Nota: se mantiene "cosionExtra" con 's'
+    cosionExtra: number = 0;        
     creationDate: Date = new Date();
   }
   
