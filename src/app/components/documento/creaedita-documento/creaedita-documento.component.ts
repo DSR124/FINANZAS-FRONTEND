@@ -97,7 +97,7 @@ export class CreaeditaDocumentoComponent implements OnInit{
           valorDocumento: data.valorDocumento,
           currency: data.currency,
           fechaEmision: data.fechaEmision,
-          fechaVencimiento: data.fechaVencimiento,
+          fechaVencimiento:  data.fechaVencimiento,
           estado: data.estado,
           clienteNombre: data.clienteNombre,
           clientePhone: data.clientePhone,

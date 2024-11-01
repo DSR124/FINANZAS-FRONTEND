@@ -13,5 +13,9 @@ import { ActivatedRoute, RouterOutlet } from '@angular/router';
 export class DocumentoComponent {
   constructor(public route:ActivatedRoute) { }
   ngOnInit(): void {
+
+
+
+    
   }
 }
