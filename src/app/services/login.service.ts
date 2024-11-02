@@ -19,13 +19,13 @@ export class LoginService {
 
   // Método para verificar si el usuario está autenticado
   verificar() {
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     return token != null;
   }
 
   // Método para obtener el rol del usuario desde el token en localStorage
   showRole() {
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     if (!token) {
       return null;
     }
@@ -35,16 +35,16 @@ export class LoginService {
 
   // Método para guardar el token en localStorage después del inicio de sesión
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   // Método para obtener el token desde localStorage
   getToken() {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   // Método para eliminar el token de localStorage (ej. en logout)
   removeToken() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   }
 }

@@ -18,7 +18,7 @@
     </div>
   
     <div class="table-wrapper">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table" id="excel-table">
         
         <!-- ID Cartera Column -->
         <ng-container matColumnDef="idCartera">
@@ -71,6 +71,15 @@
     <!-- Pagination Controls -->
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
+
+  <button mat-raised-button color="warn" (click)="exportToPDF()" class="export-pdf-button">
+    <mat-icon>picture_as_pdf</mat-icon>
+    Exportar a PDF
+  </button>
+  <button mat-raised-button color="primary" (click)="exportToExcel()" class="export-excel-button">
+    <mat-icon>grid_on</mat-icon>
+    Exportar a Excel
+  </button>
 </body>
 </html>
 

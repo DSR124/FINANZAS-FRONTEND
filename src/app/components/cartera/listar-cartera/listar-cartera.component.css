@@ -75,4 +75,37 @@ body {
     width: 100%;
     max-width: 300px;
   }
+  .export-pdf-button {
+    background-color: #d32f2f; /* Rojo */
+    color: white; /* Texto blanco */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el ícono y el texto */
+  }
+  
+  .export-pdf-button:hover {
+    background-color: #b71c1c; /* Rojo más oscuro para el efecto hover */
+  }
+  
+  .export-pdf-button mat-icon {
+    font-size: 20px; /* Tamaño del ícono */
+  }
+  .export-excel-button {
+    background-color: #4CAF50; /* Verde */
+    color: white; /* Texto blanco */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el ícono y el texto */
+    margin-right: 10px; /* Espacio a la derecha si está junto a otros botones */
+  }
+  
+  .export-excel-button:hover {
+    background-color: #388E3C; /* Verde más oscuro para el efecto hover */
+  }
+  
+  .export-excel-button mat-icon {
+    font-size: 20px; /* Tamaño del ícono */
+  }
   
