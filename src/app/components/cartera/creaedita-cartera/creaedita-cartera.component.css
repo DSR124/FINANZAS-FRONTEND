@@ -1,0 +1,63 @@
+
+/* Contenedor principal */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Container for the whole form */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Title for the form */
+  .form-container h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 20px;
+  }
+  
+  /* Full width for form fields */
+  .full-width {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  /* Error message style */
+  .error-message {
+    color: #d32f2f;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Button group styling */
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Button styling */
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  button[type="button"] {
+    width: 100%;
+    color: #d32f2f;
+  }
+  

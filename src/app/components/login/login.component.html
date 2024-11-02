@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">GESTIÓN EMPRESARIAL</div>
+    <div class="nav-links">
+      <button mat-button color="primary" [routerLink]="['/landing']">INICIO</button>
+      <button mat-button color="primary" [routerLink]="['/login']">LOGIN</button>
+      <button mat-button color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+    </div>
+  </div>
+  
+  <div class="container">
+    <h2>Inicie sesión</h2>
+    <mat-form-field class="example-full-width">
+      <mat-label>Usuario</mat-label>
+      <input matInput placeholder="Username" [(ngModel)]="username" />
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width password-container">
+      <mat-label>Contraseña</mat-label>
+      <input
+        [type]="passwordVisible ? 'text' : 'password'"
+        matInput
+        placeholder="Password"
+        [(ngModel)]="password"
+      />
+      <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+        <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <br />
+    <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
+  </div>
+</body>
+</html>

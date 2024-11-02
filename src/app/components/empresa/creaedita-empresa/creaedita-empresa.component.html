@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Empresa</title>
+</head>
+<body>
+
+
+    <div class="formulario">
+        <div class="titulo">
+            <h1>REGISTRAR EMPRESA</h1>
+        </div>
+        <form [formGroup]="form" class="empresa-form-container">
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre" />
+                    <mat-error *ngIf="form.get('nombre')?.hasError('required')">El nombre de la empresa es obligatorio.</mat-error>
+                    <mat-error *ngIf="form.get('nombre')?.hasError('pattern')">El nombre de la empresa solo puede contener letras y espacios.</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Tipo de Empresa</mat-label>
+                    <mat-select formControlName="Tipo">
+                        <mat-option *ngFor="let t of tipoempresa" [value]="t.value">{{ t.viewValue }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('Tipo')?.hasError('required')">El tipo de empresa es obligatorio.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <mat-label>RUC</mat-label>
+                    <input matInput formControlName="Ruc" />
+                    <mat-error *ngIf="form.get('Ruc')?.invalid">
+                        {{
+                            form.get('Ruc')!.errors?.['required']
+                                ? 'El RUC es obligatorio'
+                                : form.get('Ruc')!.errors?.['RucNoValido']
+                                ? 'El RUC no es válido'
+                                : ''
+                        }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                    <mat-label>Usuario</mat-label>
+                    <mat-select formControlName="usuario">
+                        <mat-option *ngFor="let c of listaUsuarios" [value]="c.idUsuario">{{ c.nombre }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('usuario')?.hasError('required')">El usuario es obligatorio.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput formControlName="Direccion" />
+                    <mat-error *ngIf="form.get('Direccion')?.hasError('required')">La dirección es obligatoria.</mat-error>
+                    <mat-error *ngIf="form.get('Direccion')?.hasError('pattern')">La dirección solo puede contener letras y espacios.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="button-container">
+                <button mat-raised-button class="btn1" (click)="registrar()">Registrar</button>
+                <button mat-raised-button class="btn2" routerLink="/empresa/listar_empresa">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

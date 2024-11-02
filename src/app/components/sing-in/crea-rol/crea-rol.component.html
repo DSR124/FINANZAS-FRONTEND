@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">GESTIÓN EMPRESARIAL</div>
+        <div class="nav-links">
+          <button mat-button color="primary" [routerLink]="['/landing']">INICIO</button>
+          <button mat-button color="primary" [routerLink]="['/login']">LOGIN</button>
+          <button mat-button color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+        </div>
+      </div>
+      <div class="register-role-container">
+        <h2>Asignar Rol al Usuario</h2>
+    
+        <form [formGroup]="form" (ngSubmit)="register()" class="register-role-form">
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccionar Rol</mat-label>
+                <mat-select formControlName="seleccion" required>
+                    <mat-option *ngFor="let role of roles" [value]="role.value">
+                        {{ role.viewValue }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls['seleccion'].hasError('required')">
+                    Seleccione un rol.
+                </mat-error>
+            </mat-form-field>
+    
+            <div class="button-group">
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Guardar Rol</button>
+                <button mat-button type="button" routerLink="/usuarios">Cancelar</button>
+            </div>
+    
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+

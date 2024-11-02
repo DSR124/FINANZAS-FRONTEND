@@ -1,0 +1,96 @@
+ /* Estilos generales */
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Barra de navegación */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+  }
+
+  .auth-buttons button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    color: #333;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Estilos de sección */
+  .section {
+    height: 100vh;
+    padding-top: 5rem; /* Espacio para la barra de navegación */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  #inicio {
+    background-color: #f2f2f2;
+  }
+
+  #carteras {
+    background-color: #e1f7e7;
+  }
+
+  #clientes {
+    background-color: #e0e7ff;
+  }
+
+  #reportes {
+    background-color: #ffe1e1;
+  }
+
+  #configuracion {
+    background-color: #fff0c2;
+  }
+
+  /* Botones y listas */
+  button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 1rem 0;
+  }
+
+  li {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+  }

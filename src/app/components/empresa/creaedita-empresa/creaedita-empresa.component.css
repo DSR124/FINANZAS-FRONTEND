@@ -1,0 +1,88 @@
+/* Contenedor principal */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor del formulario */
+.formulario {
+    width: 100%;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Estilo del título centrado */
+.titulo {
+    margin-bottom: 20px;
+}
+
+.titulo h1 {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Formulario */
+.empresa-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-field {
+    flex: 1;
+    width: 100%;
+}
+
+/* Botones */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn1, .btn2 {
+    width: 48%;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn1 {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn1:hover {
+    background-color: #0056b3;
+}
+
+.btn2 {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn2:hover {
+    background-color: #5a6268;
+}
+
+/* Error Messages */
+.mat-error {
+    font-size: 12px;
+    color: #d32f2f;
+}
