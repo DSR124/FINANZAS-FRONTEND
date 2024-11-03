@@ -1,56 +1,97 @@
 /* Contenedor principal */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100vh;
 }
 
-/* Contenedor del formulario */
-.formulario {
-    width: 100%;
-    max-width: 600px;
-    background-color: #ffffff;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center;
+/* Título de la página */
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
 }
-/* Estilo para el contenedor principal */
-.content-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #f5f7fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .content-container {
-    padding: 16px;
-  }
-  
-  .card-title {
-    font-size: 24px;
-    margin-bottom: 16px;
-  }
-  
-  .filter-container {
-    margin-bottom: 16px;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  
-  .empresa-card {
-    width: 250px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+
+/* Contenedor de filtro */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Mensaje de no hay datos */
+.no-data {
+  text-align: center;
+  color: #777;
+  margin: 20px 0;
+}
+
+.no-data p {
+  margin-bottom: 10px;
+}
+
+/* Contenedor de tarjetas */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Tarjeta individual de empresa */
+.empresa-card {
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.empresa-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Avatar (logo de la empresa) */
+.mat-card-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Título de la tarjeta */
+mat-card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1a73e8;
+  margin: 0;
+}
+
+/* Contenido de la tarjeta */
+mat-card-content {
+  padding: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+mat-card-content p {
+  margin: 5px 0;
+}
+
+/* Acciones de la tarjeta */
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+button[mat-button] {
+  font-weight: bold;
+}

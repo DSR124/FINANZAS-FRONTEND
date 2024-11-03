@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,103 +6,125 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="form-container">
+  <div class="container">
     <h2 class="form-title">{{ edicion ? 'Editar Banco' : 'Registrar Banco' }}</h2>
-  
     <form [formGroup]="form" (ngSubmit)="registrar()">
-      <!-- Nombre -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="nombre" placeholder="Ingrese el nombre del banco" />
-        <mat-error *ngIf="obtenerControlCampo('nombre').hasError('required')">
-          El nombre es obligatorio.
-        </mat-error>
-        <mat-error *ngIf="obtenerControlCampo('nombre').hasError('pattern')">
-          Solo se permiten letras.
-        </mat-error>
-      </mat-form-field>
+      <div class="form-grid">
+        <!-- Columna 1 -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre del Banco</mat-label>
+            <input matInput formControlName="nombre" />
+            <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="form.get('nombre')?.hasError('pattern')">
+              Solo se permiten letras y espacios
+            </mat-error>
+          </mat-form-field>
   
-      <!-- Imagen URL -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>URL de la Imagen</mat-label>
-        <input matInput formControlName="imageUrl" placeholder="Ingrese la URL de la imagen" />
-        <mat-error *ngIf="obtenerControlCampo('imageUrl').hasError('required')">
-          La URL de la imagen es obligatoria.
-        </mat-error>
-      </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Balance</mat-label>
+            <input matInput type="number" formControlName="balance" />
+            <mat-error *ngIf="form.get('balance')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="form.get('balance')?.hasError('valorNoValido')">
+              El valor debe ser un número positivo
+            </mat-error>
+          </mat-form-field>
   
-      <!-- Balance -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Balance</mat-label>
-        <input matInput formControlName="balance" placeholder="Ingrese el balance" type="number" />
-        <mat-error *ngIf="obtenerControlCampo('balance').hasError('required')">
-          El balance es obligatorio.
-        </mat-error>
-        <mat-error *ngIf="obtenerControlCampo('balance').hasError('valorNoValido')">
-          El balance debe ser un número positivo.
-        </mat-error>
-      </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Tasa Nominal</mat-label>
+            <input matInput type="number" formControlName="tasaNominal" />
+            <mat-error *ngIf="form.get('tasaNominal')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="form.get('tasaNominal')?.hasError('valorNoValido')">
+              El valor debe ser un número positivo
+            </mat-error>
+          </mat-form-field>
+        </div>
   
-      <!-- Tasa Nominal -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tasa Nominal (%)</mat-label>
-        <input matInput formControlName="tasaNomninal" placeholder="Ingrese la tasa nominal" type="number" />
-        <mat-error *ngIf="obtenerControlCampo('tasaNomninal').hasError('required')">
-          La tasa nominal es obligatoria.
-        </mat-error>
-        <mat-error *ngIf="obtenerControlCampo('tasaNomninal').hasError('valorNoValido')">
-          La tasa nominal debe ser un número positivo.
-        </mat-error>
-      </mat-form-field>
+        <!-- Columna 2 -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Tasa Efectiva</mat-label>
+            <input matInput type="number" formControlName="tasaEfectiva" />
+            <mat-error *ngIf="form.get('tasaEfectiva')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error
+              *ngIf="form.get('tasaEfectiva')?.hasError('valorNoValido')"
+            >
+              El valor debe ser un número positivo
+            </mat-error>
+          </mat-form-field>
   
-      <!-- Tasa Efectiva -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tasa Efectiva (%)</mat-label>
-        <input matInput formControlName="tasaEfectiva" placeholder="Ingrese la tasa efectiva" type="number" />
-        <mat-error *ngIf="obtenerControlCampo('tasaEfectiva').hasError('required')">
-          La tasa efectiva es obligatoria.
-        </mat-error>
-        <mat-error *ngIf="obtenerControlCampo('tasaEfectiva').hasError('valorNoValido')">
-          La tasa efectiva debe ser un número positivo.
-        </mat-error>
-      </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Comisión Extra</mat-label>
+            <input matInput type="number" formControlName="comisionExtra" />
+            <mat-error *ngIf="form.get('comisionExtra')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+            <mat-error
+              *ngIf="form.get('comisionExtra')?.hasError('valorNoValido')"
+            >
+              El valor debe ser un número positivo
+            </mat-error>
+          </mat-form-field>
   
-      <!-- Comisión Extra -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Comisión Extra</mat-label>
-        <input matInput formControlName="cosionExtra" placeholder="Ingrese la comisión extra" type="number" />
-        <mat-error *ngIf="obtenerControlCampo('cosionExtra').hasError('required')">
-          La comisión extra es obligatoria.
-        </mat-error>
-        <mat-error *ngIf="obtenerControlCampo('cosionExtra').hasError('valorNoValido')">
-          La comisión extra debe ser un número positivo.
-        </mat-error>
-      </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha de Creación</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="creationDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="form.get('creationDate')?.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
   
-      <!-- Fecha de Creación -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha de Creación</mat-label>
-        <input matInput formControlName="creationDate" placeholder="Seleccione la fecha de creación" [matDatepicker]="picker" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="obtenerControlCampo('creationDate').hasError('required')">
-          La fecha de creación es obligatoria.
-        </mat-error>
-      </mat-form-field>
+        <!-- Columna 3 (Imagen) -->
+        <div class="form-column image-column">
+          <label for="imageUrl">Seleccionar Imagen:</label>
+          <input
+            id="imageUrl"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
+          <img
+            [src]="getImagenUrl()"
+            alt="Imagen del Banco"
+            (error)="imagenNoCargada($event)"
+          />
+        </div>
+      </div>
   
-      <!-- Mensaje de error general -->
-      <div *ngIf="mensaje" class="error-message">{{ mensaje }}</div>
-  
-      <!-- Botones de acción -->
-      <div class="button-group">
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit">
           {{ edicion ? 'Actualizar' : 'Registrar' }}
         </button>
-        <button mat-button color="warn" type="button" (click)="confirmCancel()">Cancelar</button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="confirmCancel()"
+        >
+          Cancelar
+        </button>
+      </div>
+  
+      <div *ngIf="mensaje" class="error-message">
+        {{ mensaje }}
       </div>
     </form>
   </div>
   
 </body>
 </html>
-

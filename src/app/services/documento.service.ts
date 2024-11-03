@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Documento } from '../models/documento';
 import { Observable, Subject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { DocumentoByCartera } from '../models/DocumentobyCartera';
 
 const base_url = environment.base;
 
@@ -65,6 +66,16 @@ export class DocumentoService {
       tap(() => this.refreshList()),
       catchError(error => {
         console.error('Error updating document:', error);
+        throw error;
+      })
+    );
+  }
+
+  // Get documents by Cartera ID
+  listByCarteraId(idCartera: number): Observable<DocumentoByCartera[]> {
+    return this.http.get<DocumentoByCartera[]>(`${this.url}/ListarporIDCartera/${idCartera}`).pipe(
+      catchError(error => {
+        console.error('Error fetching documents by cartera ID:', error);
         throw error;
       })
     );

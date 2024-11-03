@@ -12,7 +12,7 @@
         <div class="titulo">
             <h1>REGISTRAR EMPRESA</h1>
         </div>
-        <form [formGroup]="form" class="empresa-form-container">
+        <form [formGroup]="form" class="empresa-form-container" (ngSubmit)="registrar()">
             <div class="form-row">
                 <mat-form-field class="form-field">
                     <mat-label>Nombre</mat-label>
@@ -64,7 +64,9 @@
             </div>
 
             <div class="button-container">
-                <button mat-raised-button class="btn1" (click)="registrar()" [routerLink]="['/empresa/listar_empresa']">Registrar</button>
+                <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid"  routerLink="/empresa/listar_empresa" (click)="registrar()">
+                    {{ edicion ? 'Actualizar' : 'Registrar' }}
+                  </button>
                 <button mat-raised-button class="btn2" routerLink="/empresa/listar_empresa">Cancelar</button>
             </div>
         </form>

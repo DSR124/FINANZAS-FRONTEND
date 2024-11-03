@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Empresa } from '../../../models/empresa';
 import { Usuario } from '../../../models/usuario';
@@ -46,7 +46,7 @@ function numeropositvo(control: FormControl) {
   templateUrl: './creaedita-empresa.component.html',
   styleUrl: './creaedita-empresa.component.css'
 })
-export class CreaeditaEmpresaComponent {
+export class CreaeditaEmpresaComponent implements OnInit {
   
   form: FormGroup = new FormGroup({});
   empresa: Empresa = new Empresa();

@@ -126,4 +126,10 @@ export class CreaeditaCarteraComponent {
     }
     return control;
   }
+  confirmCancel() {
+    const confirmed = window.confirm('¿Estás seguro de que quieres cancelar?');
+    if (confirmed) {
+      // Acciones a tomar en caso de cancelar
+    }
+  }
 }

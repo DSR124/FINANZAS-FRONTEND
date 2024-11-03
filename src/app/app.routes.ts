@@ -22,6 +22,8 @@ import { CreaeditaContratoComponent } from './components/contrato/creaedita-cont
 import { ListarContratoComponent } from './components/contrato/listar-contrato/listar-contrato.component';
 import { CreaRolComponent } from './components/sing-in/crea-rol/crea-rol.component';
 import { EmpresasUsuarioComponent } from './components/empresa/empresas-usuario/empresas-usuario.component';
+import { ListarCarteraUsuarioComponent } from './components/cartera/listar-cartera-usuario/listar-cartera-usuario.component';
+import { ListarBancoUsuarioComponent } from './components/banco/listar-banco-usuario/listar-banco-usuario.component';
 
 export const routes: Routes = [
 
@@ -98,6 +100,10 @@ export const routes: Routes = [
         component: ListarBancoComponent,
       },
       {
+        path: 'listar_banco_usuario',
+        component: ListarBancoUsuarioComponent,
+      },
+      {
         path: 'listar-banco/ediciones/:id',
         component: CreaeditaBancoComponent,
       }
@@ -153,6 +159,11 @@ export const routes: Routes = [
         path: 'listar_cartera',
         component: ListarCarteraComponent,
       },
+      {
+        path: 'listar_cartera_usuario',
+        component: ListarCarteraUsuarioComponent,
+      },
+      
       {
         path: 'listar-cartera/ediciones/:id',
         component: CreaeditaCarteraComponent,

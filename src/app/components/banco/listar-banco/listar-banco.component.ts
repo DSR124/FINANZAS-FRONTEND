@@ -30,7 +30,7 @@ import { BancoService } from '../../../services/banco.service';
   styleUrl: './listar-banco.component.css'
 })
 export class ListarBancoComponent implements OnInit {
-  displayedColumns: string[] = ['nombre', 'imageUrl', 'balance', 'tasaNomninal', 'tasaEfectiva', 'cosionExtra', 'creationDate'];
+  displayedColumns: string[] = ['nombre', 'balance', 'tasaNomninal', 'tasaEfectiva', 'cosionExtra', 'creationDate'];
   dataSource: MatTableDataSource<Banco> = new MatTableDataSource();
 
   @ViewChild(MatSort) sort!: MatSort;

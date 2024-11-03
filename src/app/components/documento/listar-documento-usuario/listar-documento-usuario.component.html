@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>Detalles de los documentos de la Cartera</h2>
+<mat-dialog-content>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+    <!-- Columna de ID de Cartera -->
+    <ng-container matColumnDef="idCartera">
+      <th mat-header-cell *matHeaderCellDef> ID Cartera </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.idCartera }} </td>
+    </ng-container>
+
+    <!-- Columna de Nombre de la Cartera -->
+    <ng-container matColumnDef="nombreCartera">
+      <th mat-header-cell *matHeaderCellDef> Nombre de la Cartera </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.nombreCartera }} </td>
+    </ng-container>
+
+    <!-- Columna de Fecha de Descuento -->
+    <ng-container matColumnDef="fechaDescuento">
+      <th mat-header-cell *matHeaderCellDef> Fecha de Descuento </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.fechaDescuento | date: 'shortDate' }} </td>
+    </ng-container>
+
+    <!-- Columna de Moneda -->
+    <ng-container matColumnDef="moneda">
+      <th mat-header-cell *matHeaderCellDef> Moneda </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.moneda }} </td>
+    </ng-container>
+
+    <!-- Columna de ID de Documento -->
+    <ng-container matColumnDef="idDocumento">
+      <th mat-header-cell *matHeaderCellDef> ID Documento </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.idDocumento }} </td>
+    </ng-container>
+
+    <!-- Columna de Fecha de Emisión -->
+    <ng-container matColumnDef="fechaEmision">
+      <th mat-header-cell *matHeaderCellDef> Fecha de Emisión </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.fechaEmision | date: 'shortDate' }} </td>
+    </ng-container>
+
+    <!-- Columna de Fecha de Vencimiento -->
+    <ng-container matColumnDef="fechaVencimiento">
+      <th mat-header-cell *matHeaderCellDef> Fecha de Vencimiento </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.fechaVencimiento | date: 'shortDate' }} </td>
+    </ng-container>
+
+    <!-- Columna de Valor del Documento -->
+    <ng-container matColumnDef="valorDocumento">
+      <th mat-header-cell *matHeaderCellDef> Valor Documento </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.valorDocumento | currency:doc.documentoCurrency }} </td>
+    </ng-container>
+
+    <!-- Columna de Nombre del Cliente -->
+    <ng-container matColumnDef="clienteNombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre del Cliente </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.clienteNombre }} </td>
+    </ng-container>
+
+    <!-- Columna de Teléfono del Cliente -->
+    <ng-container matColumnDef="clientePhone">
+      <th mat-header-cell *matHeaderCellDef> Teléfono del Cliente </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.clientePhone }} </td>
+    </ng-container>
+
+    <!-- Columna de Moneda del Documento -->
+    <ng-container matColumnDef="documentoCurrency">
+      <th mat-header-cell *matHeaderCellDef> Moneda del Documento </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.documentoCurrency }} </td>
+    </ng-container>
+
+    <!-- Columna de Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.estado }} </td>
+    </ng-container>
+
+    <!-- Columna de Tipo de Documento -->
+    <ng-container matColumnDef="tipoDocumento">
+      <th mat-header-cell *matHeaderCellDef> Tipo de Documento </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.tipoDocumento }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</mat-dialog-actions>

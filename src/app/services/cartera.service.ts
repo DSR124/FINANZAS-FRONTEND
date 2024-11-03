@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Cartera } from '../models/cartera';
 import { Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { CarteraResumenUsuario } from '../models/carteraResumenUsuario';
 
 const base_url = environment.base;
 
@@ -61,6 +62,16 @@ export class CarteraService {
       tap(() => this.refreshList()),
       catchError(error => {
         console.error('Error updating cartera:', error);
+        throw error;
+      })
+    );
+  }
+
+  // Nuevo método para obtener el resumen de la cartera
+  getCarteraSummary(): Observable<CarteraResumenUsuario[]> {
+    return this.http.get<CarteraResumenUsuario[]>(`${this.url}/findAllCarteraWithDocumentCountAndTotalValue`).pipe(
+      catchError(error => {
+        console.error('Error fetching cartera summary:', error);
         throw error;
       })
     );

@@ -1,0 +1,90 @@
+
+/* Contenedor principal */
+body {
+    height: 100vh;
+  }
+  
+  /* Main container for styling the table and search area */
+  .content-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+
+/* Estilos generales */
+.mat-elevation-z8 {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+  
+  /* Campo de búsqueda */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .mat-form-field input {
+    padding: 10px;
+  }
+  
+  /* Tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th.mat-header-cell {
+    font-weight: bold;
+    background-color: #f5f5f5;
+  }
+  
+  td.mat-cell, th.mat-header-cell {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .mat-sort-header-container {
+    align-items: center;
+  }
+  
+  /* Estilos de los botones */
+  .export-pdf-button, .export-excel-button {
+    margin: 10px 5px;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .export-pdf-button mat-icon,
+  .export-excel-button mat-icon {
+    margin-right: 5px;
+  }
+  
+  .export-pdf-button {
+    background-color: #f44336;
+    color: #ffffff;
+  }
+  
+  .export-excel-button {
+    background-color: #2196f3;
+    color: #ffffff;
+  }
+  
+  .export-pdf-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .export-excel-button:hover {
+    background-color: #1976d2;
+  }
+  
+  /* Paginador */
+  .mat-paginator {
+    margin-top: 20px;
+  }
+  

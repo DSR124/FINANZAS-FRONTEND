@@ -3,98 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Registrar Documento</title>
 </head>
 <body>
   <div class="form-container">
     <h2>{{ edicion ? 'Editar Documento' : 'Registrar Documento' }}</h2>
     
     <form [formGroup]="form" (ngSubmit)="registrar()">
-      <!-- Tipo Documento -->
-      <mat-form-field appearance="outline">
-        <mat-label>Tipo de Documento</mat-label>
-        <mat-select formControlName="tipoDocumento" required>
-          <mat-option *ngFor="let option of tipoDocumentoOpciones" [value]="option.value">
-            {{ option.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      
+      <div class="form-row">
+        <!-- Tipo Documento -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Tipo de Documento</mat-label>
+          <mat-select formControlName="tipoDocumento" required>
+            <mat-option *ngFor="let option of tipoDocumentoOpciones" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
   
-      <!-- Valor Documento -->
-      <mat-form-field appearance="outline">
-        <mat-label>Valor del Documento</mat-label>
-        <input matInput formControlName="valorDocumento" type="number" required />
-      </mat-form-field>
+        <!-- Valor Documento -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Valor del Documento</mat-label>
+          <input matInput formControlName="valorDocumento" type="number" required />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <!-- Moneda -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Moneda</mat-label>
+          <mat-select formControlName="currency" required>
+            <mat-option *ngFor="let option of monedaOpciones" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
   
-      <!-- Moneda -->
-      <mat-form-field appearance="outline">
-        <mat-label>Moneda</mat-label>
-        <mat-select formControlName="currency" required>
-          <mat-option *ngFor="let option of monedaOpciones" [value]="option.value">
-            {{ option.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <!-- Fecha Emisión -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Fecha de Emisión</mat-label>
+          <input matInput formControlName="fechaEmision" [matDatepicker]="fechaEmisionPicker" required />
+          <mat-datepicker-toggle matSuffix [for]="fechaEmisionPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fechaEmisionPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <!-- Fecha Vencimiento -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Fecha de Vencimiento</mat-label>
+          <input matInput formControlName="fechaVencimiento" [matDatepicker]="fechaVencimientoPicker" required />
+          <mat-datepicker-toggle matSuffix [for]="fechaVencimientoPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fechaVencimientoPicker></mat-datepicker>
+        </mat-form-field>
   
-      <!-- Fecha Emisión -->
-      <mat-form-field appearance="outline">
-        <mat-label>Fecha de Emisión</mat-label>
-        <input matInput formControlName="fechaEmision" [matDatepicker]="fechaEmisionPicker" required />
-        <mat-datepicker-toggle matSuffix [for]="fechaEmisionPicker"></mat-datepicker-toggle>
-        <mat-datepicker #fechaEmisionPicker></mat-datepicker>
-      </mat-form-field>
+        <!-- Estado -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado" required>
+            <mat-option *ngFor="let option of estadoOpciones" [value]="option.value">
+              {{ option.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <!-- Cliente Nombre -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Nombre del Cliente</mat-label>
+          <input matInput formControlName="clienteNombre" required />
+        </mat-form-field>
   
-      <!-- Fecha Vencimiento -->
-      <mat-form-field appearance="outline">
-        <mat-label>Fecha de Vencimiento</mat-label>
-        <input matInput formControlName="fechaVencimiento" [matDatepicker]="fechaVencimientoPicker" required />
-        <mat-datepicker-toggle matSuffix [for]="fechaVencimientoPicker"></mat-datepicker-toggle>
-        <mat-datepicker #fechaVencimientoPicker></mat-datepicker>
-      </mat-form-field>
-  
-      <!-- Estado  -->
-      <mat-form-field appearance="outline">
-        <mat-label>Estado</mat-label>
-        <mat-select formControlName="estado" required>
-          <mat-option *ngFor="let option of estadoOpciones" [value]="option.value">
-            {{ option.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <!-- Cliente Nombre -->
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre del Cliente</mat-label>
-        <input matInput formControlName="clienteNombre" required />
-      </mat-form-field>
-  
-      <!-- Cliente Teléfono -->
-      <mat-form-field appearance="outline">
-        <mat-label>Teléfono de Cliente</mat-label>
-        <input matInput formControlName="clientePhone" type="tel" required />
-      </mat-form-field>
-  
-      <!-- Cartera -->
-      <mat-form-field appearance="outline">
-        <mat-label>Cartera</mat-label>
-        <mat-select formControlName="cartera" required>
-          <mat-option *ngFor="let cartera of listaCarteras" [value]="cartera.idCartera">
-            {{ cartera.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <!-- Cliente Teléfono -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Teléfono de Cliente</mat-label>
+          <input matInput formControlName="clientePhone" type="tel" required />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <!-- Cartera -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Cartera</mat-label>
+          <mat-select formControlName="cartera" required>
+            <mat-option *ngFor="let cartera of listaCarteras" [value]="cartera.idCartera">
+              {{ cartera.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
   
       <!-- Botones de Acción -->
-      <div class="button-group">
-        <button mat-raised-button color="primary" type="submit">Guardar</button>
-        <button mat-raised-button color="warn" type="button" (click)="confirmCancel()">Cancelar</button>
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"  routerLink="/documento/listar_documento">
+          {{ edicion ? 'Actualizar' : 'Registrar' }}
+        </button>
+        <button mat-button color="warn" type="button" (click)="confirmCancel()" routerLink="/documento/listar_documento">Cancelar</button>
       </div>
+
+
+
     </form>
   
     <p class="error-message" *ngIf="mensaje">{{ mensaje }}</p>
   </div>
 </body>
 </html>
-
-
-  

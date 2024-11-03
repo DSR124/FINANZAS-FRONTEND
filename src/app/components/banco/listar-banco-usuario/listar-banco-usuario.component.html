@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <div class="litle">
+      <h2 style="text-align: center">LISTA DE BANCOS</h2>
+    </div>
+
+    <div class="bancos-container">
+      <!-- Itera sobre los bancos y muestra cada uno como una tarjeta -->
+      <mat-card *ngFor="let banco of dataSource.data" class="banco-card" [style.background-color]="'white'">
+        <!-- Imagen del banco -->
+        <img mat-card-image [src]="getImagenUrl(banco)" (error)="imagenNoCargada($event)" alt="Logo del banco"
+          class="imagen-por-defecto" />
+
+        <!-- Encabezado con el nombre del banco -->
+        <mat-card-header>
+          <mat-card-title>
+            <p>{{ banco.nombre }}</p>
+          </mat-card-title>
+          <mat-card-subtitle>Detalle del banco</mat-card-subtitle>
+        </mat-card-header>
+
+        <!-- Contenido con las tasas -->
+        <mat-card-content>
+          <p>
+            <strong>Tasa Nominal:</strong> {{ banco.tasaEfectiva }}% <br />
+            <strong>Tasa Efectiva:</strong> {{ banco.tasaNomninal }}%
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  
+</body>
+</html>

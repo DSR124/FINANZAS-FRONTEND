@@ -1,0 +1,87 @@
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100vh;
+}
+
+/* Encabezado de la lista */
+.litle h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de las tarjetas de bancos */
+.bancos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Tarjeta individual del banco */
+.banco-card {
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff;
+}
+
+.banco-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del banco */
+.imagen-por-defecto {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Título del banco */
+mat-card-title p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a73e8;
+  margin: 0;
+  text-align: center;
+}
+
+/* Subtítulo */
+mat-card-subtitle {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-top: 5px;
+}
+
+/* Contenido de tasas */
+mat-card-content {
+  padding: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+mat-card-content p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+mat-card-content strong {
+  color: #333;
+}
+mat-card-image {
+  max-height: 200px;
+  object-fit: cover;
+}
+.banco-card img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}

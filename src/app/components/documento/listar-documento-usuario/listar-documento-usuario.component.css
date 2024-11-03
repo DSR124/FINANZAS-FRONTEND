@@ -36,7 +36,7 @@ h2 {
 }
 
 .form-column {
-  width: 48%; /* Ajusta el ancho para 2 columnas */
+  width: 32%; /* Ajusta el ancho para 3 columnas */
 }
 
 /* Botones */
@@ -71,4 +71,3 @@ button[mat-button] {
 button[mat-button]:hover {
   background-color: #757575;
 }
-

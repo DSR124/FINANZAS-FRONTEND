@@ -1,74 +1,77 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Registrar Cartera</title>
 </head>
 <body>
   <div class="form-container">
     <h2>{{ edicion ? 'Editar Cartera' : 'Registrar Cartera' }}</h2>
   
     <form [formGroup]="form" (ngSubmit)="registrar()">
-      <!-- Fecha de Descuento -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha de Descuento</mat-label>
-        <input matInput formControlName="fechaDescuento" [matDatepicker]="picker1" />
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-      </mat-form-field>
+      <div class="form-row">
+        <!-- Fecha de Descuento -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Fecha de Descuento</mat-label>
+          <input matInput formControlName="fechaDescuento" [matDatepicker]="picker1" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
   
-      <!-- TCEA -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>TCEA</mat-label>
-        <input matInput formControlName="tcea" placeholder="Ingrese TCEA" type="number" />
-      </mat-form-field>
+        <!-- TCEA -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>TCEA</mat-label>
+          <input matInput formControlName="tcea" placeholder="Ingrese TCEA" type="number" />
+        </mat-form-field>
   
-      <!-- Fecha de Creación -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha de Creación</mat-label>
-        <input matInput formControlName="fechaCreacion" [matDatepicker]="picker2" />
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-  
-      <!-- Empresa -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Empresa</mat-label>
-        <mat-select formControlName="empresa">
-          <mat-option *ngFor="let empresa of listaEmpresas" [value]="empresa.idEmpresa">
-            {{ empresa.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <!-- Nombre -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
-      </mat-form-field>
-  
-  <!-- Moneda -->
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Moneda</mat-label>
-    <mat-select formControlName="moneda">
-      <mat-option *ngFor="let moneda of monedas" [value]="moneda.value">
-        {{ moneda.viewValue }}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="obtenerControlCampo('moneda').hasError('required')">
-      La moneda es obligatoria.
-    </mat-error>
-  </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-        {{ edicion ? 'Actualizar' : 'Registrar' }}
-      </button>
-      <button mat-button color="warn" type="button">Cancelar</button>
+        <!-- Fecha de Creación -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Fecha de Creación</mat-label>
+          <input matInput formControlName="fechaCreacion" [matDatepicker]="picker2" />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <!-- Empresa -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Empresa</mat-label>
+          <mat-select formControlName="empresa">
+            <mat-option *ngFor="let empresa of listaEmpresas" [value]="empresa.idEmpresa">
+              {{ empresa.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Nombre -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
+        </mat-form-field>
+
+        <!-- Moneda -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Moneda</mat-label>
+          <mat-select formControlName="moneda">
+            <mat-option *ngFor="let moneda of monedas" [value]="moneda.value">
+              {{ moneda.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="obtenerControlCampo('moneda').hasError('required')">
+            La moneda es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          {{ edicion ? 'Actualizar' : 'Registrar' }}
+        </button>
+        <button mat-button color="warn" type="button">Cancelar</button>
+      </div>
     </form>
   </div>
-  
 </body>
 </html>
-
