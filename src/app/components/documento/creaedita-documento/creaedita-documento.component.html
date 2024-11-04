@@ -97,7 +97,7 @@
   
       <!-- Botones de Acción -->
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"  routerLink="/documento/listar_documento">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"  (click)="registrar()" routerLink="/documento/listar_documento">
           {{ edicion ? 'Actualizar' : 'Registrar' }}
         </button>
         <button mat-button color="warn" type="button" (click)="confirmCancel()" routerLink="/documento/listar_documento">Cancelar</button>
