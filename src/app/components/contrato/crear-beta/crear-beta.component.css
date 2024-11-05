@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.selection-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.selection-section button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.selection-section button:hover {
+    background-color: #0056b3;
+}
+
+.selection-section select {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.report-section {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.report-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 10px); /* Para tener tres tarjetas por fila */
+    box-sizing: border-box;
+}
+
+.report-card h4 {
+    margin-bottom: 10px;
+    color: #007bff;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.report-card p {
+    font-size: 14px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.report-card p span {
+    font-weight: bold;
+    color: #333;
+}
