@@ -91,8 +91,6 @@ export class CreaeditaContratoComponent implements OnInit {
     if (this.edicion) {
       this.contratoService.listId(this.id).subscribe((data) => {
         this.form.patchValue({
-          fechaCompra: data.fechaCompra,
-          fechaPago: data.fechaPago,
           currency: data.currency,
           valorNominal: data.valorNominal,
           tasaDescontada: data.tasaDescontada,

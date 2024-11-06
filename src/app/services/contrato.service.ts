@@ -77,4 +77,6 @@ export class ContratoService {
       return throwError(() => new Error(`Error ${operation}: ${error.message || 'Unknown error'}`));
     };
   }
+
+  
 }

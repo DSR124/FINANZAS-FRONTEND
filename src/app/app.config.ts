@@ -7,11 +7,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 export function tokenGetter() {
-  return sessionStorage.getItem('token');
+    return sessionStorage.getItem('token');
 }
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+   provideHttpClient(),
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),

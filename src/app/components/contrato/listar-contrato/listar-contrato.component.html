@@ -22,19 +22,6 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
               <td mat-cell *matCellDef="let contrato"> {{ contrato.id }} </td>
             </ng-container>
-      
-            <!-- Fecha Compra Column -->
-            <ng-container matColumnDef="fechaCompra">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Compra </th>
-              <td mat-cell *matCellDef="let contrato"> {{ contrato.fechaCompra | date:'mediumDate' }} </td>
-            </ng-container>
-      
-            <!-- Fecha Pago Column -->
-            <ng-container matColumnDef="fechaPago">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Pago </th>
-              <td mat-cell *matCellDef="let contrato"> {{ contrato.fechaPago | date:'mediumDate' }} </td>
-            </ng-container>
-      
             <!-- Currency Column -->
             <ng-container matColumnDef="currency">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Moneda </th>
