@@ -3,8 +3,6 @@ import { Banco } from './banco';
 
 export class Contrato {
   id: number = 0;
-  fechaCompra: string = '';  // Usamos string para manejar fechas fácilmente con el control de formularios
-  fechaPago: string = '';
   currency: string = '';
   valorNominal: number = 0;
   tasaDescontada: number = 0;

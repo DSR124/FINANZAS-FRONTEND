@@ -3,9 +3,9 @@ import { Empresa } from "./empresa";
 
 export class Cartera {
     idCartera: number = 0;
-    fechaDescuento: string = '';
+    fechaDescuento:  Date = new Date();
     tcea: number = 0;
-    fechaCreacion: string = '';
+    fechaCreacion:  Date = new Date();
     empresa: Empresa = new Empresa();
     nombre: string = '';
     moneda: string = '';

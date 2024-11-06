@@ -8,8 +8,14 @@
 <body>
     
     <div class="content-container">
+
+      <div *ngIf="username">
+        Bienvenido, {{ username }}!
+      </div>
+
+
+
         <h2 class="card-title">Listado de Empresas</h2>
-      
         <div class="filter-container">
           <mat-form-field appearance="outline">
             <mat-label>Buscar</mat-label>

@@ -27,6 +27,7 @@ export class ListaEmpresaComponent implements OnInit{
   dataSource: Empresa[] = [];
   filteredDataSource: Empresa[] = [];
   filterValue: string = '';
+  username: string | null = null;
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -38,6 +39,8 @@ export class ListaEmpresaComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.username = this.loginService.getUsername();
+
     this.empService.list().subscribe((data) => {
       this.dataSource = data;
       this.filteredDataSource = data; // Inicializamos filteredDataSource con todos los datos

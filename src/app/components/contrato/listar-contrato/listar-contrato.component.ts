@@ -33,8 +33,6 @@ import { ContratoService } from '../../../services/contrato.service';
 export class ListarContratoComponent implements OnInit{
   displayedColumns: string[] = [
     'id',
-    'fechaCompra',
-    'fechaPago',
     'currency',
     'valorNominal',
     'tasaDescontada',

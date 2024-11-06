@@ -24,6 +24,7 @@ import { CreaRolComponent } from './components/sing-in/crea-rol/crea-rol.compone
 import { EmpresasUsuarioComponent } from './components/empresa/empresas-usuario/empresas-usuario.component';
 import { ListarCarteraUsuarioComponent } from './components/cartera/listar-cartera-usuario/listar-cartera-usuario.component';
 import { ListarBancoUsuarioComponent } from './components/banco/listar-banco-usuario/listar-banco-usuario.component';
+import { CrearBetaComponent } from './components/contrato/crear-beta/crear-beta.component';
 
 export const routes: Routes = [
 
@@ -133,7 +134,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'registrar_contrato',
-        component: CreaeditaContratoComponent,
+        component: CrearBetaComponent,
       },
       {
         path: 'listar_contrato',

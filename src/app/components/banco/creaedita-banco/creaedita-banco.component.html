@@ -36,11 +36,11 @@
   
           <mat-form-field appearance="fill">
             <mat-label>Tasa Nominal</mat-label>
-            <input matInput type="number" formControlName="tasaNominal" />
-            <mat-error *ngIf="form.get('tasaNominal')?.hasError('required')">
+            <input matInput type="number" formControlName="tasaNomninal" />
+            <mat-error *ngIf="form.get('tasaNomninal')?.hasError('required')">
               Este campo es requerido
             </mat-error>
-            <mat-error *ngIf="form.get('tasaNominal')?.hasError('valorNoValido')">
+            <mat-error *ngIf="form.get('tasaNomninal')?.hasError('valorNoValido')">
               El valor debe ser un número positivo
             </mat-error>
           </mat-form-field>
