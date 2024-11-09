@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
 </head>
 <body>
   <div class="container">
     <div class="litle">
-      <h2 style="text-align: center">LISTA DE BANCOS</h2>
+      <h2>LISTA DE BANCOS</h2>
     </div>
 
     <div class="bancos-container">
@@ -26,16 +27,18 @@
           <mat-card-subtitle>Detalle del banco</mat-card-subtitle>
         </mat-card-header>
 
-        <!-- Contenido con las tasas -->
+        <!-- Contenido con las tasas y balance -->
         <mat-card-content>
           <p>
-            <strong>Tasa Nominal:</strong> {{ banco.tasaEfectiva }}% <br />
-            <strong>Tasa Efectiva:</strong> {{ banco.tasaNomninal }}%
+            <strong>Balance:</strong> {{ banco.balance }} <br />
+            <strong>Tasa Nominal:</strong> {{ banco.tasaNomninal }}% <br />
+            <strong>Tasa Efectiva:</strong> {{ banco.tasaEfectiva }}% <br />
+            <strong>Precio del Cambio a dolares:</strong> S/ {{ banco.balance }}
           </p>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
-  
+
 </body>
 </html>

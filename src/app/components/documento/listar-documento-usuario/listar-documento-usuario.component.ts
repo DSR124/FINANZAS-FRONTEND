@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DocumentoByCartera } from '../../../models/DocumentobyCartera';
 import { MatPaginator } from '@angular/material/paginator';
@@ -37,29 +37,56 @@ import { MatOptionModule } from '@angular/material/core';
 export class ListarDocumentoUsuarioComponent {
   dataSource: MatTableDataSource<DocumentoByCartera>;
   displayedColumns: string[] = [
-    'idCartera', 
-    'nombreCartera', 
-    'fechaDescuento', 
-    'moneda', 
-    'idDocumento', 
-    'fechaEmision', 
-    'fechaVencimiento', 
-    'valorDocumento', 
-    'clienteNombre', 
-    'clientePhone', 
-    'documentoCurrency', 
-    'estado', 
-    'tipoDocumento'
-  ]; // Incluye todas las columnas necesarias
+    'idCartera',
+    'nombreCartera',
+    'fechaDescuento',
+    'moneda',
+    'idDocumento',
+    'fechaEmision',
+    'fechaVencimiento',
+    'valorDocumento',
+    'clienteNombre',
+    'clientePhone',
+    'documentoCurrency',
+    'estado',
+    'tipoDocumento',
+    'acciones' // Columna para las acciones (como eliminar)
+  ];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     public dialogRef: MatDialogRef<ListarDocumentoUsuarioComponent>,
-    @Inject(MAT_DIALOG_DATA) public documentos: DocumentoByCartera[]
+    @Inject(MAT_DIALOG_DATA) public documentos: DocumentoByCartera[],
+    private documentoService: DocumentoService // Inyección del servicio DocumentoService
   ) {
-    this.dataSource = new MatTableDataSource(documentos); // Inicializa con los datos
+    this.dataSource = new MatTableDataSource(documentos);
+  }
+
+  ngOnInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  // Método para eliminar un documento
+  eliminarDocumento(documento: DocumentoByCartera): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este documento?')) {
+      this.documentoService.delete(documento.idDocumento).subscribe(
+        () => {
+          // Actualiza la tabla eliminando el documento localmente
+          this.dataSource.data = this.dataSource.data.filter(d => d.idDocumento !== documento.idDocumento);
+          alert('Documento eliminado correctamente');
+        },
+        (error) => {
+          console.error('Error al eliminar el documento:', error);
+          alert('Hubo un error al intentar eliminar el documento');
+        }
+      );
+    }
   }
 }

@@ -41,20 +41,11 @@ export class CreaeditaDocumentoComponent implements OnInit{
   id: number = 0;
   edicion: boolean = false;
   mensaje: string = '';
+  formularioActivo: boolean = false; // Controla si el formulario está activo o no
 
   tipoDocumentoOpciones = [
     { value: 'LETRAS', viewValue: 'Letras' },
     { value: 'FACTURAS', viewValue: 'Facturas' }
-  ];
-
-  estadoOpciones = [
-    { value: 'ACTIVO', viewValue: 'Activo' },
-    { value: 'NO ACTIVO', viewValue: 'No Activo' }
-  ];
-
-  monedaOpciones = [
-    { value: 'USD', viewValue: 'Dólares' },
-    { value: 'PEN', viewValue: 'Soles' }
   ];
 
   constructor(
@@ -65,27 +56,60 @@ export class CreaeditaDocumentoComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((data: Params) => {
-      this.id = data['id'];
-      this.edicion = data['id'] != null;
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.edicion = this.id != null;
       this.init();
     });
 
+    // Configurar el formulario con validaciones
     this.form = this.formBuilder.group({
-      tipoDocumento: ['', [Validators.required]],
-      valorDocumento: ['', [Validators.required, Validators.min(0.01)]],
-      currency: ['', [Validators.required]],
-      fechaEmision: ['', [Validators.required]],
-      fechaVencimiento: ['', [Validators.required]],
-      estado: ['', [Validators.required]],
-      clienteNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      clientePhone: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      cartera: ['', [Validators.required]]
+      cartera: ['', [Validators.required]],
+      tipoDocumento: [{ value: '', disabled: true }, [Validators.required]],
+      valorDocumento: [{ value: '', disabled: true }, [Validators.required, Validators.min(0.01)]],
+      currency: [{ value: '', disabled: false }, [Validators.required]], // Moneda deshabilitada
+      fechaEmision: [{ value: '', disabled: true }, [Validators.required]],
+      fechaVencimiento: [{ value: '', disabled: true }, [Validators.required]],
+      estado: [{ value: 'ACTIVO', disabled: true }, [Validators.required]], // Estado inicial y deshabilitado
+      clienteNombre: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      clientePhone: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/)]]
     });
 
-    // Load carteras
+    // Cargar las carteras disponibles
     this.carteraService.list().subscribe((data) => {
       this.listaCarteras = data;
+    });
+
+    // Escuchar cambios en el campo 'cartera'
+    this.form.get('cartera')?.valueChanges.subscribe((carteraId) => {
+      const carteraSeleccionada = this.listaCarteras.find(c => c.idCartera === carteraId);
+      if (carteraSeleccionada) {
+        // Actualizar el currency y activar el formulario
+        this.form.get('currency')?.setValue(carteraSeleccionada.moneda);
+        this.activarFormulario();
+      } else {
+        this.desactivarFormulario();
+      }
+    });
+  }
+
+  activarFormulario() {
+    // Habilitar los campos del formulario excepto 'currency' y 'estado'
+    this.formularioActivo = true;
+    Object.keys(this.form.controls).forEach((key) => {
+      if (key !== 'cartera' && key !== 'currency' && key !== 'estado') {
+        this.form.get(key)?.enable();
+      }
+    });
+  }
+
+  desactivarFormulario() {
+    // Deshabilitar los campos del formulario
+    this.formularioActivo = false;
+    Object.keys(this.form.controls).forEach((key) => {
+      if (key !== 'cartera') {
+        this.form.get(key)?.disable();
+      }
     });
   }
 
@@ -93,25 +117,36 @@ export class CreaeditaDocumentoComponent implements OnInit{
     if (this.edicion) {
       this.documentoService.listId(this.id).subscribe((data) => {
         this.form.patchValue({
+          cartera: data.cartera.idCartera,
           tipoDocumento: data.tipoDocumento,
           valorDocumento: data.valorDocumento,
           currency: data.currency,
           fechaEmision: data.fechaEmision,
-          fechaVencimiento:  data.fechaVencimiento,
+          fechaVencimiento: data.fechaVencimiento,
           estado: data.estado,
           clienteNombre: data.clienteNombre,
-          clientePhone: data.clientePhone,
-          cartera: data.cartera.idCartera
+          clientePhone: data.clientePhone
         });
+        this.activarFormulario();
       });
     }
   }
-
+  getRUC(): string {
+    const carteraId = this.form.get('cartera')?.value;
+    const carteraSeleccionada = this.listaCarteras.find(c => c.idCartera === carteraId);
+  
+    // Convertir el número a string
+    return carteraSeleccionada ? carteraSeleccionada.empresa.ruc.toString() : '';
+  }
+  
   registrar() {
     if (this.form.valid) {
-      this.documento =    this.form.value;
+      // Habilita temporalmente el campo 'estado' para incluirlo en la solicitud
+      this.form.get('estado')?.enable();
+  
+      this.documento = this.form.value;
       this.documento.cartera = { idCartera: this.form.value.cartera } as Cartera;
-
+  
       if (this.edicion) {
         this.documento.idDocumento = this.id;
         this.documentoService.update(this.documento).subscribe(() => {
@@ -122,15 +157,17 @@ export class CreaeditaDocumentoComponent implements OnInit{
           alert('El documento ha sido registrado correctamente');
         });
       }
+  
+      // Desactiva el campo 'estado' nuevamente
+      this.form.get('estado')?.disable();
     } else {
       this.mensaje = 'Complete todos los campos correctamente';
     }
   }
-
   confirmCancel() {
     const confirmed = window.confirm('¿Estás seguro de que quieres cancelar?');
     if (confirmed) {
-      // Acciones a tomar en caso de cancelar
+      this.ngOnInit()
     }
   }
 }

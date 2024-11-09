@@ -22,17 +22,18 @@ export class ListarBancoUsuarioComponent implements OnInit{
   displayedColumns: string[] = [
     'codigo',
     'nombre',
+    'balance',
     'tasaNominal',
     'tasaEfectiva',
-    'acciones'
+    'acciones',
   ];
-
 
   constructor(
     private vS: BancoService,
     public route: ActivatedRoute,
     private loginService: LoginService
   ) {}
+
   ngOnInit(): void {
     this.vS.list().subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
@@ -41,29 +42,22 @@ export class ListarBancoUsuarioComponent implements OnInit{
       this.dataSource = new MatTableDataSource(data);
     });
   }
-  
+
   filter(en: any) {
     this.dataSource.filter = en.target.value.trim();
   }
 
-
   imagenNoCargada(event: any) {
-    // Puedes agregar lógica adicional aquí si es necesario
     console.error('Error al cargar la imagen:', event);
   }
 
   getImagenUrl(banco: Banco): string {
-    // Verifica si la propiedad 'foto' está presente y no es nula
     if (banco.imageUrl) {
-      // Construye y retorna la URL de la imagen
       return 'data:image/jpeg;base64,' + banco.imageUrl;
     } else {
-      // Si no hay imagen, retorna la ruta de la imagen por defecto
       return 'assets/image/EstacionamientoDefault.jpg';
     }
   }
-
-
-
-
 }
+
+

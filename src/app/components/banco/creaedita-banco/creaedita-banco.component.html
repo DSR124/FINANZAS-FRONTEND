@@ -107,9 +107,11 @@
       </div>
   
       <div class="actions">
-        <button mat-raised-button color="primary" type="submit">
-          {{ edicion ? 'Actualizar' : 'Registrar' }}
-        </button>
+
+          <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid"  routerLink="/banco/listar_banco_usuario" (click)="registrar()">
+            {{ edicion ? 'Actualizar' : 'Registrar' }}
+          </button>
+
         <button
           mat-raised-button
           color="warn"

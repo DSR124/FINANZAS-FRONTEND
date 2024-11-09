@@ -22,7 +22,6 @@ import { LoginService } from '../../../services/login.service';
   template: `
   <h2 mat-dialog-title>Información de Empresa</h2>
   <mat-dialog-content>
-    <p><strong>ID:</strong> {{ data.idEmpresa }}</p>
     <p><strong>Nombre:</strong> {{ data.nombre }}</p>
     <p><strong>Usuario:</strong> {{ data.usuario.nombre}} {{ data.usuario.apellido}}</p>
     <p><strong>Dirección:</strong> {{ data.direccion }}</p>
