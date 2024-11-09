@@ -8,104 +8,102 @@
 <body>
   <div class="form-container">
     <h2>{{ edicion ? 'Editar Documento' : 'Registrar Documento' }}</h2>
-    
+
     <form [formGroup]="form" (ngSubmit)="registrar()">
+      <!-- Sección de la Cartera -->
+      <div class="section">
+        <h3 class="section-title">Información de la Cartera</h3>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Cartera</mat-label>
+            <mat-select formControlName="cartera">
+              <mat-option *ngFor="let cartera of listaCarteras" [value]="cartera.idCartera">
+                {{ cartera.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+                                 <!-- RUC -->
+                                 <mat-form-field appearance="outline" class="form-column">
+                                  <mat-label>RUC</mat-label>
+                                  <input matInput [value]="getRUC()" [disabled]="true" />
+                                </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Moneda</mat-label>
+            <input matInput formControlName="currency" [disabled]="true" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Sección del Documento -->
+      <div class="section" *ngIf="formularioActivo">
+        <h3 class="section-title">Información del Documento</h3>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Tipo de Documento</mat-label>
+            <mat-select formControlName="tipoDocumento">
+              <mat-option *ngFor="let tipo of tipoDocumentoOpciones" [value]="tipo.value">
+                {{ tipo.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Valor del Documento</mat-label>
+            <input matInput formControlName="valorDocumento" placeholder="Ingrese el valor" type="number" />
+            <mat-error *ngIf="form.get('valorDocumento')?.hasError('min')">
+              El valor debe ser mayor a 0.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Fecha de Emisión</mat-label>
+            <input matInput formControlName="fechaEmision" [matDatepicker]="picker1" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Fecha de Vencimiento</mat-label>
+            <input matInput formControlName="fechaVencimiento" [matDatepicker]="picker2" />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Sección del Cliente -->
+      <div class="section" *ngIf="formularioActivo">
+        <h3 class="section-title">Información del Cliente</h3>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Nombre del Cliente</mat-label>
+            <input matInput formControlName="clienteNombre" placeholder="Ingrese nombre del cliente" />
+            <mat-error *ngIf="form.get('clienteNombre')?.hasError('pattern')">
+              Solo se permiten letras y espacios.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Teléfono del Cliente</mat-label>
+            <input matInput formControlName="clientePhone" placeholder="Ingrese teléfono" type="text" />
+            <mat-error *ngIf="form.get('clientePhone')?.hasError('pattern')">
+              Solo se permiten números.
+            </mat-error>
+          </mat-form-field>
       
-      <div class="form-row">
-        <!-- Tipo Documento -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Tipo de Documento</mat-label>
-          <mat-select formControlName="tipoDocumento" required>
-            <mat-option *ngFor="let option of tipoDocumentoOpciones" [value]="option.value">
-              {{ option.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-  
-        <!-- Valor Documento -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Valor del Documento</mat-label>
-          <input matInput formControlName="valorDocumento" type="number" required />
-        </mat-form-field>
+        
+        </div>
       </div>
 
-      <div class="form-row">
-        <!-- Moneda -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Moneda</mat-label>
-          <mat-select formControlName="currency" required>
-            <mat-option *ngFor="let option of monedaOpciones" [value]="option.value">
-              {{ option.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-  
-        <!-- Fecha Emisión -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Fecha de Emisión</mat-label>
-          <input matInput formControlName="fechaEmision" [matDatepicker]="fechaEmisionPicker" required />
-          <mat-datepicker-toggle matSuffix [for]="fechaEmisionPicker"></mat-datepicker-toggle>
-          <mat-datepicker #fechaEmisionPicker></mat-datepicker>
-        </mat-form-field>
-      </div>
-
-      <div class="form-row">
-        <!-- Fecha Vencimiento -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Fecha de Vencimiento</mat-label>
-          <input matInput formControlName="fechaVencimiento" [matDatepicker]="fechaVencimientoPicker" required />
-          <mat-datepicker-toggle matSuffix [for]="fechaVencimientoPicker"></mat-datepicker-toggle>
-          <mat-datepicker #fechaVencimientoPicker></mat-datepicker>
-        </mat-form-field>
-  
-        <!-- Estado -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Estado</mat-label>
-          <mat-select formControlName="estado" required>
-            <mat-option *ngFor="let option of estadoOpciones" [value]="option.value">
-              {{ option.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="form-row">
-        <!-- Cliente Nombre -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Nombre del Cliente</mat-label>
-          <input matInput formControlName="clienteNombre" required />
-        </mat-form-field>
-  
-        <!-- Cliente Teléfono -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Teléfono de Cliente</mat-label>
-          <input matInput formControlName="clientePhone" type="tel" required />
-        </mat-form-field>
-      </div>
-
-      <div class="form-row">
-        <!-- Cartera -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Cartera</mat-label>
-          <mat-select formControlName="cartera" required>
-            <mat-option *ngFor="let cartera of listaCarteras" [value]="cartera.idCartera">
-              {{ cartera.nombre }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-  
       <!-- Botones de Acción -->
-      <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"  (click)="registrar()" routerLink="/documento/listar_documento">
+      <div class="button-container" *ngIf="formularioActivo">
+        <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid"  routerLink="/documento/listar_documento" (click)="registrar()">
           {{ edicion ? 'Actualizar' : 'Registrar' }}
         </button>
-        <button mat-button color="warn" type="button" (click)="confirmCancel()" routerLink="/documento/listar_documento">Cancelar</button>
+        <button mat-button color="warn" type="button" (click)="confirmCancel()">Cancelar</button>
       </div>
     </form>
-  
-    <p class="error-message" *ngIf="mensaje">{{ mensaje }}</p>
-    
   </div>
 </body>
 </html>

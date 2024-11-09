@@ -1,17 +1,11 @@
 
 /* Contenedor principal */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f6f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
-  margin: 0;
 }
 /* Main container for styling the table and search area */
 .content-container {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;

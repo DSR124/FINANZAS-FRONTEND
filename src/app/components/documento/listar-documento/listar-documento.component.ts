@@ -33,15 +33,16 @@ import { MatSortModule } from '@angular/material/sort';
 })
 export class ListarDocumentoComponent implements OnInit {
   displayedColumns: string[] = [
-    'tipoDocumento', 
-    'valorDocumento', 
-    'currency', 
-    'fechaEmision', 
-    'fechaVencimiento', 
-    'estado', 
-    'clienteNombre', 
-    'cartera', 
-    'clientePhone'
+    'tipoDocumento',
+    'valorDocumento',
+    'currency',
+    'fechaEmision',
+    'fechaVencimiento',
+    'estado',
+    'clienteNombre',
+    'cartera',
+    'clientePhone',
+    'acciones' // Columna para acciones como eliminar
   ];
   dataSource: MatTableDataSource<Documento> = new MatTableDataSource();
 
@@ -61,5 +62,22 @@ export class ListarDocumentoComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  // Método para eliminar un documento
+  eliminarDocumento(documento: Documento): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este documento?')) {
+      this.documentoService.delete(documento.idDocumento).subscribe(
+        () => {
+          // Actualiza la tabla eliminando el documento localmente
+          this.dataSource.data = this.dataSource.data.filter(d => d.idDocumento !== documento.idDocumento);
+          alert('Documento eliminado correctamente');
+        },
+        (error) => {
+          console.error('Error al eliminar el documento:', error);
+          alert('Hubo un error al intentar eliminar el documento');
+        }
+      );
+    }
   }
 }

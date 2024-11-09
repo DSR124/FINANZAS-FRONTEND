@@ -9,8 +9,14 @@
   <div class="form-container">
     <h2>{{ edicion ? 'Editar Cartera' : 'Registrar Cartera' }}</h2>
   
-    <form [formGroup]="form" (ngSubmit)="registrar()">
+    <form [formGroup]="form" class="cartera-form-container" (ngSubmit)="registrar()">
       <div class="form-row">
+        
+        <!-- Nombre -->
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
+        </mat-form-field>
         <!-- Fecha de Descuento -->
         <mat-form-field appearance="outline" class="form-column">
           <mat-label>Fecha de Descuento</mat-label>
@@ -18,20 +24,8 @@
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
-  
-        <!-- TCEA -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>TCEA</mat-label>
-          <input matInput formControlName="tcea" placeholder="Ingrese TCEA" type="number" />
-        </mat-form-field>
-  
-        <!-- Fecha de Creación -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Fecha de Creación</mat-label>
-          <input matInput formControlName="fechaCreacion" [matDatepicker]="picker2" />
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+
+
       </div>
 
       <div class="form-row">
@@ -43,12 +37,6 @@
               {{ empresa.nombre }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
-
-        <!-- Nombre -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
         </mat-form-field>
 
         <!-- Moneda -->
@@ -66,7 +54,7 @@
       </div>
 
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid"  routerLink="/cartera/listar_cartera_usuario" (click)="registrar()">
           {{ edicion ? 'Actualizar' : 'Registrar' }}
         </button>
         <button mat-button color="warn" type="button">Cancelar</button>

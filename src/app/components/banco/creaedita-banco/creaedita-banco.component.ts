@@ -58,6 +58,8 @@ export class CreaeditaBancoComponent  implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    const today = new Date(); // Obtiene la fecha actual
+  
     this.form = this.formBuilder.group({
       nombre: [
         '',
@@ -68,16 +70,15 @@ export class CreaeditaBancoComponent  implements OnInit{
       tasaNomninal: ['', [Validators.required, numeroPositivo]],
       tasaEfectiva: ['', [Validators.required, numeroPositivo]],
       comisionExtra: ['', [Validators.required, numeroPositivo]],
-      creationDate: ['', Validators.required],
+      creationDate: [{ value: today, disabled: true }, Validators.required], // Deshabilita el campo y asigna la fecha actual
     });
-
+  
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
       this.edicion = this.id != null;
       this.init();
     });
   }
-
   init() {
     if (this.edicion) {
       this.bS.listId(this.id).subscribe((data) => {
@@ -97,12 +98,15 @@ export class CreaeditaBancoComponent  implements OnInit{
 
   registrar() {
     if (this.form.valid) {
+      // Habilita temporalmente el campo 'creationDate' para incluirlo en la solicitud
+      this.form.get('creationDate')?.enable();
+  
       const bancoData: Banco = {
         ...this.form.value,
         idBanco: this.edicion ? this.id : undefined,
         imageUrl: this.form.value.imageUrl,
       };
-
+  
       if (this.edicion) {
         this.bS.update(bancoData).subscribe(
           () => {
@@ -122,6 +126,9 @@ export class CreaeditaBancoComponent  implements OnInit{
           }
         );
       }
+  
+      // Desactiva nuevamente el campo 'creationDate'
+      this.form.get('creationDate')?.disable();
     } else {
       this.mensaje = 'Complete todos los campos correctamente';
     }
@@ -132,6 +139,7 @@ export class CreaeditaBancoComponent  implements OnInit{
       '¿Estás seguro de que quieres cancelar?'
     );
     if (confirmed) {
+      this.ngOnInit();
     }
   }
 

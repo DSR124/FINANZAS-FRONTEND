@@ -59,16 +59,16 @@ export class CreaeditaCarteraComponent {
       this.edicion = data['id'] != null;
       this.init();
     });
-
+  
     this.form = this.formBuilder.group({
       fechaDescuento: ['', Validators.required],
-      tcea: ['', [Validators.required, Validators.min(0)]],
-      fechaCreacion: ['', Validators.required],
+      tcea: [{ value: 0, disabled: true }], // Inicializa TCEA con 0 y deshabilitado
+      fechaCreacion: [new Date(), Validators.required], // Fecha de creación con la fecha actual
       empresa: ['', Validators.required],
       nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       moneda: ['', Validators.required]
     });
-
+  
     this.eS.list().subscribe((data) => {
       this.listaEmpresas = data;
     });
@@ -114,6 +114,7 @@ export class CreaeditaCarteraComponent {
           });
         });
         alert('El registro se hizo correctamente');
+        this.ngOnInit();
       }
     } else {
       this.mensaje = 'Complete todos los campos!!!';
@@ -129,7 +130,7 @@ export class CreaeditaCarteraComponent {
   confirmCancel() {
     const confirmed = window.confirm('¿Estás seguro de que quieres cancelar?');
     if (confirmed) {
-      // Acciones a tomar en caso de cancelar
+      this.ngOnInit()
     }
   }
 }
