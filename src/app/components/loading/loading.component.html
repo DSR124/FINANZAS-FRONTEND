@@ -7,11 +7,13 @@
 </head>
 <body>
   <div class="navbar">
-    <div class="logo">GESTIÓN EMPRESARIAL</div>
-    <div class="nav-links">
-      <button mat-button color="primary" [routerLink]="['/landing']">INICIO</button>
-      <button mat-button color="primary" [routerLink]="['/login']">LOGIN</button>
-      <button mat-button color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+    <div class="container">
+        <div class="logo">GESTIÓN EMPRESARIAL</div>
+        <div class="nav-links">
+        <button mat-button color="primary" [routerLink]="['/landing']">INICIO</button>
+        <button mat-button color="primary" [routerLink]="['/login']">LOGIN</button>
+        <button mat-button color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+        </div>
     </div>
   </div>
 
@@ -20,14 +22,14 @@
     <main class="landing-content">
         <!-- Sección de bienvenida -->
         <section id="hero" class="hero">
-            <h2>Optimiza y Administra tus Operaciones Empresariales</h2>
+            <h1>Optimiza y Administra tus Operaciones Empresariales</h1>
             <p>Una plataforma integral para gestionar empresas, carteras, bancos, documentos y contratos con facilidad y seguridad.</p>
             <button class="cta-button" routerLink="/registrar">Comienza Ahora</button>
         </section>
 
         <!-- Beneficios de la plataforma -->
         <section id="benefits" class="section benefits">
-            <h3>¿Por qué elegir nuestra plataforma?</h3>
+            <h2>¿Por qué elegir nuestra plataforma?</h2>
             <div class="benefit-list">
                 <div class="benefit">
                     <h4>Eficiencia en la Gestión</h4>
@@ -46,7 +48,7 @@
 
         <!-- Características de la plataforma -->
         <section id="features" class="section features">
-            <h3>Características de Nuestra Plataforma</h3>
+            <h2>Características de Nuestra Plataforma</h2>
             <div class="feature-list">
                 <div class="feature">
                     <h4>Gestión de Empresas</h4>
@@ -65,7 +67,7 @@
 
         <!-- Proceso de uso en tres pasos -->
         <section id="how-it-works" class="section how-it-works">
-            <h3>¿Cómo funciona?</h3>
+            <h2>¿Cómo funciona?</h2>
             <div class="steps">
                 <div class="step">
                     <h4>Paso 1: Regístrate</h4>
@@ -84,7 +86,7 @@
 
         <!-- Testimonios de usuarios -->
         <section id="testimonials" class="section testimonials">
-            <h3>Testimonios de nuestros clientes</h3>
+            <h2>Testimonios de nuestros clientes</h2>
             <div class="testimonial-list">
                 <div class="testimonial">
                     <p>"Gracias a esta plataforma, puedo gestionar mis empresas de forma centralizada y segura. ¡Un cambio total!"</p>
@@ -99,7 +101,7 @@
 
         <!-- Preguntas Frecuentes (FAQ) -->
         <section id="faq" class="section faq">
-            <h3>Preguntas Frecuentes</h3>
+            <h2>Preguntas Frecuentes</h2>
             <div class="faq-item">
                 <h4>¿Cuán segura es la plataforma?</h4>
                 <p>Implementamos medidas de seguridad avanzadas para proteger tus datos en todo momento.</p>
@@ -116,7 +118,7 @@
 
         <!-- Llamado a la acción final -->
         <section class="section final-cta">
-            <h3>¿Listo para llevar tu negocio al siguiente nivel?</h3>
+            <h2>¿Listo para llevar tu negocio al siguiente nivel?</h2>
             <button class="cta-button" routerLink="/registrar">Regístrate Gratis</button>
         </section>
     </main>
