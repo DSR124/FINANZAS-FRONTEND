@@ -55,6 +55,6 @@ export class AppComponent {
     return this.loginService.verificar();
   }
   cerrar() {
-    sessionStorage.clear();
+    localStorage.clear();
   }
 }

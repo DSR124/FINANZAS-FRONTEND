@@ -11,20 +11,20 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para iniciar sesión y almacenar el token en sessionStorage
+  // Método para iniciar sesión y almacenar el token en localStorage
   login(request: JwtRequest) {
     return this.http.post('http://localhost:8080/login', request);
   }
 
   // Método para verificar si el usuario está autenticado
   verificar() {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     return token != null;
   }
 
-  // Método para obtener el rol del usuario desde el token en sessionStorage
+  // Método para obtener el rol del usuario desde el token en localStorage
   showRole() {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     if (!token) {
       return null;
     }
@@ -32,24 +32,24 @@ export class LoginService {
     return decodedToken?.role;
   }
 
-  // Método para guardar el token en sessionStorage después del inicio de sesión
+  // Método para guardar el token en localStorage después del inicio de sesión
   setToken(token: string) {
-    sessionStorage.setItem('token', token);
+    localStorage.setItem('token', token);
   }
 
-  // Método para obtener el token desde sessionStorage
+  // Método para obtener el token desde localStorage
   getToken() {
-    return sessionStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 
-  // Método para eliminar el token de sessionStorage (ej. en logout)
+  // Método para eliminar el token de localStorage (ej. en logout)
   removeToken() {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
   }
 
   // Método para obtener el nombre de usuario del token JWT
   getUsername() {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     if (!token) {
       return null;
     }
