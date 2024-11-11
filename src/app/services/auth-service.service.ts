@@ -19,7 +19,7 @@ export class AuthService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(`${this.url}/login`, { username, password }, { headers }).pipe(
       tap((response: any) => {
-        sessionStorage.setItem('token', response.token); // Almacena el token en sessionStorage
+        localStorage.setItem('token', response.token); // Almacena el token en localStorage
       }),
       catchError((error) => {
         console.error('Error during login:', error);
@@ -30,16 +30,16 @@ export class AuthService {
 
   // Método para cerrar sesión
   logout(): void {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
   }
 
   // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
-    return !!sessionStorage.getItem('token');
+    return !!localStorage.getItem('token');
   }
 
   // Obtener el token del usuario autenticado
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 }

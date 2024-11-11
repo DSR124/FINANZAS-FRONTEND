@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     request.password = this.password;
     this.loginService.login(request).subscribe(
       (data: any) => {
-        sessionStorage.setItem('token', data.jwttoken);
+        localStorage.setItem('token', data.jwttoken);
         console.log(data.jwttoken);
         
         this.router.navigate(['empresa/listar_empresa']);
