@@ -1,114 +1,85 @@
 /* Estilos generales para centrar el formulario */
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
-    background-color: #f0f2f5;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #333;
 }
 
-/* Contenedor del formulario */
-.container {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    width: auto;
-    max-width: 80%;
-}
-
-/* Navbar */
-.navbar {
-    background-color: #333;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
+/* BACKGROUND */
+.login-content::before{
+    content: "";
+    background-image: url(/assets/Register.png);
+    display: block;
+    position: absolute;
+    left: 0;
+    top:0;
     width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
+    height: 100%;    
+    background-size: cover;
+    z-index: 1;
 }
 
-.navbar .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ffffff;
-    text-transform: uppercase;
-}
 
-.navbar .nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-.navbar .nav-links button {
-    background-color: transparent;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 8px 16px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.navbar .nav-links button:hover {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.navbar .nav-links button[routerLink='/registrar'] {
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 4px;
-}
-
-.navbar .nav-links button[routerLink='/registrar']:hover {
-    background-color: #43a047;
-}
-
-/* Contenedor de inicio de sesión */
-.container {
-    text-align: center;
-    margin-top: 100px;
-    background-color: #ffffff;
-    padding: 40px;
-    width: 400px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Título del formulario */
-h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
 
 /* Campo de formulario */
-.mat-form-field {
-    width: 100%;
-    max-width: 300px;
-    margin: 10px auto;
+.container-form{
+    position: relative;
+    z-index: 10;
+    background-color: var(--gray);
+    padding: 60px 30px;
+    border-radius: 30px;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 130px;
+}
+.login-content h4{
+    color: var(--green);
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    
 }
 
-
-
-/* Botón de ingreso */
-button {
-    margin-top: 20px;
+.container-form p{
+    font-size: 12px;
+    color: #D9D9D9;
+    margin: auto;
+    max-width: 240px;
+    margin-bottom: 30px;
+    text-align: center;
 }
+.container-form .mdc-text-field--filled mat-label{
+    color: #fff;
+     font-family: "Poppins", sans-serif; 
+    font-size: 12px;
+    font-weight: 300 !important;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.container-form .mat-mdc-form-field-infix{
+    padding: 10px 8px;
+    display: flex ;
+    align-items: center;
+    min-height: unset;
+}
+
+.container-form input{
+    display: block ;
+}
+
+.container-form .mat-focused label{
+    display: none !important
+}
+.container-form mat-form-field{
+    display: block;
+}
+
 
 /* Icono de visibilidad para contraseña */
-.password-container {
-    position: relative;
+.icon-pass {
+    position: absolute;
+    right: 30px;
+    color: #fff;
+    transform: translateY(-46px);
 }
 
 .password-container input[type="password"], 
@@ -116,13 +87,7 @@ button {
     padding-right: 40px; /* Espacio para el icono */
 }
 
-.password-container .visibility-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
+.btn-primary{
+    margin-top: 30px;
 }
-
 

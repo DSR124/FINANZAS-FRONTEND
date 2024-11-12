@@ -7,38 +7,40 @@
 
 </head>
 <body>
-  <div class="container">
-    <div class="litle">
-      <h2>LISTA DE BANCOS</h2>
+  <div class="content-container">
+    <div class="container-title">
+        <h4 class="card-title" >LISTA DE BANCOS</h4>
     </div>
+    <div class="container">
+      <div class="bancos-container">
+          <!-- Itera sobre los bancos y muestra cada uno como una tarjeta -->
+          <mat-card *ngFor="let banco of dataSource.data" class="banco-card">
+            <!-- Imagen del banco -->
+            <img mat-card-image [src]="getImagenUrl(banco)" (error)="imagenNoCargada($event)" alt="Logo del banco"
+              class="imagen-por-defecto" />
 
-    <div class="bancos-container">
-      <!-- Itera sobre los bancos y muestra cada uno como una tarjeta -->
-      <mat-card *ngFor="let banco of dataSource.data" class="banco-card" [style.background-color]="'white'">
-        <!-- Imagen del banco -->
-        <img mat-card-image [src]="getImagenUrl(banco)" (error)="imagenNoCargada($event)" alt="Logo del banco"
-          class="imagen-por-defecto" />
+            <!-- Encabezado con el nombre del banco -->
+            <mat-card-header>
+              <mat-card-title class="banco-title">
+                <p>{{ banco.nombre }}</p>
+              </mat-card-title>
+              <mat-card-subtitle>Detalle del banco</mat-card-subtitle>
+            </mat-card-header>
 
-        <!-- Encabezado con el nombre del banco -->
-        <mat-card-header>
-          <mat-card-title>
-            <p>{{ banco.nombre }}</p>
-          </mat-card-title>
-          <mat-card-subtitle>Detalle del banco</mat-card-subtitle>
-        </mat-card-header>
-
-        <!-- Contenido con las tasas y balance -->
-        <mat-card-content>
-          <p>
-            <strong>Balance:</strong> {{ banco.balance }} <br />
-            <strong>Tasa Nominal:</strong> {{ banco.tasaNomninal }}% <br />
-            <strong>Tasa Efectiva:</strong> {{ banco.tasaEfectiva }}% <br />
-            <strong>Precio del Cambio a dolares:</strong> S/ {{ banco.balance }}
-          </p>
-        </mat-card-content>
-      </mat-card>
+            <!-- Contenido con las tasas y balance -->
+            <mat-card-content>
+              <p>
+                <strong>Balance:</strong> {{ banco.balance }} <br />
+                <strong>Tasa Nominal:</strong> {{ banco.tasaNomninal }}% <br />
+                <strong>Tasa Efectiva:</strong> {{ banco.tasaEfectiva }}% <br />
+                <strong>Precio del Cambio a dolares:</strong> S/ {{ banco.balance }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+      </div>
     </div>
   </div>
+  
 
 </body>
 </html>

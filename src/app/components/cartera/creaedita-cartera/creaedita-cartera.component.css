@@ -4,7 +4,6 @@ html, body {
 }/* Contenedor principal del formulario */
 .form-container {
   max-width: 800px;
-  margin: 0 auto;
   padding: 20px;
   background-color: #f5f5f5;
   border-radius: 8px;
@@ -52,22 +51,10 @@ html, body {
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   margin-top: 20px;
+  flex-direction: column;
 }
-
-/* Botón de registrar/actualizar */
-button[mat-raised-button][color="primary"] {
-  background-color: #1a73e8;
-  color: white;
-}
-
-button[mat-raised-button][color="primary"]:hover {
-  background-color: #155bb5;
-}
-
-
-
-button[mat-button][color="warn"]:hover {
-  background-color: #f9e0e0;
+.form-container{
+  max-width: 600px;
 }

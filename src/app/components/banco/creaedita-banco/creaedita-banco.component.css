@@ -6,51 +6,25 @@ body {
 }
 /* Contenedor principal */
 .container {
-  max-width: 1200px;
-  margin: 20px auto;
+  max-width: 800px;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #2E2E2E;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Título del formulario */
-.form-title {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
 
-/* Diseño de grilla para las columnas del formulario */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Tres columnas iguales */
-  gap: 20px;
-}
 
 /* Columnas individuales del formulario */
-.form-column {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Estilos para los campos de entrada */
-mat-form-field {
-  width: 100%;
-}
-
-
-
-/* Botones de acción */
-.actions {
-  display: flex;
-  justify-content: center;
+.form-column{
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Tres columnas iguales */
   gap: 20px;
-  margin-top: 20px;
 }
+
+
+
+
 
 /* Mensaje de error */
 .error-message {
@@ -59,16 +33,12 @@ mat-form-field {
   text-align: center;
   margin-top: 10px;
 }
-img {
-  max-width: 100%;
-  max-height: auto;
+
+.actions{
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  row-gap: 10px;
 }
-input[type="file"] {
-  background-color: rgb(173, 173, 182);
-}
-.image-upload {
-  max-width: 90%;
-  max-height: 90%;
-  margin: 0 20px;
-  justify-content: center;
-}
+
+

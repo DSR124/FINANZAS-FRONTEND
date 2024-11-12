@@ -6,84 +6,84 @@
     <title>Document</title>
 </head>
 <body>
-   
-  <div class="mat-elevation-z8">
-    <h2 class="table-title">Listado de Carteras</h2>
-  
-    <mat-form-field appearance="outline">
-      <mat-label>Buscar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar en la tabla" />
-    </mat-form-field>
-  
-    <table mat-table [dataSource]="dataSource" matSort>
-  
-      <ng-container matColumnDef="idCartera">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID Cartera</th>
-        <td mat-cell *matCellDef="let element">{{ element.idCartera }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="nombreCartera">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Cartera</th>
-        <td mat-cell *matCellDef="let element">{{ element.nombreCartera }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="fechaCreacion">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Creación</th>
-        <td mat-cell *matCellDef="let element">{{ element.fechaCreacion | date }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="fechaDescuento">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Descuento</th>
-        <td mat-cell *matCellDef="let element">{{ element.fechaDescuento | date }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="nombreEmpresa">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Empresa</th>
-        <td mat-cell *matCellDef="let element">{{ element.nombreEmpresa }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="tcea">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>TCEA</th>
-        <td mat-cell *matCellDef="let element">{{ element.tcea | number: '1.2-2' }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="moneda">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
-        <td mat-cell *matCellDef="let element">{{ element.moneda }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="cantidadDocumentos">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Documentos</th>
-        <td mat-cell *matCellDef="let element">{{ element.cantidadDocumentos }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="montoTotalCartera">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto Total Cartera</th>
-        <td mat-cell *matCellDef="let element">{{ element.montoTotalCartera | currency }}</td>
-      </ng-container>
-  
-      <ng-container matColumnDef="verDocumentos">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" (click)="verDocumentosPorCartera(element.idCartera)">
-            Ver Documentos
-          </button>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-          (click)="selectCartera(row)" [class.selected]="selectedCartera === row"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <div class="content-container">
+    <div class="container-title">
+          <h4 class="card-title">Busca tus carteras de manera rápida</h4>
+          <div class="container-search">
+              <input (keyup)="applyFilter($event)" placeholder="Buscar en la tabla" />
+              <mat-icon class="icon-search">search</mat-icon>
+          </div>
+      </div>
+      <div class="mat-elevation-z8">
+        
+        <table class="table-info"  mat-table [dataSource]="dataSource" matSort>
+      
+          <ng-container matColumnDef="idCartera">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID Cartera</th>
+            <td mat-cell *matCellDef="let element">{{ element.idCartera }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="nombreCartera">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Cartera</th>
+            <td mat-cell *matCellDef="let element">{{ element.nombreCartera }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="fechaCreacion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Creación</th>
+            <td mat-cell *matCellDef="let element">{{ element.fechaCreacion | date }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="fechaDescuento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Descuento</th>
+            <td mat-cell *matCellDef="let element">{{ element.fechaDescuento | date }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="nombreEmpresa">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Empresa</th>
+            <td mat-cell *matCellDef="let element">{{ element.nombreEmpresa }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="tcea">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>TCEA</th>
+            <td mat-cell *matCellDef="let element">{{ element.tcea | number: '1.2-2' }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="moneda">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
+            <td mat-cell *matCellDef="let element">{{ element.moneda }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="cantidadDocumentos">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Documentos</th>
+            <td mat-cell *matCellDef="let element">{{ element.cantidadDocumentos }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="montoTotalCartera">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto Total Cartera</th>
+            <td mat-cell *matCellDef="let element">{{ element.montoTotalCartera | currency }}</td>
+          </ng-container>
+      
+          <ng-container matColumnDef="verDocumentos">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-raised-button class="btn-primary" (click)="verDocumentosPorCartera(element.idCartera)">
+                Ver Documentos
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+              (click)="selectCartera(row)" [class.selected]="selectedCartera === row"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    <div>
+        <button (click)="exportToPDF()" [disabled]="!selectedCartera" class="btn-secundary">
+          Exportar a PDF
+        </button>
+    </div>
   </div>
-  
-  <div>
-    <button (click)="exportToPDF()" [disabled]="!selectedCartera">
-      Exportar a PDF
-    </button>
-  </div>
-  
 </body>
 </html>

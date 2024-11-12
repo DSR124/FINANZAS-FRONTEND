@@ -1,26 +1,15 @@
 /* Contenedor principal */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  max-width: 970px;
+  margin: 0;
   height: 100vh;
-}
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.litle {
-  text-align: center;
-  margin-bottom: 20px;
 }
 
 .bancos-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center;
+  justify-content: start;
 }
 
 .banco-card {
@@ -33,6 +22,26 @@
 .imagen-por-defecto {
   max-width: 100%;
   height: 150px;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
+  object-fit: contain;
+}
+
+.banco-card mat-card-header, .banco-card mat-card-content, .banco-card .mat-mdc-card-subtitle{
+  background-color: #3d3d3d !important;
+  color: #fff;
+  font-family: "Poppins", sans-serif;  
+  font-size: 12px;
+}
+
+.banco-card mat-card-header{
+  font-size: 16px !important;
+  padding-top: 10px;
+}
+
+ .banco-card mat-card-content p, .banco-card .mat-mdc-card-subtitle{
+  opacity: 0.7;
+  margin: 5px 0;
+}
+
+.banco-card .mat-mdc-card-title{
+  color: #fff;
 }
