@@ -12,4 +12,33 @@
 <body class="mat-typography">
   <app-root></app-root>
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      const observer = new MutationObserver(function (mutations) {
+        const subMenuButtons = document.querySelectorAll('.mat-expansion-panel .mat-mdc-list-item');
+
+        if (subMenuButtons.length > 0) {
+          subMenuButtons.forEach(button => {
+            button.addEventListener('click', function () {
+              subMenuButtons.forEach(btn => btn.classList.remove('active'));
+              console.log("entro")
+              document.querySelectorAll('.mat-expansion-panel').forEach(panel => panel.classList.remove('active-ancestor'));
+
+              button.classList.add('active');
+
+              const parentPanel = button.closest('.mat-expansion-panel');
+              if (parentPanel) {
+                parentPanel.classList.add('active-ancestor');
+              }
+            });
+          });
+
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }, 0);
+  });
+</script>
 </html>

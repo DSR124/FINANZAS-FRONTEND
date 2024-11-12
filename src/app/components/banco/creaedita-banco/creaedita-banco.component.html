@@ -6,127 +6,122 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="container">
-    <h2 class="form-title">{{ edicion ? 'Editar Banco' : 'Registrar Banco' }}</h2>
-    <form [formGroup]="form" (ngSubmit)="registrar()">
-      <div class="form-grid">
-        <!-- Columna 1 -->
-        <div class="form-column">
-          <mat-form-field appearance="fill">
-            <mat-label>Nombre del Banco</mat-label>
-            <input matInput formControlName="nombre" />
-            <mat-error *ngIf="form.get('nombre')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-            <mat-error *ngIf="form.get('nombre')?.hasError('pattern')">
-              Solo se permiten letras y espacios
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill">
-            <mat-label>Balance</mat-label>
-            <input matInput type="number" formControlName="balance" />
-            <mat-error *ngIf="form.get('balance')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-            <mat-error *ngIf="form.get('balance')?.hasError('valorNoValido')">
-              El valor debe ser un número positivo
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill">
-            <mat-label>Tasa Nominal</mat-label>
-            <input matInput type="number" formControlName="tasaNomninal" />
-            <mat-error *ngIf="form.get('tasaNomninal')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-            <mat-error *ngIf="form.get('tasaNomninal')?.hasError('valorNoValido')">
-              El valor debe ser un número positivo
-            </mat-error>
-          </mat-form-field>
-        </div>
-  
-        <!-- Columna 2 -->
-        <div class="form-column">
-          <mat-form-field appearance="fill">
-            <mat-label>Tasa Efectiva</mat-label>
-            <input matInput type="number" formControlName="tasaEfectiva" />
-            <mat-error *ngIf="form.get('tasaEfectiva')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-            <mat-error
-              *ngIf="form.get('tasaEfectiva')?.hasError('valorNoValido')"
-            >
-              El valor debe ser un número positivo
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill">
-            <mat-label>Comisión Extra</mat-label>
-            <input matInput type="number" formControlName="comisionExtra" />
-            <mat-error *ngIf="form.get('comisionExtra')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-            <mat-error
-              *ngIf="form.get('comisionExtra')?.hasError('valorNoValido')"
-            >
-              El valor debe ser un número positivo
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="fill">
-            <mat-label>Fecha de Creación</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="creationDate"
-            />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="form.get('creationDate')?.hasError('required')">
-              Este campo es requerido
-            </mat-error>
-          </mat-form-field>
-        </div>
-  
-        <!-- Columna 3 (Imagen) -->
-        <div class="form-column image-column">
-          <label for="imageUrl">Seleccionar Imagen:</label>
-          <input
-            id="imageUrl"
-            type="file"
-            accept="image/*"
-            (change)="onFileSelected($event)"
-          />
-          <img
-            [src]="getImagenUrl()"
-            alt="Imagen del Banco"
-            (error)="imagenNoCargada($event)"
-          />
-        </div>
-      </div>
-  
-      <div class="actions">
+  <div class="content-container">
+    <div class="container">
+        <h5 class="titulo">{{ edicion ? 'Editar Banco' : 'Registrar Banco' }}</h5>
+        <form [formGroup]="form" (ngSubmit)="registrar()">
+          <div class="form-grid">
+            <!-- Columna 1 -->
+            <div class="form-column">
+              <div class="form-field">
+                  <label for="nombre">Nombre del Banco</label>
+                  <input id="nombre" formControlName="nombre" placeholder="Ingrese el nombre del banco" />
+                  <span class="error-message" *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">
+                    Este campo es requerido.
+                  </span>
+                  <span class="error-message" *ngIf="form.get('nombre')?.hasError('pattern') && form.get('nombre')?.touched">
+                    Solo se permiten letras y espacios.
+                  </span>
+              </div>          
+      
+              <div class="form-field">
+                <label for="balance">Balance</label>
+                <input id="balance" type="number" formControlName="balance" placeholder="Ingrese el balance" />
+                <span class="error-message" *ngIf="form.get('balance')?.hasError('required') && form.get('balance')?.touched">
+                  Este campo es requerido.
+                </span>
+                <span class="error-message" *ngIf="form.get('balance')?.hasError('valorNoValido') && form.get('balance')?.touched">
+                  El valor debe ser un número positivo.
+                </span>
+              </div>
 
-          <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid"  routerLink="/banco/listar_banco_usuario" (click)="registrar()">
-            {{ edicion ? 'Actualizar' : 'Registrar' }}
-          </button>
+              <div class="form-field">
+                <label for="tasaNomninal">Tasa Nominal</label>
+                <input id="tasaNomninal" type="number" formControlName="tasaNomninal" placeholder="Ingrese la tasa nominal" />
+                <span class="error-message" *ngIf="form.get('tasaNomninal')?.hasError('required') && form.get('tasaNomninal')?.touched">
+                  Este campo es requerido.
+                </span>
+                <span class="error-message" *ngIf="form.get('tasaNomninal')?.hasError('valorNoValido') && form.get('tasaNomninal')?.touched">
+                  El valor debe ser un número positivo.
+                </span>
+              </div>
+              
+              <div class="form-field">
+                <label for="tasaEfectiva">Tasa Efectiva</label>
+                <input id="tasaEfectiva" type="number" formControlName="tasaEfectiva" placeholder="Ingrese la tasa efectiva" />
+                <span class="error-message" *ngIf="form.get('tasaEfectiva')?.hasError('required') && form.get('tasaEfectiva')?.touched">
+                  Este campo es requerido.
+                </span>
+                <span class="error-message" *ngIf="form.get('tasaEfectiva')?.hasError('valorNoValido') && form.get('tasaEfectiva')?.touched">
+                  El valor debe ser un número positivo.
+                </span>
+              </div>
 
-        <button
-          mat-raised-button
-          color="warn"
-          type="button"
-          (click)="confirmCancel()"
-        >
-          Cancelar
-        </button>
-      </div>
-  
-      <div *ngIf="mensaje" class="error-message">
-        {{ mensaje }}
-      </div>
-    </form>
+              <div class="form-field">
+                <label for="creationDate">Fecha de Creación</label>
+                <input
+                  id="creationDate"
+                  type="date"
+                  formControlName="creationDate"
+                  placeholder="Seleccionar fecha"
+                />
+                <span class="error-message" *ngIf="form.get('creationDate')?.hasError('required') && form.get('creationDate')?.touched">
+                  Este campo es requerido.
+                </span>
+              </div>
+
+              <div class="form-field">
+                <label for="comisionExtra">Comisión Extra</label>
+                <input id="comisionExtra" type="number" formControlName="comisionExtra" placeholder="Ingrese la comisión extra" />
+                <span class="error-message" *ngIf="form.get('comisionExtra')?.hasError('required') && form.get('comisionExtra')?.touched">
+                  Este campo es requerido.
+                </span>
+                <span class="error-message" *ngIf="form.get('comisionExtra')?.hasError('valorNoValido') && form.get('comisionExtra')?.touched">
+                  El valor debe ser un número positivo.
+                </span>
+              </div>  
+              
+              <div class="form-field image-column">
+                <label for="imageUrl">Seleccionar Imagen:</label>
+                <input
+                  id="imageUrl"
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileSelected($event)"
+                />
+                <img
+                  [src]="getImagenUrl()"
+                  alt="Imagen del Banco"
+                  (error)="imagenNoCargada($event)"
+                />
+              </div>
+            </div>
+      
+            <!-- Columna 3 (Imagen) -->
+          
+          </div>
+      
+          <div class="actions">
+
+              <button mat-raised-button class="btn-primary" type="submit"  [disabled]="form.invalid"  routerLink="/banco/listar_banco_usuario" (click)="registrar()">
+                {{ edicion ? 'Actualizar' : 'Registrar' }}
+              </button>
+
+            <button mat-raised-button class="btn-cancel"
+              type="button"
+              (click)="confirmCancel()"
+            >
+              Cancelar
+            </button>
+          </div>
+      
+          <div *ngIf="mensaje" class="error-message">
+            {{ mensaje }}
+          </div>
+        </form>
+    </div>   
   </div>
+  
   
 </body>
 </html>

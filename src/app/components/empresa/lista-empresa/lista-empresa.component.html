@@ -6,32 +6,31 @@
     <title>Document</title>
 </head>
 <body>
-    
     <div class="content-container">
 
       <div *ngIf="username">
         Bienvenido, {{ username }}!
       </div>
 
-
-
-        <h2 class="card-title">Listado de Empresas</h2>
+      <div class="container-title">
+        <h4 class="card-title">Empresas registradas</h4>
         <div class="filter-container">
-          <mat-form-field appearance="outline">
-            <mat-label>Buscar</mat-label>
-            <input matInput (keyup)="filter($event)" placeholder="Filtrar por cualquier campo" />
-          </mat-form-field>
         </div>
+        <div class="container-search">
+            <input (keyup)="filter($event)" placeholder="Buscar" />
+            <mat-icon class="icon-search">search</mat-icon>
+          </div>
+      </div>
       
         <div *ngIf="filteredDataSource.length === 0" class="no-data">
           <p>No hay empresas registradas con ese criterio. ¿Deseas registrar una?</p>
-          <button mat-raised-button color="primary" [routerLink]="['/empresa/registrar_empresa']">Registrar Empresa</button>
+          <button class="btn-secundary" [routerLink]="['/empresa/registrar_empresa']">Registrar Empresa</button>
         </div>
       
         <div *ngIf="filteredDataSource.length > 0" class="card-container">
-          <mat-card *ngFor="let empresa of filteredDataSource" class="empresa-card">
+          <mat-card *ngFor="let empresa of filteredDataSource; let i = index" class="empresa-card">
             <mat-card-header>
-              <img mat-card-avatar src="https://via.placeholder.com/150" alt="Company Logo">
+              <img mat-card-avatar [src]="getAvatar(i)" alt="Company Logo">
               <mat-card-title>{{ empresa.nombre }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
@@ -40,13 +39,10 @@
               <p><strong>Tipo:</strong> {{ empresa.tipo }}</p>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-button color="primary" (click)="openDialog(empresa.idEmpresa)">Ver Información</button>
+              <button mat-button class="btn-primary" (click)="openDialog(empresa.idEmpresa)">Ver Información</button>
             </mat-card-actions>
-          </mat-card>
+          </mat-card>          
         </div>
-      </div>
-      
-      
-      
+    </div>  
 </body>
 </html>

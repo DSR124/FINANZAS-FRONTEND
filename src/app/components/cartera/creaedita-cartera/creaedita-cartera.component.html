@@ -6,60 +6,67 @@
   <title>Registrar Cartera</title>
 </head>
 <body>
-  <div class="form-container">
-    <h2>{{ edicion ? 'Editar Cartera' : 'Registrar Cartera' }}</h2>
-  
-    <form [formGroup]="form" class="cartera-form-container" (ngSubmit)="registrar()">
-      <div class="form-row">
-        
+  <div class="content-container">
+    <div class="form-container">
+      <h5>{{ edicion ? 'Editar Cartera' : 'Nueva Cartera' }}</h5>
+    
+      <form [formGroup]="form" class="cartera-form-container" (ngSubmit)="registrar()">
+        <div class="form-row">
+          
         <!-- Nombre -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
-        </mat-form-field>
+          <div class="form-column">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" formControlName="nombre"/>
+            <span class="error-message" *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">
+              El nombre de la cartera es obligatorio.
+            </span>
+          </div>
+
         <!-- Fecha de Descuento -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Fecha de Descuento</mat-label>
-          <input matInput formControlName="fechaDescuento" [matDatepicker]="picker1" />
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
+          <div class="form-column">
+            <label for="fechaDescuento">Fecha de Descuento</label>
+            <input id="fechaDescuento" type="date" formControlName="fechaDescuento" />
+          </div>
 
+        </div>
 
-      </div>
+        <div class="form-row">
+          <!-- Empresa -->
+          <div class="form-column">
+            <label for="empresa">Empresa</label>
+            <select id="empresa" formControlName="empresa">
+              <option *ngFor="let empresa of listaEmpresas" [value]="empresa.idEmpresa">
+                {{ empresa.nombre }}
+              </option>
+            </select>
+            <span class="error-message" *ngIf="form.get('empresa')?.hasError('required') && form.get('empresa')?.touched">
+              La empresa es obligatorio.
+            </span>
+          </div>
 
-      <div class="form-row">
-        <!-- Empresa -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Empresa</mat-label>
-          <mat-select formControlName="empresa">
-            <mat-option *ngFor="let empresa of listaEmpresas" [value]="empresa.idEmpresa">
-              {{ empresa.nombre }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <!-- Moneda -->
+          <div class="form-column">
+            <label for="moneda">Moneda</label>
+            <select id="moneda" formControlName="moneda">
+              <option *ngFor="let moneda of monedas" [value]="moneda.value">
+                {{ moneda.viewValue }}
+              </option>
+            </select>
+            <div class="error-message" *ngIf="obtenerControlCampo('moneda').hasError('required') && form.get('moneda')?.touched">
+              La moneda es obligatoria.
+            </div>
+          </div>
 
-        <!-- Moneda -->
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Moneda</mat-label>
-          <mat-select formControlName="moneda">
-            <mat-option *ngFor="let moneda of monedas" [value]="moneda.value">
-              {{ moneda.viewValue }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="obtenerControlCampo('moneda').hasError('required')">
-            La moneda es obligatoria.
-          </mat-error>
-        </mat-form-field>
-      </div>
+        </div>
 
-      <div class="button-container">
-        <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid"  routerLink="/cartera/listar_cartera_usuario" (click)="registrar()">
-          {{ edicion ? 'Actualizar' : 'Registrar' }}
-        </button>
-        <button mat-button color="warn" type="button">Cancelar</button>
-      </div>
-    </form>
+        <div class="button-container">
+          <button mat-raised-button class="btn-primary" type="submit"  [disabled]="form.invalid"  routerLink="/cartera/listar_cartera_usuario" (click)="registrar()">
+            {{ edicion ? 'Actualizar' : 'Registrar' }}
+          </button>
+          <button mat-button class="btn-cancel" type="button" routerLink="/cartera/listar_cartera_usuario">Cancelar</button>
+        </div>
+      </form>
+    </div> 
   </div>
 </body>
 </html>

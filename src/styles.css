@@ -1,22 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 :root {
-    --green: #72ffc3;
+    --green: #4BFFB3;
     --gray: #3d3d3d;
     --font-color: #333;
     --font-size: 16px;
 }
+
+/* Reset general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
 
 html, body { height: 100%; }
 body { margin: 0;}
 mat-sidenav-content{
     padding: 0 !important;
 }
-.mat-body, .mat-body-2, .mat-typography .mat-body, .mat-typography .mat-body-2, .mat-typography{
+
+
+.mat-body, .mat-body-2, .mat-typography .mat-body, .mat-typography .mat-body-2, .mat-typography input{
     font-family: "Poppins", sans-serif; 
 }
 
-h1, h2, h3, h4, h5, p , a, li{
+h1, h2, h3, h4, h5, p , a, li, button, label, input, select, th, td{
     font-family: "Poppins", sans-serif !important; 
 }
 
@@ -31,6 +55,19 @@ h1, h2, h3, h4, h5, p , a, li{
     line-height: 50px;
     font-weight: 700;
 }
+.mat-typography h3{
+    font-size: 22px;
+    line-height: 35px;
+    font-weight: 400;
+    color: var(--green)
+}
+
+.mat-typography h5{
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    text-align: left;
+}
 @media only screen and (max-width: 767px){
     .mat-typography h1{
         font-size: 38px;
@@ -44,4 +81,252 @@ h1, h2, h3, h4, h5, p , a, li{
 }
 .mat-typography button{
     cursor: pointer;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+.navbar .container{
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar .nav-links button {
+    background-color: var(--green);
+    color: #000;
+    border: 1px solid;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 12px 24px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.navbar .nav-links button:first-child {
+    background-color: transparent;
+    color: #fff;
+    border: none
+ }
+
+.navbar .nav-links button:nth-child(2) {
+   background-color: transparent;
+   border-color: var(--green);
+   color: var(--green)
+}
+
+
+
+/* Butons*/
+body .btn-primary{
+    background-color: var(--green) !important;
+    font-size: 15px;
+    width: 100%;
+    border-radius: 10px;
+    letter-spacing: 0;
+    min-height: 45px;
+    cursor: pointer;
+}
+body .btn-primary .mdc-button__label{
+    color: var(--gray);
+}
+.empresa-card  .btn-primary .mdc-button__label{
+    color:  #4BFFB3 !important;
+  }
+  
+body .btn-cancel{
+    background-color: rgb(233, 65, 65) !important;
+    border:none;
+    min-height: 45px;
+    max-width: 120px;
+    margin: 0 auto;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+body .btn-cancel .mdc-button__label{
+    color: #fff !important;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+body .btn-secundary{
+    background: #306F55;
+    border-radius: 12px;
+    font-size: 15px;
+    min-height: 48px;
+    border: none;
+    color: #4BFFB3;
+    padding: 10px 35px;
+
+}
+
+/* Side Bar*/
+body .sidenav{
+    background-color: #222222;
+    width: 250px;
+    color: #808080;
+    border-right: 1px solid #e0e0e0;
+}
+.sidenav .mat-expansion-panel-header-title{
+    color: #808080
+}
+.sidenav .mdc-list{
+    padding-top: 35px;
+}
+.mat-sidenav-content body{
+    background-color: #d9e7ef;
+}
+.sidenav .mat-expansion-panel-header-title{
+    font-family: "Poppins", sans-serif !important; 
+}
+.sidenav .active-ancestor .mat-expansion-panel-header .mat-expansion-panel-header-title,
+.sidenav .active-ancestor .mat-icon,
+.sidenav .active .mat-mdc-list-item-unscoped-content  {
+    color: var(--green) !important;
+    font-weight: 300;
+}
+
+.sidenav .mat-mdc-list-item .mat-mdc-list-item-unscoped-content  {
+    font-size: 13px;
+    text-transform: none;
+    color: #fff;
+}
+.sidenav .mat-mdc-nav-list .mat-mdc-list-item {
+    height: 30px;
+    cursor: pointer;
+}
+.sidenav .mat-mdc-list-item:hover, .sidenav .mat-mdc-list-item:focus{
+    background-color: #222222 !important;
+}
+
+.sidenav .mat-mdc-list-item:hover .mat-mdc-list-item-unscoped-content{
+    color:var(--green) !important;
+}
+
+
+/* Side Contet*/
+.mat-sidenav-content .formulario,
+.mat-sidenav-content .form-container{
+    background-color: #3d3d3d !important;
+    border-radius: 15px;
+    padding: 40px 25px;
+    max-width: 600px;
+}
+.mat-sidenav-content body{
+    /*padding: 50px 30px;*/
+}
+.content-container{
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 50px 30px;
+}
+
+
+
+/*Form content */
+.mat-sidenav-content input,  .mat-sidenav-content select{
+    background-color: #545454;
+    padding: 10px 8px;
+    font-size: 13px;
+    border: none;
+    display: block;
+    border-radius: 5px;
+    width: 100%;
+    color: #fff;
+}
+.mat-sidenav-content label{
+    display: block;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 300;
+}
+.mat-sidenav-content .error-message{
+    font-size: 11px;
+    color: rgb(222, 56, 56);
+    font-weight: 500;
+}
+
+.mat-sidenav-content h5{
+    margin-bottom: 35px;
+}
+
+
+
+
+/*Search content*/
+.container-title{
+    background-color: var(--gray);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    max-width: 970px;
+}
+  .card-title{
+    color: var(--green);
+    margin-bottom: 0 !important;
+    text-transform: uppercase;
+  }
+
+  .container-search{
+    margin-left: 20px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+  }
+.icon-search{
+    position: absolute;
+    color: #fff;
+    right: 10px;
+    top: 10px;
+}
+
+
+
+/* Table*/
+.mat-elevation-z8{
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--gray);
+    max-width: 970px;
+}
+.mat-elevation-z8{
+    overflow-x: scroll;
+}
+.table-info .mdc-data-table__cell, .table-info .mdc-data-table__header-cell, .mat-mdc-paginator{
+    background-color: var(--gray) !important;
+    color: #fff !important;
+    font-size: 12px;
+}
+.mat-mdc-paginator{
+    margin-top: 20px;
+}
+.table-info .mdc-data-table__header-cell{
+    border-color: var(--green) !important;
+}
+.mat-mdc-paginator-range-actions .mat-mdc-paginator-icon{
+    fill: var(--green) !important;
 }

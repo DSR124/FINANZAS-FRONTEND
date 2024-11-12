@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogActions, MatDialogClose, MatDialogContent } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
 
 
 
@@ -65,6 +66,7 @@ export class CreaeditaEmpresaComponent implements OnInit {
     private uS: UsuarioService,
     private formBuilder: FormBuilder,
     public route: ActivatedRoute,
+    private router: Router,
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -125,6 +127,7 @@ export class CreaeditaEmpresaComponent implements OnInit {
         });
         alert('El registro se hizo correctamente');
         this.ngOnInit();
+        this.router.navigate(['/empresa/listar_empresa']);
 
       }
     } else {

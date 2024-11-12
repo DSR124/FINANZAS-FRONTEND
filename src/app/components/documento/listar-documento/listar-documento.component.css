@@ -4,33 +4,8 @@ body {
   height: 100vh;
 }
 /* Main container for styling the table and search area */
-.content-container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
   
-  .table-title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #3f51b5;
-    margin-bottom: 20px;
-  }
-  
-  .filter-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
-  }
-  
-  .table-wrapper {
-    overflow-x: auto;
-    margin-top: 15px;
-  }
+
   
   .custom-table th.mat-header-cell {
     background-color: #3f51b5;
@@ -44,13 +19,6 @@ body {
     color: #333;
   }
   
-  .custom-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .mat-elevation-z8 {
-    border-radius: 8px;
-  }
   
   mat-paginator {
     margin-top: 10px;
