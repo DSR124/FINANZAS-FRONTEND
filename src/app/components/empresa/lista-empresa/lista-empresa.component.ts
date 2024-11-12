@@ -59,14 +59,11 @@ export class ListaEmpresaComponent implements OnInit {
     );
   }
 
-<<<<<<< Updated upstream
   // Método para obtener el avatar basado en el índice
   getAvatar(index: number): string {
     return `/assets/${this.avatars[index % this.avatars.length]}`;
   }
 
-=======
->>>>>>> Stashed changes
   // Filtra la lista de empresas por varios campos
   filter(event: any) {
     this.filterValue = event.target.value.trim().toLowerCase();

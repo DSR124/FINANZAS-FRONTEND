@@ -12,77 +12,67 @@
     
       <form [formGroup]="form" class="cartera-form-container" (ngSubmit)="registrar()">
         <div class="form-row">
-          
-        <!-- Nombre -->
-<<<<<<< Updated upstream
-          <div class="form-column">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" formControlName="nombre"/>
-            <span class="error-message" *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">
-              El nombre de la cartera es obligatorio.
-            </span>
-          </div>
 
-        <!-- Fecha de Descuento -->
-          <div class="form-column">
-            <label for="fechaDescuento">Fecha de Descuento</label>
-            <input id="fechaDescuento" type="date" formControlName="fechaDescuento" />
-          </div>
-=======
-        <mat-form-field appearance="outline" class="form-column">
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
-        </mat-form-field>
-        <mat-form-field class="form-field">
-          <mat-label>Fecha de Descuento</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fechaDescuento" />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="form.get('fechaDescuento')?.hasError('required')">
-            La fecha de descuento es obligatoria.
-          </mat-error>
-          <mat-error *ngIf="form.get('fechaDescuento')?.hasError('fechaDescuentoInvalida')">
-            La fecha de descuento no puede ser anterior a la fecha actual.
-          </mat-error>
-        </mat-form-field>
->>>>>>> Stashed changes
+          <!-- Nombre -->
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
+            <mat-error *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">
+              El nombre de la cartera es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Fecha de Descuento -->
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Fecha de Descuento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaDescuento" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="form.get('fechaDescuento')?.hasError('required')">
+              La fecha de descuento es obligatoria.
+            </mat-error>
+            <mat-error *ngIf="form.get('fechaDescuento')?.hasError('fechaDescuentoInvalida')">
+              La fecha de descuento no puede ser anterior a la fecha actual.
+            </mat-error>
+          </mat-form-field>
 
         </div>
 
         <div class="form-row">
           <!-- Empresa -->
-          <div class="form-column">
-            <label for="empresa">Empresa</label>
-            <select id="empresa" formControlName="empresa">
-              <option *ngFor="let empresa of listaEmpresas" [value]="empresa.idEmpresa">
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Empresa</mat-label>
+            <mat-select formControlName="empresa">
+              <mat-option *ngFor="let empresa of listaEmpresas" [value]="empresa.idEmpresa">
                 {{ empresa.nombre }}
-              </option>
-            </select>
-            <span class="error-message" *ngIf="form.get('empresa')?.hasError('required') && form.get('empresa')?.touched">
-              La empresa es obligatorio.
-            </span>
-          </div>
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('empresa')?.hasError('required') && form.get('empresa')?.touched">
+              La empresa es obligatoria.
+            </mat-error>
+          </mat-form-field>
 
           <!-- Moneda -->
-          <div class="form-column">
-            <label for="moneda">Moneda</label>
-            <select id="moneda" formControlName="moneda">
-              <option *ngFor="let moneda of monedas" [value]="moneda.value">
+          <mat-form-field appearance="outline" class="form-column">
+            <mat-label>Moneda</mat-label>
+            <mat-select formControlName="moneda">
+              <mat-option *ngFor="let moneda of monedas" [value]="moneda.value">
                 {{ moneda.viewValue }}
-              </option>
-            </select>
-            <div class="error-message" *ngIf="obtenerControlCampo('moneda').hasError('required') && form.get('moneda')?.touched">
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('moneda')?.hasError('required') && form.get('moneda')?.touched">
               La moneda es obligatoria.
-            </div>
-          </div>
-
+            </mat-error>
+          </mat-form-field>
         </div>
 
         <div class="button-container">
-          <button mat-raised-button class="btn-primary" type="submit"  [disabled]="form.invalid"  routerLink="/cartera/listar_cartera_usuario" (click)="registrar()">
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
             {{ edicion ? 'Actualizar' : 'Registrar' }}
           </button>
-          <button mat-button class="btn-cancel" type="button" routerLink="/cartera/listar_cartera_usuario">Cancelar</button>
+          <button mat-button color="warn" type="button" routerLink="/cartera/listar_cartera_usuario">
+            Cancelar
+          </button>
         </div>
       </form>
     </div> 

@@ -63,13 +63,10 @@ export class CreaeditaEmpresaComponent implements OnInit {
     private eS: EmpresaService,
     private uS: UsuarioService,
     private formBuilder: FormBuilder,
-<<<<<<< Updated upstream
     public route: ActivatedRoute,
     private router: Router,
-=======
-    private route: ActivatedRoute,
+
     private loginService: LoginService // Agregamos el LoginService
->>>>>>> Stashed changes
   ) {}
 
   ngOnInit(): void {
@@ -142,11 +139,8 @@ export class CreaeditaEmpresaComponent implements OnInit {
         });
         alert('El registro se hizo correctamente');
         this.ngOnInit();
-<<<<<<< Updated upstream
         this.router.navigate(['/empresa/listar_empresa']);
 
-=======
->>>>>>> Stashed changes
       }
     } else {
       this.mensaje = '¡Complete todos los campos!';
