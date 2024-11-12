@@ -18,6 +18,7 @@ export class CarteraService {
 
   constructor(private http: HttpClient) {}
 
+  // Listar todas las carteras
   list(): Observable<Cartera[]> {
     return this.http.get<Cartera[]>(`${this.url}/Listar`).pipe(
       tap(data => this.setList(data)),
@@ -28,6 +29,7 @@ export class CarteraService {
     );
   }
 
+  // Insertar una nueva cartera
   insert(dt: Cartera): Observable<any> {
     return this.http.post(`${this.url}/Registrar`, dt).pipe(
       tap(() => this.refreshList()),
@@ -38,6 +40,7 @@ export class CarteraService {
     );
   }
 
+  // Eliminar una cartera por ID
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.url}/Eliminar/${id}`).pipe(
       tap(() => this.refreshList()),
@@ -48,6 +51,7 @@ export class CarteraService {
     );
   }
 
+  // Obtener una cartera por ID
   listId(id: number): Observable<Cartera> {
     return this.http.get<Cartera>(`${this.url}/ListarporID/${id}`).pipe(
       catchError(error => {
@@ -57,6 +61,7 @@ export class CarteraService {
     );
   }
 
+  // Actualizar una cartera
   update(cartera: Cartera): Observable<any> {
     return this.http.put(`${this.url}/Modificar/${cartera.idCartera}`, cartera).pipe(
       tap(() => this.refreshList()),
@@ -67,7 +72,7 @@ export class CarteraService {
     );
   }
 
-  // Nuevo método para obtener el resumen de la cartera
+  // Obtener el resumen de la cartera
   getCarteraSummary(): Observable<CarteraResumenUsuario[]> {
     return this.http.get<CarteraResumenUsuario[]>(`${this.url}/findAllCarteraWithDocumentCountAndTotalValue`).pipe(
       catchError(error => {
@@ -77,14 +82,27 @@ export class CarteraService {
     );
   }
 
+  // Nuevo método para obtener el resumen de la cartera por username
+  getCarteraSummaryByUsername(username: string): Observable<CarteraResumenUsuario[]> {
+    return this.http.get<CarteraResumenUsuario[]>(`${this.url}/findAllCarteraWithDocumentCountAndTotalValueByUsername/${username}`).pipe(
+      catchError(error => {
+        console.error('Error fetching cartera summary by username:', error);
+        throw error;
+      })
+    );
+  }
+
+  // Refrescar la lista de carteras
   private refreshList() {
     this.list().subscribe((data) => this.setList(data));
   }
 
+  // Configurar la nueva lista de carteras
   setList(listaNueva: Cartera[]): void {
     this.listaCambio.next(listaNueva);
   }
 
+  // Obtener la lista observable de carteras
   getList(): Observable<Cartera[]> {
     return this.listaCambio.asObservable();
   }

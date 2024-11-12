@@ -6,10 +6,10 @@ import { Subject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoginService } from './login.service';
 
-const base_url = environment.base; // Base database URL
+const base_url = environment.base; // Base URL for the API
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmpresaService {
   private url = `${base_url}/Empresa`;
@@ -17,15 +17,27 @@ export class EmpresaService {
 
   constructor(private http: HttpClient, private loginService: LoginService) {}
 
-
-
   // List all companies
   list(): Observable<Empresa[]> {
     return this.http.get<Empresa[]>(`${this.url}/Listar`).pipe(
-      tap(data => this.setList(data)),
-      catchError(error => {
+      tap((data) => this.setList(data)),
+      catchError((error) => {
         console.error('Error fetching companies list:', error);
         return throwError(() => new Error('Error fetching companies list'));
+      })
+    );
+  }
+
+  // List companies by username
+  listByUsername(): Observable<Empresa[]> {
+    const username = this.loginService.getUsername(); // Get username from LoginService
+    if (!username) {
+      throw new Error('Username not available');
+    }
+    return this.http.get<Empresa[]>(`${this.url}/ListarPorUsuario/${username}`).pipe(
+      catchError((error) => {
+        console.error('Error fetching companies by username:', error);
+        return throwError(() => new Error('Error fetching companies by username'));
       })
     );
   }
@@ -34,7 +46,7 @@ export class EmpresaService {
   insert(dt: Empresa): Observable<any> {
     return this.http.post(`${this.url}/Registrar`, dt).pipe(
       tap(() => this.list().subscribe()),
-      catchError(error => {
+      catchError((error) => {
         console.error('Error registering company:', error);
         return throwError(() => new Error('Error registering company'));
       })
@@ -44,7 +56,7 @@ export class EmpresaService {
   // Delete a company by ID
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.url}/Eliminar/${id}`).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error deleting company:', error);
         return throwError(() => new Error('Error deleting company'));
       })
@@ -54,7 +66,7 @@ export class EmpresaService {
   // Get a company by ID
   listId(id: number): Observable<Empresa> {
     return this.http.get<Empresa>(`${this.url}/ListarporID/${id}`).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error fetching company by ID:', error);
         return throwError(() => new Error('Error fetching company by ID'));
       })
@@ -64,7 +76,7 @@ export class EmpresaService {
   // Update a company
   update(empresa: Empresa): Observable<any> {
     return this.http.put(`${this.url}/Modificar/${empresa.idEmpresa}`, empresa).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error updating company:', error);
         return throwError(() => new Error('Error updating company'));
       })

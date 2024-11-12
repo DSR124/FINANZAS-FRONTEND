@@ -41,19 +41,24 @@ import { LoadingComponent } from './components/loading/loading.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'TF-FINANZAS-FRONT';
+   title = 'TF-FINANZAS-FRONT';
   role: string = '';
-  cantidadEnCarrito: number = 0
-  constructor(private loginService:LoginService,
-  ){}
-  ngOnInit(): void { 
-    const role = this.loginService.showRole();
-    console.log('Rol del usuario:', role);
+  username: string | null = ''; // Cambié el valor inicial a una cadena vacía
+  cantidadEnCarrito: number = 0;
 
+  constructor(private loginService: LoginService) {}
+
+  ngOnInit(): void { 
+    this.role = this.loginService.showRole() || '';
+    this.username = this.loginService.getUsername() || 'Usuario'; // Fallback por si no se obtiene
+    console.log('Rol del usuario:', this.role);
+    console.log('Nombre de usuario:', this.username); // Añadido para depurar
   }
-    verificar() {
+
+  verificar() {
     return this.loginService.verificar();
   }
+
   cerrar() {
     localStorage.clear();
   }

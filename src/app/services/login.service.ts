@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtRequest } from '../models/jwtRequest';
 
@@ -22,17 +22,33 @@ export class LoginService {
     return token != null;
   }
 
-  // Método para obtener el rol del usuario desde el token en localStorage
+  // Método para obtener el rol del usuario desde el token
   showRole() {
     let token = localStorage.getItem('token');
     if (!token) {
       return null;
     }
     const decodedToken = this.helper.decodeToken(token);
-    return decodedToken?.role;
+    return decodedToken?.role; // Asegúrate de que 'role' sea el nombre correcto
   }
 
-  // Método para guardar el token en localStorage después del inicio de sesión
+  // Método para obtener el nombre de usuario del token
+  getUsername(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = this.helper.decodeToken(token);
+      return payload.sub || null; // Asegúrate de que 'sub' sea el campo correcto
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return null;
+    }
+  }
+
+  // Método para guardar el token en localStorage
   setToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -42,18 +58,8 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-  // Método para eliminar el token de localStorage (ej. en logout)
+  // Método para eliminar el token de localStorage
   removeToken() {
     localStorage.removeItem('token');
-  }
-
-  // Método para obtener el nombre de usuario del token JWT
-  getUsername() {
-    let token = localStorage.getItem('token');
-    if (!token) {
-      return null;
-    }
-    const decodedToken = this.helper.decodeToken(token);
-    return decodedToken?.username; // Reemplaza 'username' por el nombre exacto del campo en tu token JWT
   }
 }

@@ -14,6 +14,7 @@
         <div class="form-row">
           
         <!-- Nombre -->
+<<<<<<< Updated upstream
           <div class="form-column">
             <label for="nombre">Nombre</label>
             <input id="nombre" type="text" formControlName="nombre"/>
@@ -27,6 +28,24 @@
             <label for="fechaDescuento">Fecha de Descuento</label>
             <input id="fechaDescuento" type="date" formControlName="fechaDescuento" />
           </div>
+=======
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" placeholder="Ingrese nombre de la cartera" />
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Fecha de Descuento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaDescuento" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('fechaDescuento')?.hasError('required')">
+            La fecha de descuento es obligatoria.
+          </mat-error>
+          <mat-error *ngIf="form.get('fechaDescuento')?.hasError('fechaDescuentoInvalida')">
+            La fecha de descuento no puede ser anterior a la fecha actual.
+          </mat-error>
+        </mat-form-field>
+>>>>>>> Stashed changes
 
         </div>
 

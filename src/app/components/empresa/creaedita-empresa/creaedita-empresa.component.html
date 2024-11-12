@@ -6,6 +6,7 @@
     <title>Registrar Empresa</title>
 </head>
 <body>
+<<<<<<< Updated upstream
 <div class="content-container">
   <div class="formulario">
       <div class="titulo">
@@ -89,5 +90,85 @@
 </div>
 
 
+=======
+    <div class="formulario">
+        <div class="titulo">
+            <h1>REGISTRAR EMPRESA</h1>
+        </div>
+        <form [formGroup]="form" class="empresa-form-container" (ngSubmit)="registrar()">
+            <div class="form-row">
+                <!-- Campo de Nombre -->
+                <mat-form-field class="form-field">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre" />
+                    <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+                        El nombre de la empresa es obligatorio.
+                    </mat-error>
+                    <mat-error *ngIf="form.get('nombre')?.hasError('pattern')">
+                        El nombre de la empresa solo puede contener letras y espacios.
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Campo de Tipo de Empresa -->
+                <mat-form-field class="form-field">
+                    <mat-label>Tipo de Empresa</mat-label>
+                    <mat-select formControlName="Tipo">
+                        <mat-option *ngFor="let t of tipoempresa" [value]="t.value">
+                            {{ t.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('Tipo')?.hasError('required')">
+                        El tipo de empresa es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <!-- Campo de RUC -->
+                <mat-form-field class="form-field">
+                    <mat-label>RUC</mat-label>
+                    <input matInput formControlName="Ruc" />
+                    <mat-error *ngIf="form.get('Ruc')?.hasError('required')">
+                        El RUC es obligatorio.
+                    </mat-error>
+                    <mat-error *ngIf="form.get('Ruc')?.hasError('precioNoValido')">
+                        El RUC no es válido.
+                    </mat-error>
+                </mat-form-field>
+
+            <!-- Campo de Usuario (Mostrando el username) -->
+<mat-form-field class="form-field">
+    <mat-label>Usuario</mat-label>
+    <input matInput formControlName="usuario"  />
+    <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+      El usuario es obligatorio.
+    </mat-error>
+  </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <!-- Campo de Dirección -->
+                <mat-form-field class="form-field">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput formControlName="Direccion" />
+                    <mat-error *ngIf="form.get('Direccion')?.hasError('required')">
+                        La dirección es obligatoria.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="button-container">
+                <!-- Botón de Registrar/Actualizar -->
+                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+                    {{ edicion ? 'Actualizar' : 'Registrar' }}
+                </button>
+                <!-- Botón de Cancelar -->
+                <button mat-raised-button class="btn2" routerLink="/empresa/listar_empresa">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+>>>>>>> Stashed changes
 </body>
 </html>

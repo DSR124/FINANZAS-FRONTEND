@@ -19,11 +19,9 @@ import { Router } from '@angular/router';
 
 function numeropositvo(control: FormControl) {
   const precio = control.value;
-
   if (isNaN(precio) || precio <= 0) {
     return { precioNoValido: true };
   }
-
   return null;
 }
 
@@ -48,99 +46,121 @@ function numeropositvo(control: FormControl) {
   styleUrl: './creaedita-empresa.component.css'
 })
 export class CreaeditaEmpresaComponent implements OnInit {
-  
   form: FormGroup = new FormGroup({});
   empresa: Empresa = new Empresa();
   mensaje: string = '';
-  listaUsuarios: Usuario[] = [];
-  id: number = 0;
+  usuarioActual: Usuario | null = null; // Usuario actual
+  idUsuarioActual: number | null = null; // ID del usuario actual
+  usernameActual: string = ''; // Username del usuario actual
   edicion: boolean = false;
-  role: string = '';
 
   tipoempresa: { value: string; viewValue: string }[] = [
     { value: 'PYME', viewValue: 'Pyme' },
     { value: 'Mediana', viewValue: 'Mediana' },
   ];
+
   constructor(
     private eS: EmpresaService,
     private uS: UsuarioService,
     private formBuilder: FormBuilder,
+<<<<<<< Updated upstream
     public route: ActivatedRoute,
     private router: Router,
+=======
+    private route: ActivatedRoute,
+    private loginService: LoginService // Agregamos el LoginService
+>>>>>>> Stashed changes
   ) {}
+
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
-      this.id = data['id'];
       this.edicion = data['id'] != null;
       this.init();
     });
+
+    // Inicializa el formulario
     this.form = this.formBuilder.group({
-      nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/)]],
-      Tipo:['',Validators.required],
+      nombre: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/)],
+      ],
+      Tipo: ['', Validators.required],
       Ruc: ['', [Validators.required, numeropositvo]],
-      Direccion:['',Validators.required],
-      usuario:['',Validators.required],
-    });
-    this.uS.list().subscribe((data) => {
-      this.listaUsuarios = data;
+      Direccion: ['', Validators.required],
+      usuario: [{ value: '', disabled: true }, Validators.required], // Campo deshabilitado
     });
 
-    
+    // Obtén el username del usuario actual desde el token
+    const username = this.loginService.getUsername();
+    if (username) {
+      this.usernameActual = username; // Almacena el username
+      // Busca el usuario por username
+      this.uS.buscarPorUsername(username).subscribe((usuario) => {
+        this.usuarioActual = usuario;
+        this.idUsuarioActual = usuario.idUsuario; // Almacena el ID del usuario
+        // Muestra el username en el formulario
+        this.form.patchValue({ usuario: this.usernameActual });
+      });
+    }
   }
 
   init() {
     if (this.edicion) {
-      this.eS.listId(this.id).subscribe((data) => {
+      this.eS.listId(this.idUsuarioActual!).subscribe((data) => {
         this.form.patchValue({
-          idEmpresa: data.idEmpresa,
           nombre: data.nombre,
           Tipo: data.tipo,
           Ruc: data.ruc,
           Direccion: data.direccion,
-          usuario: data.usuario.idUsuario
+          usuario: this.usernameActual,
         });
       });
     }
   }
+
   registrar() {
-    if (this.form.valid) {
-      this.empresa.idEmpresa=this.id
-      this.empresa.nombre=this.form.value.nombre
-      this.empresa.tipo=this.form.value.Tipo
-      this.empresa.ruc=this.form.value.Ruc
-      this.empresa.direccion=this.form.value.Direccion
-      this.empresa.usuario.idUsuario=this.form.value.usuario
-      
-      this.empresa.usuario.idUsuario = this.form.value.usuario;
+    if (this.form.valid && this.idUsuarioActual) {
+      // Asigna los valores del formulario a la empresa
+      this.empresa.nombre = this.form.value.nombre;
+      this.empresa.tipo = this.form.value.Tipo;
+      this.empresa.ruc = this.form.value.Ruc;
+      this.empresa.direccion = this.form.value.Direccion;
+      this.empresa.usuario = { idUsuario: this.idUsuarioActual } as Usuario; // Asocia el usuario por ID
+
       if (this.edicion) {
         this.eS.update(this.empresa).subscribe(() => {
           this.eS.list().subscribe((data) => {
             this.eS.setList(data);
           });
         });
-        alert('La modificacion se hizo correctamente');
+        alert('La modificación se hizo correctamente');
       } else {
-        this.eS.insert(this.empresa).subscribe((data) => {
+        this.eS.insert(this.empresa).subscribe(() => {
           this.eS.list().subscribe((data) => {
             this.eS.setList(data);
           });
         });
         alert('El registro se hizo correctamente');
         this.ngOnInit();
+<<<<<<< Updated upstream
         this.router.navigate(['/empresa/listar_empresa']);
 
+=======
+>>>>>>> Stashed changes
       }
     } else {
-      this.mensaje = 'Complete todos los campos!!!';
+      this.mensaje = '¡Complete todos los campos!';
     }
   }
+
   confirmCancel() {
-    const confirmed = window.confirm('¿Estás seguro de que quieres cancelar?');
+    const confirmed = window.confirm(
+      '¿Estás seguro de que quieres cancelar?'
+    );
     if (confirmed) {
-
-
+      // Lógica para cancelar
     }
-}
+  }
 
   obtenerControlCampo(nombreCampo: string): AbstractControl {
     const control = this.form.get(nombreCampo);

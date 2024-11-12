@@ -21,6 +21,7 @@ import { DocumentoService } from '../../../services/documento.service';
 import { DocumentoByCartera } from '../../../models/DocumentobyCartera';
 import { MatDialog } from '@angular/material/dialog';
 import { ListarDocumentoUsuarioComponent } from '../../documento/listar-documento-usuario/listar-documento-usuario.component';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-listar-cartera-usuario',
@@ -40,9 +41,7 @@ import { ListarDocumentoUsuarioComponent } from '../../documento/listar-document
 })
 export class ListarCarteraUsuarioComponent  implements OnInit{
   selectedCartera: CarteraResumenUsuario | null = null;
-  selectedCarteraDetails: CarteraResumenUsuario | null = null;
   documentos: DocumentoByCartera[] = [];
-
   displayedColumns: string[] = [
     'idCartera',
     'nombreCartera',
@@ -53,26 +52,41 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
     'moneda',
     'cantidadDocumentos',
     'montoTotalCartera',
-    'verDocumentos' 
+    'verDocumentos'
   ];
   dataSource = new MatTableDataSource<CarteraResumenUsuario>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private carteraService: CarteraService , private documentoService: DocumentoService , private dialog: MatDialog) {}
+  constructor(
+    private carteraService: CarteraService,
+    private documentoService: DocumentoService,
+    private dialog: MatDialog,
+    private loginService: LoginService // Inyectamos el LoginService
+  ) {}
 
   ngOnInit(): void {
-    this.carteraService.getCarteraSummary().subscribe(data => {
-      this.dataSource.data = data;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    const username = this.loginService.getUsername(); // Obtener el username del usuario autenticado
+
+    if (username) {
+      // Usamos el nuevo método para obtener las carteras por username
+      this.carteraService.getCarteraSummaryByUsername(username).subscribe(
+        (data) => {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        (error) => {
+          console.error('Error fetching cartera summary by username:', error);
+        }
+      );
+    } else {
+      console.error('Username is not available');
+    }
   }
-  selectCartera(cartera: CarteraResumenUsuario) {
-    this.selectedCartera = cartera;
-  }
-  applyFilter(event: Event) {
+
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -80,18 +94,22 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
       this.dataSource.paginator.firstPage();
     }
   }
+
   verDocumentosPorCartera(idCartera: number): void {
-    this.documentoService.listByCarteraId(idCartera).subscribe((documentos: DocumentoByCartera[]) => {
-      this.dialog.open(ListarDocumentoUsuarioComponent, {
-        data: documentos,
-        width: '1500px'
-      });
-    }, error => {
-      console.error('Error fetching documents by cartera ID:', error);
-    });
+    this.documentoService.listByCarteraId(idCartera).subscribe(
+      (documentos: DocumentoByCartera[]) => {
+        this.dialog.open(ListarDocumentoUsuarioComponent, {
+          data: documentos,
+          width: '1500px'
+        });
+      },
+      (error) => {
+        console.error('Error fetching documents by cartera ID:', error);
+      }
+    );
   }
-  
-  exportToPDF() {
+
+  exportToPDF(): void {
     if (!this.selectedCartera) {
       console.error('No Cartera selected');
       return;
@@ -100,64 +118,51 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
     const doc = new jsPDF('p', 'mm', 'a4');
     let currentY = 20;
 
-    // Set up header
+    // Header
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text('Reporte de Cartera', 105, currentY, { align: 'center' });
     currentY += 10;
 
-    // Add a separator line
     doc.setLineWidth(0.5);
     doc.line(15, currentY, 195, currentY);
     currentY += 10;
 
-    // Cartera Details - Styled as a professional report
+    // Cartera Details
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(80); // Dark gray text
+    doc.setTextColor(80);
 
-    // Using a two-column layout for details
-    doc.text('ID Cartera:', 20, currentY);
-    doc.text(`${this.selectedCartera.idCartera}`, 70, currentY);
+    const details = [
+      { label: 'ID Cartera:', value: this.selectedCartera.idCartera },
+      { label: 'Nombre:', value: this.selectedCartera.nombreCartera },
+      { label: 'Empresa:', value: this.selectedCartera.nombreEmpresa },
+      { label: 'TCEA:', value: `${this.selectedCartera.tcea}%` },
+      { label: 'Moneda:', value: this.selectedCartera.moneda },
+      { label: 'Cantidad de Documentos:', value: this.selectedCartera.cantidadDocumentos },
+      { label: 'Monto Total de la Cartera:', value: this.selectedCartera.montoTotalCartera?.toFixed(2) || '0.00' }
+    ];
 
-    doc.text('Nombre:', 20, currentY + 7);
-    doc.text(`${this.selectedCartera.nombreCartera}`, 70, currentY + 7);
+    details.forEach((detail, index) => {
+      doc.text(detail.label, 20, currentY + index * 7);
+      doc.text(`${detail.value}`, 70, currentY + index * 7);
+    });
 
-    doc.text('Empresa:', 20, currentY + 14);
-    doc.text(`${this.selectedCartera.nombreEmpresa}`, 70, currentY + 14);
-
-    doc.text('TCEA:', 20, currentY + 21);
-    doc.text(`${this.selectedCartera.tcea}%`, 70, currentY + 21);
-
-    doc.text('Moneda:', 20, currentY + 28);
-    doc.text(`${this.selectedCartera.moneda}`, 70, currentY + 28);
-
-    doc.text('Cantidad de Documentos:', 20, currentY + 35);
-    doc.text(`${this.selectedCartera.cantidadDocumentos}`, 70, currentY + 35);
-
-    doc.text('Monto Total de la Cartera:', 20, currentY + 42);
-    doc.text(`${this.selectedCartera.montoTotalCartera?.toFixed(2) || '0.00'}`, 70, currentY + 42);
     currentY += 50;
-
-    // Add another separator line
     doc.setLineWidth(0.5);
     doc.line(15, currentY, 195, currentY);
     currentY += 10;
 
-    // Section Header for Documents
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0); // Black text
+    doc.setTextColor(0);
     doc.text('Documentos Asociados', 105, currentY, { align: 'center' });
     currentY += 10;
 
-    // Fetch documents for the selected cartera
     if (this.selectedCartera.idCartera != null) {
       this.documentoService.listByCarteraId(this.selectedCartera.idCartera).subscribe(
         (documentos: DocumentoByCartera[]) => {
           this.documentos = documentos;
-
-          // Prepare document data for the table
           const documentosTableData = this.documentos.map(doc => [
             doc.idDocumento,
             new Date(doc.fechaEmision).toLocaleDateString(),
@@ -167,32 +172,23 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
             doc.estado
           ]);
 
-          // Add the table to the PDF
           autoTable(doc, {
             head: [['ID Documento', 'Fecha Emisión', 'Fecha Vencimiento', 'Valor', 'Cliente', 'Estado']],
             body: documentosTableData,
             startY: currentY,
-            theme: 'striped', // Use a striped theme for a clean look
+            theme: 'striped',
             styles: { fontSize: 9, cellPadding: 3 },
-            headStyles: { fillColor: [41, 128, 185], textColor: 255 }, // Blue header with white text
-            alternateRowStyles: { fillColor: [245, 245, 245] }, // Light gray rows
+            headStyles: { fillColor: [41, 128, 185], textColor: 255 },
+            alternateRowStyles: { fillColor: [245, 245, 245] },
             margin: { left: 15, right: 15 },
           });
 
-          // Calculate total amount
-          const montoTotal = this.documentos.reduce(
-            (total, doc) => total + doc.valorDocumento,
-            0
-          );
-
-          // Add the total amount below the table
+          const montoTotal = this.documentos.reduce((total, doc) => total + doc.valorDocumento, 0);
           const finalY = (doc as any).autoTable.previous.finalY || currentY;
           doc.setFontSize(11);
           doc.setFont('helvetica', 'bold');
-          doc.setTextColor(0); // Black text
           doc.text(`Monto Total de Documentos: ${montoTotal.toFixed(2)}`, 15, finalY + 10);
 
-          // Save the PDF
           doc.save('Reporte_Cartera.pdf');
         },
         error => {

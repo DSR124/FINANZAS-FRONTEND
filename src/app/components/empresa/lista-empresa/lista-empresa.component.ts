@@ -44,19 +44,29 @@ export class ListaEmpresaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Obtiene el username desde el LoginService
     this.username = this.loginService.getUsername();
 
-    this.empService.list().subscribe((data) => {
-      this.dataSource = data;
-      this.filteredDataSource = data; // Inicializamos filteredDataSource con todos los datos
-    });
+    // Llama a listByUsername() para obtener las empresas del usuario
+    this.empService.listByUsername().subscribe(
+      (data) => {
+        this.dataSource = data;
+        this.filteredDataSource = data; // Inicializa filteredDataSource con los datos obtenidos
+      },
+      (error) => {
+        console.error('Error al obtener las empresas por usuario:', error);
+      }
+    );
   }
 
+<<<<<<< Updated upstream
   // Método para obtener el avatar basado en el índice
   getAvatar(index: number): string {
     return `/assets/${this.avatars[index % this.avatars.length]}`;
   }
 
+=======
+>>>>>>> Stashed changes
   // Filtra la lista de empresas por varios campos
   filter(event: any) {
     this.filterValue = event.target.value.trim().toLowerCase();
@@ -74,7 +84,7 @@ export class ListaEmpresaComponent implements OnInit {
     this.empService.listId(empresaId).subscribe((empresa) => {
       this._matDialog.open(EmpresasUsuarioComponent, {
         width: '400px',
-        data: empresa
+        data: empresa,
       });
     });
   }

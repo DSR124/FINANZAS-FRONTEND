@@ -41,11 +41,11 @@ export class SingInComponent {
       correo: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      enabled: [true]
+      enabled: [true] // El campo 'enabled' se establece automáticamente en 'true'
     });
   }
 
-  async registrar() {
+  registrar() {
     if (this.form.valid) {
       // Mapear los datos del formulario al modelo de Usuario
       this.usuario.nombre = this.form.value.nombre;
@@ -55,12 +55,11 @@ export class SingInComponent {
       this.usuario.enabled = this.form.value.enabled;
       this.usuario.password = this.form.value.password;
 
-
       // Enviar la solicitud de registro al backend
       this.uS.insert(this.usuario).subscribe(
         (data) => {
           console.log('Usuario registrado correctamente:', data);
-          this.router.navigate(['/rol']); // Redirigir al login después de registrar
+          this.router.navigate(['/rol']); // Redirigir después de registrar
         },
         (error) => {
           console.error('Error al registrar usuario:', error);

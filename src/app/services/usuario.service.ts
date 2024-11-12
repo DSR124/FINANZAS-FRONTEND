@@ -53,7 +53,10 @@ export class UsuarioService {
   encontrarUltimoUsuario(): Observable<number> {
     return this.http.get<number>(`${this.url}/ultimoUsuario`);
   }
-
+ // Nuevo método: Buscar usuario por username
+ buscarPorUsername(username: string): Observable<Usuario> {
+  return this.http.get<Usuario>(`${this.url}/buscarPorUsername/${username}`);
+}
   // Gestionar el estado de la lista de usuarios localmente
   private setList(listaNueva: Usuario[]): void {
     this.listaCambio.next(this.sortList(listaNueva));

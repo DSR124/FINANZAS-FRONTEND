@@ -46,11 +46,13 @@ export class CreaeditaCarteraComponent {
     { value: 'PEN', viewValue: 'Soles' },
     { value: 'USD', viewValue: 'Dólares' }
   ];
+
   constructor(
     private cS: CarteraService,
     private eS: EmpresaService,
     private formBuilder: FormBuilder,
-    public route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -59,19 +61,36 @@ export class CreaeditaCarteraComponent {
       this.edicion = data['id'] != null;
       this.init();
     });
-  
+
+    // Inicializamos el formulario con la validación personalizada
     this.form = this.formBuilder.group({
-      fechaDescuento: ['', Validators.required],
-      tcea: [{ value: 0, disabled: true }], // Inicializa TCEA con 0 y deshabilitado
-      fechaCreacion: [new Date(), Validators.required], // Fecha de creación con la fecha actual
+      fechaDescuento: ['', [Validators.required, this.fechaDescuentoValidator]], // Validación personalizada
+      tcea: [{ value: 0, disabled: true }], // TCEA deshabilitado
+      fechaCreacion: [new Date(), Validators.required], // Fecha actual
       empresa: ['', Validators.required],
       nombre: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       moneda: ['', Validators.required]
     });
-  
-    this.eS.list().subscribe((data) => {
-      this.listaEmpresas = data;
-    });
+
+    // Usamos el servicio para listar las empresas del usuario
+    this.eS.listByUsername().subscribe(
+      (data) => {
+        this.listaEmpresas = data;
+      },
+      (error) => {
+        console.error('Error al obtener las empresas del usuario:', error);
+      }
+    );
+  }
+
+  // Validación personalizada para verificar que la fecha de descuento no sea anterior a la fecha actual
+  fechaDescuentoValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const fechaDescuento = new Date(control.value);
+    const fechaActual = new Date();
+    if (fechaDescuento < new Date(fechaActual.setHours(0, 0, 0, 0))) {
+      return { fechaDescuentoInvalida: true };
+    }
+    return null;
   }
 
   init() {
@@ -96,7 +115,7 @@ export class CreaeditaCarteraComponent {
       this.cartera.fechaDescuento = this.form.value.fechaDescuento;
       this.cartera.tcea = this.form.value.tcea;
       this.cartera.fechaCreacion = this.form.value.fechaCreacion;
-      this.cartera.empresa.idEmpresa = this.form.value.empresa;
+      this.cartera.empresa = { idEmpresa: this.form.value.empresa } as Empresa;
       this.cartera.nombre = this.form.value.nombre;
       this.cartera.moneda = this.form.value.moneda;
 
@@ -108,7 +127,7 @@ export class CreaeditaCarteraComponent {
         });
         alert('La modificación se hizo correctamente');
       } else {
-        this.cS.insert(this.cartera).subscribe((data) => {
+        this.cS.insert(this.cartera).subscribe(() => {
           this.cS.list().subscribe((data) => {
             this.cS.setList(data);
           });
@@ -120,6 +139,7 @@ export class CreaeditaCarteraComponent {
       this.mensaje = 'Complete todos los campos!!!';
     }
   }
+
   obtenerControlCampo(nombreCampo: string): AbstractControl {
     const control = this.form.get(nombreCampo);
     if (!control) {
@@ -127,10 +147,11 @@ export class CreaeditaCarteraComponent {
     }
     return control;
   }
+
   confirmCancel() {
     const confirmed = window.confirm('¿Estás seguro de que quieres cancelar?');
     if (confirmed) {
-      this.ngOnInit()
+      this.ngOnInit();
     }
   }
 }
