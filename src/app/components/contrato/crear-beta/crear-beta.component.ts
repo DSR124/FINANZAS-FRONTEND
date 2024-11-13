@@ -364,6 +364,8 @@ disableSections(): void {
     );
   }
 }
+
+
 generarPDF(contrato: Contrato): void {
   const doc = new jsPDF();
 
