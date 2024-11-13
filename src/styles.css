@@ -239,6 +239,7 @@ body .sidenav{
     max-width: 1020px;
     margin: 0 auto;
     padding: 50px 30px;
+    min-height: 100vh;
 }
 
 
