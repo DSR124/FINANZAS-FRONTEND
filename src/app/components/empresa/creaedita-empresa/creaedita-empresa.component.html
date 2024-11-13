@@ -8,84 +8,89 @@
 <body>
     <div class="content-container">
         <div class="formulario">
-              <div class="titulo">
-                  <h1>REGISTRAR EMPRESA</h1>
-              </div>
-              <form [formGroup]="form" class="empresa-form-container" (ngSubmit)="registrar()">
-                  <div class="form-row">
-                      <!-- Campo de Nombre -->
-                      <mat-form-field class="form-field">
-                          <mat-label>Nombre</mat-label>
-                          <input matInput formControlName="nombre" />
-                          <mat-error *ngIf="form.get('nombre')?.hasError('required')">
-                              El nombre de la empresa es obligatorio.
-                          </mat-error>
-                          <mat-error *ngIf="form.get('nombre')?.hasError('pattern')">
-                              El nombre de la empresa solo puede contener letras y espacios.
-                          </mat-error>
-                      </mat-form-field>
+            <div class="titulo">
+                <h5>Nueva Empresa</h5>
+            </div>
+            <form [formGroup]="form" class="empresa-form-container" (ngSubmit)="registrar()">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" type="text" formControlName="nombre" />
+                        <span class="error-message" *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">
+                          El nombre de la empresa es obligatorio.
+                        </span>
+                        <span class="error-message" *ngIf="form.get('nombre')?.hasError('pattern') && form.get('nombre')?.dirty">
+                          El nombre de la empresa solo puede contener letras y espacios.
+                        </span>
+                    </div>
       
-                      <!-- Campo de Tipo de Empresa -->
-                      <mat-form-field class="form-field">
-                          <mat-label>Tipo de Empresa</mat-label>
-                          <mat-select formControlName="Tipo">
-                              <mat-option *ngFor="let t of tipoempresa" [value]="t.value">
-                                  {{ t.viewValue }}
-                              </mat-option>
-                          </mat-select>
-                          <mat-error *ngIf="form.get('Tipo')?.hasError('required')">
-                              El tipo de empresa es obligatorio.
-                          </mat-error>
-                      </mat-form-field>
-                  </div>
+                    <div class="form-field">
+                        <label for="tipo">Tipo de Empresa</label>
+                        <select id="tipo" formControlName="Tipo">
+                          <option *ngFor="let t of tipoempresa" [value]="t.value">{{ t.viewValue }}</option>
+                        </select>
+                        <span class="error-message" *ngIf="form.get('Tipo')?.hasError('required') && form.get('Tipo')?.touched">
+                          El tipo de empresa es obligatorio.
+                        </span>
+                    </div>
+                </div>
       
-                  <div class="form-row">
-                      <!-- Campo de RUC -->
-                      <mat-form-field class="form-field">
-                          <mat-label>RUC</mat-label>
-                          <input matInput formControlName="Ruc" />
-                          <mat-error *ngIf="form.get('Ruc')?.hasError('required')">
-                              El RUC es obligatorio.
-                          </mat-error>
-                          <mat-error *ngIf="form.get('Ruc')?.hasError('precioNoValido')">
-                              El RUC no es válido.
-                          </mat-error>
-                      </mat-form-field>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="ruc">RUC</label>
+                        <input id="ruc" type="number" formControlName="Ruc" />
+                        <span class="error-message" *ngIf="form.get('Ruc')?.invalid && form.get('Ruc')?.touched">
+                          {{
+                            form.get('Ruc')?.hasError('required')
+                              ? 'El RUC es obligatorio'
+                              : form.get('Ruc')?.hasError('RucNoValido')
+                              ? 'El RUC no es válido'
+                              : ''
+                          }}
+                        </span>
+                    </div>
+                    <div class="form-field">
+                        <label for="usuario">Usuario</label>
+                        <input id="usuario" type="text" formControlName="usuario" />
+                        <span class="error-message" *ngIf="form.get('usuario')?.invalid && form.get('usuario')?.touched">
+                            {{
+                              form.get('usuario')?.hasError('required')
+                                ? 'El usuario es obligatorio'
+                                : form.get('usuario')?.hasError('usuarioNoValido')
+                                ? 'El usuario no es válido'
+                                : ''
+                            }}
+                        </span>
+                    </div>
+                </div>
       
-                  <!-- Campo de Usuario (Mostrando el username) -->
-      <mat-form-field class="form-field">
-          <mat-label>Usuario</mat-label>
-          <input matInput formControlName="usuario"  />
-          <mat-error *ngIf="form.get('usuario')?.hasError('required')">
-            El usuario es obligatorio.
-          </mat-error>
-        </mat-form-field>
-                  </div>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="direccion">Dirección</label>
+                        <input 
+                          id="direccion" 
+                          type="text" 
+                          formControlName="Direccion" 
+                        />
+                        <span class="error-message" *ngIf="form.get('Direccion')?.hasError('required') && form.get('Direccion')?.touched">
+                          La dirección es obligatoria.
+                        </span>
+                        <span class="error-message" *ngIf="form.get('Direccion')?.hasError('pattern') && form.get('Direccion')?.dirty">
+                          La dirección solo puede contener letras y espacios.
+                        </span>
+                    </div>
+                </div>
       
-                  <div class="form-row">
-                      <!-- Campo de Dirección -->
-                      <mat-form-field class="form-field">
-                          <mat-label>Dirección</mat-label>
-                          <input matInput formControlName="Direccion" />
-                          <mat-error *ngIf="form.get('Direccion')?.hasError('required')">
-                              La dirección es obligatoria.
-                          </mat-error>
-                      </mat-form-field>
-                  </div>
+                <div class="button-container">
+                    <button mat-raised-button  type="submit" class="btn-primary" [disabled]="form.invalid">
+                        {{ edicion ? 'Actualizar' : 'Registrar' }}
+                    </button>
+                    <button mat-raised-button class="btn-cancel" routerLink="/empresa/listar_empresa">Cancelar</button>
+                </div>
+            </form>
+        </div>  
+    </div>
       
-                  <div class="button-container">
-                      <!-- Botón de Registrar/Actualizar -->
-                      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-                          {{ edicion ? 'Actualizar' : 'Registrar' }}
-                      </button>
-                      <!-- Botón de Cancelar -->
-                      <button mat-raised-button class="btn2" routerLink="/empresa/listar_empresa">
-                          Cancelar
-                      </button>
-                  </div>
-              </form>
-          </div>
-        </div>
 </body>
 
 </html>
