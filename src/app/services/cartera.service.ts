@@ -106,4 +106,14 @@ export class CarteraService {
   getList(): Observable<Cartera[]> {
     return this.listaCambio.asObservable();
   }
+
+  // En CarteraService
+listByEmpresaId(empresaId: number): Observable<Cartera[]> {
+  return this.http.get<Cartera[]>(`${this.url}/ListarPorEmpresa/${empresaId}`).pipe(
+    catchError(error => {
+      console.error('Error al obtener carteras por empresa:', error);
+      throw error;
+    })
+  );
+}
 }

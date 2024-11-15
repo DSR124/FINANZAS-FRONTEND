@@ -28,6 +28,18 @@ export class EmpresaService {
     );
   }
 
+  // Modified method to accept username as a parameter
+// empresa.service.ts
+listByUsername2(username: string): Observable<Empresa[]> {
+  return this.http.get<Empresa[]>(`${this.url}/ListarPorUsuario/${username}`).pipe(
+    catchError(error => {
+      console.error('Error fetching companies by username:', error);
+      throw error;
+    })
+  );
+}
+
+
   // List companies by username
   listByUsername(): Observable<Empresa[]> {
     const username = this.loginService.getUsername(); // Get username from LoginService

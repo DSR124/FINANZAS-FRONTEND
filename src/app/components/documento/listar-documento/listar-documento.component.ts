@@ -13,6 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { LoginService } from '../../../services/login.service';
+import { EliminarDocComponent } from '../eliminar-doc/eliminar-doc.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -42,21 +45,33 @@ export class ListarDocumentoComponent implements OnInit {
     'clienteNombre',
     'cartera',
     'clientePhone',
-    'acciones' // Columna para acciones como eliminar
+    'acciones' // Column for actions like delete
   ];
   dataSource: MatTableDataSource<Documento> = new MatTableDataSource();
+  username: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private documentoService: DocumentoService) {}
+  constructor(
+    private documentoService: DocumentoService,
+    private loginService: LoginService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.documentoService.list().subscribe((data) => {
-      this.dataSource.data = data;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.username = this.loginService.getUsername() || '';
+
+    this.documentoService.listByUsername(this.username).subscribe(
+      (data) => {
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        console.error('Error al obtener los documentos:', error);
+      }
+    );
   }
 
   applyFilter(event: Event) {
@@ -64,20 +79,33 @@ export class ListarDocumentoComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // Método para eliminar un documento
   eliminarDocumento(documento: Documento): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este documento?')) {
-      this.documentoService.delete(documento.idDocumento).subscribe(
-        () => {
-          // Actualiza la tabla eliminando el documento localmente
-          this.dataSource.data = this.dataSource.data.filter(d => d.idDocumento !== documento.idDocumento);
-          alert('Documento eliminado correctamente');
-        },
-        (error) => {
-          console.error('Error al eliminar el documento:', error);
-          alert('Hubo un error al intentar eliminar el documento');
-        }
-      );
-    }
+    const dialogRef = this.dialog.open(EliminarDocComponent, {
+      width: '400px',
+      data: { documento }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.documentoService.eliminarDocumento(documento.idDocumento, this.username).subscribe(
+          (response) => {
+            if (response && response.message) {
+              alert(response.message);
+              this.dataSource.data = this.dataSource.data.filter(d => d.idDocumento !== documento.idDocumento);
+            } else {
+              alert('Error desconocido al eliminar el documento');
+            }
+          },
+          (error) => {
+            console.error('Error al eliminar el documento:', error);
+            if (error.error && error.error.error) {
+              alert(error.error.error);
+            } else {
+              alert('Hubo un error al intentar eliminar el documento');
+            }
+          }
+        );
+      }
+    });
   }
 }

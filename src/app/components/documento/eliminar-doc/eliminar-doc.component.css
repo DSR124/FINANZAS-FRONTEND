@@ -1,0 +1,74 @@
+/* Styles for dialog container */
+.dialog-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Styles for document details */
+  .document-details {
+    margin-bottom: 20px;
+  }
+  
+  .document-details p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  /* Styles for form */
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  button {
+    font-weight: bold;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[color="warn"] {
+    background-color: #e53935;
+    color: white;
+  }
+  
+  button[color="warn"]:disabled {
+    background-color: #f8d7da;
+    color: #a1a1a1;
+    cursor: not-allowed;
+  }
+  
+  button.mat-button {
+    background-color: #ccc;
+    color: #333;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.mat-button:hover {
+    background-color: #b3b3b3;
+  }
+  

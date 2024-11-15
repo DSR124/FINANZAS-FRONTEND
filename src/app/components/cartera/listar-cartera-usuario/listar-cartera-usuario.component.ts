@@ -43,7 +43,6 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
   selectedCartera: CarteraResumenUsuario | null = null;
   documentos: DocumentoByCartera[] = [];
   displayedColumns: string[] = [
-    'idCartera',
     'nombreCartera',
     'fechaCreacion',
     'fechaDescuento',
@@ -63,14 +62,13 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
     private carteraService: CarteraService,
     private documentoService: DocumentoService,
     private dialog: MatDialog,
-    private loginService: LoginService // Inyectamos el LoginService
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
-    const username = this.loginService.getUsername(); // Obtener el username del usuario autenticado
+    const username = this.loginService.getUsername();
 
     if (username) {
-      // Usamos el nuevo método para obtener las carteras por username
       this.carteraService.getCarteraSummaryByUsername(username).subscribe(
         (data) => {
           this.dataSource.data = data;
@@ -93,6 +91,12 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  onSelectCartera(row: CarteraResumenUsuario): void {
+    this.selectedCartera = row; // Asigna la cartera seleccionada
+  }
+  isButtonSelected(): boolean {
+    return this.selectedCartera !== null;
   }
 
   verDocumentosPorCartera(idCartera: number): void {
@@ -118,7 +122,6 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
     const doc = new jsPDF('p', 'mm', 'a4');
     let currentY = 20;
 
-    // Header
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text('Reporte de Cartera', 105, currentY, { align: 'center' });
@@ -128,7 +131,6 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
     doc.line(15, currentY, 195, currentY);
     currentY += 10;
 
-    // Cartera Details
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(80);

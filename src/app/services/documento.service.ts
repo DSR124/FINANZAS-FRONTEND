@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Documento } from '../models/documento';
 import { Observable, Subject } from 'rxjs';
@@ -80,7 +80,15 @@ export class DocumentoService {
       })
     );
   }
-
+ // Obtener documentos por nombre de usuario
+ listByUsername(username: string): Observable<Documento[]> {
+  return this.http.get<Documento[]>(`${this.url}/ListarPorUsuario/${username}`).pipe(
+    catchError(error => {
+      console.error('Error al obtener documentos por nombre de usuario:', error);
+      throw error;
+    })
+  );
+}
   // Refresh the list of documents
   private refreshList() {
     this.list().subscribe((data) => this.setList(data));
@@ -94,5 +102,14 @@ export class DocumentoService {
   // Get the observable list of documents
   getList(): Observable<Documento[]> {
     return this.listaCambio.asObservable();
+  }
+  eliminarDocumento(id: number, username: string): Observable<any> {
+    const url = `${this.url}/Eliminar2/${id}?username=${encodeURIComponent(username)}`;
+    return this.http.delete<any>(url).pipe(
+      catchError(error => {
+        console.error('Error al eliminar el documento:', error);
+        throw error;
+      })
+    );
   }
 }
