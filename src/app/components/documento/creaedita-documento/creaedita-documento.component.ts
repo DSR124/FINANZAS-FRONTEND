@@ -35,14 +35,14 @@ import { CarteraService } from '../../../services/cartera.service';
   styleUrl: './creaedita-documento.component.css'
 })
 export class CreaeditaDocumentoComponent implements OnInit{
-  form: FormGroup = new FormGroup({});
+  form: FormGroup;
   documento: Documento = new Documento();
   listaCarteras: Cartera[] = [];
   id: number = 0;
   edicion: boolean = false;
   mensaje: string = '';
-  formularioActivo: boolean = false; // Controla si el formulario está activo o no
-
+  formularioActivo: boolean = false;
+  username: string = '';
   tipoDocumentoOpciones = [
     { value: 'LETRAS', viewValue: 'Letras' },
     { value: 'FACTURAS', viewValue: 'Facturas' }
@@ -52,39 +52,36 @@ export class CreaeditaDocumentoComponent implements OnInit{
     private documentoService: DocumentoService,
     private carteraService: CarteraService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private loginService: LoginService
+  ) {
+    this.form = this.formBuilder.group({
+      cartera: ['', Validators.required],
+      tipoDocumento: [{ value: '', disabled: true }, Validators.required],
+      valorDocumento: [{ value: '', disabled: true }, [Validators.required, Validators.min(0.01)]],
+      currency: [{ value: '', disabled: false }, Validators.required],
+      fechaEmision: [{ value: '', disabled: true }, Validators.required],
+      fechaVencimiento: [{ value: '', disabled: true }, Validators.required],
+      estado: [{ value: 'NO DESCONTADO', disabled: true }, Validators.required],
+      clienteNombre: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      clientePhone: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/)]]
+    });
+  }
 
   ngOnInit(): void {
+    this.username = this.loginService.getUsername() || '';
+
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
       this.edicion = this.id != null;
       this.init();
     });
 
-    // Configurar el formulario con validaciones
-    this.form = this.formBuilder.group({
-      cartera: ['', [Validators.required]],
-      tipoDocumento: [{ value: '', disabled: true }, [Validators.required]],
-      valorDocumento: [{ value: '', disabled: true }, [Validators.required, Validators.min(0.01)]],
-      currency: [{ value: '', disabled: false }, [Validators.required]], // Moneda deshabilitada
-      fechaEmision: [{ value: '', disabled: true }, [Validators.required]],
-      fechaVencimiento: [{ value: '', disabled: true }, [Validators.required]],
-      estado: [{ value: 'ACTIVO', disabled: true }, [Validators.required]], // Estado inicial y deshabilitado
-      clienteNombre: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      clientePhone: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/)]]
-    });
+    this.cargarCarterasPorUsuario();
 
-    // Cargar las carteras disponibles
-    this.carteraService.list().subscribe((data) => {
-      this.listaCarteras = data;
-    });
-
-    // Escuchar cambios en el campo 'cartera'
     this.form.get('cartera')?.valueChanges.subscribe((carteraId) => {
       const carteraSeleccionada = this.listaCarteras.find(c => c.idCartera === carteraId);
       if (carteraSeleccionada) {
-        // Actualizar el currency y activar el formulario
         this.form.get('currency')?.setValue(carteraSeleccionada.moneda);
         this.activarFormulario();
       } else {
@@ -93,8 +90,17 @@ export class CreaeditaDocumentoComponent implements OnInit{
     });
   }
 
-  activarFormulario() {
-    // Habilitar los campos del formulario excepto 'currency' y 'estado'
+  cargarCarterasPorUsuario(): void {
+    this.carteraService.getCarteraSummaryByUsername(this.username).subscribe((data) => {
+      this.listaCarteras = data.map(carteraResumen => ({
+        idCartera: carteraResumen.idCartera,
+        nombre: carteraResumen.nombreCartera,
+        moneda: carteraResumen.moneda
+      })) as Cartera[];
+    });
+  }
+
+  activarFormulario(): void {
     this.formularioActivo = true;
     Object.keys(this.form.controls).forEach((key) => {
       if (key !== 'cartera' && key !== 'currency' && key !== 'estado') {
@@ -103,8 +109,7 @@ export class CreaeditaDocumentoComponent implements OnInit{
     });
   }
 
-  desactivarFormulario() {
-    // Deshabilitar los campos del formulario
+  desactivarFormulario(): void {
     this.formularioActivo = false;
     Object.keys(this.form.controls).forEach((key) => {
       if (key !== 'cartera') {
@@ -113,7 +118,7 @@ export class CreaeditaDocumentoComponent implements OnInit{
     });
   }
 
-  init() {
+  init(): void {
     if (this.edicion) {
       this.documentoService.listId(this.id).subscribe((data) => {
         this.form.patchValue({
@@ -131,22 +136,13 @@ export class CreaeditaDocumentoComponent implements OnInit{
       });
     }
   }
-  getRUC(): string {
-    const carteraId = this.form.get('cartera')?.value;
-    const carteraSeleccionada = this.listaCarteras.find(c => c.idCartera === carteraId);
-  
-    // Convertir el número a string
-    return carteraSeleccionada ? carteraSeleccionada.empresa.ruc.toString() : '';
-  }
-  
-  registrar() {
+
+  registrar(): void {
     if (this.form.valid) {
-      // Habilita temporalmente el campo 'estado' para incluirlo en la solicitud
       this.form.get('estado')?.enable();
-  
       this.documento = this.form.value;
       this.documento.cartera = { idCartera: this.form.value.cartera } as Cartera;
-  
+
       if (this.edicion) {
         this.documento.idDocumento = this.id;
         this.documentoService.update(this.documento).subscribe(() => {
@@ -157,17 +153,17 @@ export class CreaeditaDocumentoComponent implements OnInit{
           alert('El documento ha sido registrado correctamente');
         });
       }
-  
-      // Desactiva el campo 'estado' nuevamente
+
       this.form.get('estado')?.disable();
     } else {
       this.mensaje = 'Complete todos los campos correctamente';
     }
   }
-  confirmCancel() {
+
+  confirmCancel(): void {
     const confirmed = window.confirm('¿Estás seguro de que quieres cancelar?');
     if (confirmed) {
-      this.ngOnInit()
+      this.ngOnInit();
     }
   }
 }

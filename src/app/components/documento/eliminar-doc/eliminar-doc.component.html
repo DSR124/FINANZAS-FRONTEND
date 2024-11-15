@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="dialog-container">
+        <h2>Eliminar Documento</h2>
+        
+        <!-- Display document details -->
+        <div class="document-details">
+          <p><strong>Tipo de Documento:</strong> {{ documento.tipoDocumento }}</p>
+          <p><strong>Valor del Documento:</strong> {{ documento.valorDocumento | currency }}</p>
+          <p><strong>Moneda:</strong> {{ documento.currency }}</p>
+          <p><strong>Fecha de Emisión:</strong> {{ documento.fechaEmision | date }}</p>
+          <p><strong>Fecha de Vencimiento:</strong> {{ documento.fechaVencimiento | date }}</p>
+          <p><strong>Estado:</strong> {{ documento.estado }}</p>
+          <p><strong>Cliente:</strong> {{ documento.clienteNombre }}</p>
+          <p><strong>Teléfono del Cliente:</strong> {{ documento.clientePhone }}</p>
+        </div>
+      
+        <!-- Form to collect the username -->
+        <form [formGroup]="eliminarForm" class="form-container">
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre de Usuario</mat-label>
+            <input matInput formControlName="username" placeholder="Ingrese su usuario" required>
+            <mat-error *ngIf="eliminarForm.get('username')?.invalid">El nombre de usuario es obligatorio</mat-error>
+          </mat-form-field>
+      
+          <div class="actions">
+            <button mat-button color="warn" (click)="onEliminar()" [disabled]="eliminarForm.invalid">Eliminar</button>
+            <button mat-button (click)="onCancel()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+      
+</body>
+</html>
