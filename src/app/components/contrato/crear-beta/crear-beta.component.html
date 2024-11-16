@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Contrato</title>
-    <link rel="stylesheet" href="crear-beta.component.css">
 </head>
 <body>
     <div class="container">
@@ -40,14 +39,13 @@
                     <p><span>Nombre:</span> {{ bancoData.nombre }}</p>
                     <p><span>Tasa Nominal:</span> {{ bancoData.tasaNomninal }}</p>
                     <p><span>Tasa Efectiva:</span> {{ bancoData.tasaEfectiva }}</p>
-                    <p><span>Cosión Extra:</span> {{ bancoData.cosionExtra }}</p>
+                    <p><span>cambio a dolares:</span> {{ bancoData.balance }}</p>
                 </div>
     
                 <div class="report-card" *ngIf="carteraData">
                     <h4>Cartera Seleccionada</h4>
                     <p><span>Nombre:</span> {{ carteraData.nombre }}</p>
                     <p><span>Fecha de Descuento:</span> {{ carteraData.fechaDescuento | date }}</p>
-                    <p><span>Empresa:</span> {{ carteraData.empresa?.nombre }}</p>
                     <p><span>Moneda:</span> {{ carteraData.moneda }}</p>
                 </div>
     

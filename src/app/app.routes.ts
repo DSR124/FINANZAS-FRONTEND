@@ -10,7 +10,6 @@ import { CreaeditaEmpresaComponent } from './components/empresa/creaedita-empres
 import { ListaEmpresaComponent } from './components/empresa/lista-empresa/lista-empresa.component';
 import { BancoComponent } from './components/banco/banco.component';
 import { CreaeditaBancoComponent } from './components/banco/creaedita-banco/creaedita-banco.component';
-import { ListarBancoComponent } from './components/banco/listar-banco/listar-banco.component';
 import { DocumentoComponent } from './components/documento/documento.component';
 import { CreaeditaDocumentoComponent } from './components/documento/creaedita-documento/creaedita-documento.component';
 import { ListarDocumentoComponent } from './components/documento/listar-documento/listar-documento.component';
@@ -98,7 +97,7 @@ export const routes: Routes = [
       },
       {
         path: 'listar_banco',
-        component: ListarBancoComponent,
+        component: ListarBancoUsuarioComponent,
       },
       {
         path: 'listar_banco_usuario',
