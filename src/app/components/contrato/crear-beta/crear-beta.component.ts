@@ -164,8 +164,6 @@ loadCarteras(): void {
     this.fechaVencimiento = new Date(documento.fechaVencimiento);
   }
 
-
-
   // Verificar si todos los campos están seleccionados
   isFormComplete(): boolean {
     return this.selectedBanco !== null && this.selectedCartera !== null && this.selectedDocumento !== null;
@@ -184,14 +182,19 @@ generarContrato(): void {
 
   // Método para manejar la selección de tasa
   onSelectTasaOpcion(opcion: string): void {
-    this.tasaOpcion = opcion;
-    this.periodoTasa = null; // Resetear el periodo de tasa al cambiar de opción
-    this.frecuenciaCapitalizacion = null; // Resetear la frecuencia de capitalización
+    this.tasaOpcion = opcion; // Solo acepta "nominal" o "efectiva"
   }
-   // Método para calcular la tasa seleccionada
-   calcularTasa(): void {
+
+  // Método para calcular la tasa seleccionada directamente desde los datos del banco
+  calcularTasa(): void {
     if (this.selectedBanco) {
-      this.tasaResultado = this.tasaOpcion === 'nominal' ? this.selectedBanco.tasaNomninal : this.selectedBanco.tasaEfectiva;
+      if (this.tasaOpcion === 'nominal') {
+        this.tasaResultado = this.selectedBanco.tasaNomninal; // Usar tasa nominal del banco
+      } else if (this.tasaOpcion === 'efectiva') {
+        this.tasaResultado = this.selectedBanco.tasaEfectiva; // Usar tasa efectiva del banco
+      }
+    } else {
+      console.error('Por favor seleccione un banco antes de calcular la tasa.');
     }
   }
 

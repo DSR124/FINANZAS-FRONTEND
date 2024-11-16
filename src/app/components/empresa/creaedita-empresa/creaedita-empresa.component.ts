@@ -139,7 +139,7 @@ export class CreaeditaEmpresaComponent implements OnInit {
         });
         alert('El registro se hizo correctamente');
         this.ngOnInit();
-        this.router.navigate(['empresa/listar_empresa']);
+        this.router.navigate(['/empresa/listar_empresa']);
 
       }
     } else {

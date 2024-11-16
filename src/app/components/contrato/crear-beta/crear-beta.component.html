@@ -68,45 +68,19 @@
             
             <!-- Fila de cálculos adicionales -->
             <div class="row calculation-row" *ngIf="showRateSelection && showSections">
-                <div class="column rate-selection">
-                    <h4>Seleccione la Opción de Tasa</h4>
-                    <div>
-                        <label>
-                            <input type="radio" name="tasa" value="efectiva" (change)="onSelectTasaOpcion('efectiva')" /> Tasa Efectiva
-                        </label>
+                <div class="row rate-selection-row" *ngIf="selectedBanco">
+                    <div class="column">
+                        <h4>Seleccione la Opción de Tasa</h4>
                         <label>
                             <input type="radio" name="tasa" value="nominal" (change)="onSelectTasaOpcion('nominal')" /> Tasa Nominal
                         </label>
-                    </div>
-                    <div *ngIf="tasaOpcion === 'efectiva'">
-                        <label>Periodo de la tasa efectiva:</label>
-                        <select [(ngModel)]="periodoTasa">
-                            <option value="diario">Diario</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
-                        </select>
-                    </div>
-                    <div *ngIf="tasaOpcion === 'nominal'">
-                        <label>Periodo de la tasa nominal:</label>
-                        <select [(ngModel)]="periodoTasa">
-                            <option value="diario">Diario</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
-                        </select>
-                    </div>
-                    <div *ngIf="tasaOpcion === 'nominal' && periodoTasa">
-                        <label>Frecuencia de capitalización:</label>
-                        <select [(ngModel)]="frecuenciaCapitalizacion">
-                            <option value="diario">Diario</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
-                        </select>
-                    </div>
-                    <div class="calculation-result">
-                        <button (click)="calcularTasa()" class ="btn-secundary">Calcular</button>
-                        <span *ngIf="tasaResultado !== null">
-                            Resultado de la Tasa: {{ tasaResultado }}
-                        </span>
+                        <label>
+                            <input type="radio" name="tasa" value="efectiva" (change)="onSelectTasaOpcion('efectiva')" /> Tasa Efectiva
+                        </label>
+                        <button (click)="calcularTasa()" class="btn-secundary">Calcular</button>
+                        <div *ngIf="tasaResultado !== null">
+                            <p><strong>Resultado de la Tasa:</strong> {{ tasaResultado }}</p>
+                        </div>
                     </div>
                 </div>
     

@@ -70,7 +70,7 @@ export class CreaeditaBancoComponent  implements OnInit{
       tasaNomninal: ['', [Validators.required, numeroPositivo]],
       tasaEfectiva: ['', [Validators.required, numeroPositivo]],
       comisionExtra: ['', [Validators.required, numeroPositivo]],
-      creationDate: [{ value: today, disabled: true }, Validators.required], // Deshabilita el campo y asigna la fecha actual
+      creationDate: [{ value: today, disabled: false }, Validators.required], // Deshabilita el campo y asigna la fecha actual
     });
   
     this.route.params.subscribe((params: Params) => {
