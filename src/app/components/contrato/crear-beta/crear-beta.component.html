@@ -8,142 +8,141 @@
 </head>
 <body>
     <div class="container">
-        <!-- Fila de selección -->
-        <div class="row selection-row">
-            <div class="column">
-                <button (click)="loadBancos()">Seleccionar Banco</button>
-                <select *ngIf="bancos.length > 0" [(ngModel)]="selectedBanco" (change)="onSelectBanco(selectedBanco!)">
-                    <option *ngFor="let banco of bancos" [ngValue]="banco">{{ banco.nombre }}</option>
-                </select>
-            </div>
-
-            <div class="column" *ngIf="selectedBanco">
-                <button (click)="loadCarteras()">Seleccionar Cartera</button>
-                <select *ngIf="carteras.length > 0" [(ngModel)]="selectedCartera" (change)="onSelectCartera(selectedCartera!)">
-                    <option *ngFor="let cartera of carteras" [ngValue]="cartera">{{ cartera.nombre }}</option>
-                </select>
-            </div>
-
-            <div class="column" *ngIf="selectedCartera">
-                <button (click)="loadDocumentos(selectedCartera!.idCartera)">Seleccionar Documento</button>
-                <select *ngIf="documentos.length > 0" [(ngModel)]="selectedDocumento" (change)="onSelectDocumento(selectedDocumento!)">
-                    <option *ngFor="let documento of documentos" [ngValue]="documento">{{ documento.tipoDocumento }}</option>
-                </select>
-            </div>
-        </div>
-      
-        <!-- Fila de información seleccionada -->
-        <div class="row info-row">
-            <div class="report-card" *ngIf="bancoData">
-                <h4>Banco Seleccionado</h4>
-                <p><span>Nombre:</span> {{ bancoData.nombre }}</p>
-                <p><span>Tasa Nominal:</span> {{ bancoData.tasaNomninal }}</p>
-                <p><span>Tasa Efectiva:</span> {{ bancoData.tasaEfectiva }}</p>
-                <p><span>Cosión Extra:</span> {{ bancoData.cosionExtra }}</p>
-            </div>
-
-            <div class="report-card" *ngIf="carteraData">
-                <h4>Cartera Seleccionada</h4>
-                <p><span>Nombre:</span> {{ carteraData.nombre }}</p>
-                <p><span>Fecha de Descuento:</span> {{ carteraData.fechaDescuento | date }}</p>
-                <p><span>Empresa:</span> {{ carteraData.empresa?.nombre }}</p>
-                <p><span>Moneda:</span> {{ carteraData.moneda }}</p>
-            </div>
-
-            <div class="report-card" *ngIf="documentoData">
-                <h4>Documento Seleccionado</h4>
-                <p><span>Tipo de Documento:</span> {{ documentoData.tipoDocumento }}</p>
-                <p><span>Valor del Documento:</span> {{ documentoData.valorDocumento }}</p>
-                <p><span>Moneda:</span> {{ documentoData.currency }}</p>
-                <p><span>Fecha de Emisión:</span> {{ documentoData.fechaEmision | date }}</p>
-                <p><span>Fecha de Vencimiento:</span> {{ documentoData.fechaVencimiento | date }}</p>
-            </div>
-        </div>
-
-        <!-- Fila de botón para generar contrato -->
-        <div class="row button-row">
-            <button [disabled]="!isFormComplete()" (click)="generarContrato()">
-                {{ isFormComplete() ? 'Generar Contrato' : 'Seleccione todos los campos' }}
-            </button>
-        </div>
-        
-        <!-- Fila de cálculos adicionales -->
-        <div class="row calculation-row" *ngIf="showRateSelection && showSections">
-            <div class="column rate-selection">
-                <h3>Seleccione la Opción de Tasa</h3>
-                <div>
-                    <label>
-                        <input type="radio" name="tasa" value="efectiva" (change)="onSelectTasaOpcion('efectiva')" /> Tasa Efectiva
-                    </label>
-                    <label>
-                        <input type="radio" name="tasa" value="nominal" (change)="onSelectTasaOpcion('nominal')" /> Tasa Nominal
-                    </label>
-                </div>
-                <div *ngIf="tasaOpcion === 'efectiva'">
-                    <label>Periodo de la tasa efectiva:</label>
-                    <select [(ngModel)]="periodoTasa">
-                        <option value="diario">Diario</option>
-                        <option value="mensual">Mensual</option>
-                        <option value="anual">Anual</option>
+        <div class="formulario">
+            <!-- Fila de selección -->
+            <div class="row selection-row">
+                <div class="column">
+                    <button (click)="loadBancos()" class ="btn-primary">Seleccionar Banco</button>
+                    <select *ngIf="bancos.length > 0" [(ngModel)]="selectedBanco" (change)="onSelectBanco(selectedBanco!)">
+                        <option *ngFor="let banco of bancos" [ngValue]="banco">{{ banco.nombre }}</option>
                     </select>
                 </div>
-                <div *ngIf="tasaOpcion === 'nominal'">
-                    <label>Periodo de la tasa nominal:</label>
-                    <select [(ngModel)]="periodoTasa">
-                        <option value="diario">Diario</option>
-                        <option value="mensual">Mensual</option>
-                        <option value="anual">Anual</option>
+    
+                <div class="column" *ngIf="selectedBanco">
+                    <button (click)="loadCarteras()" class ="btn-primary">Seleccionar Cartera</button>
+                    <select *ngIf="carteras.length > 0" [(ngModel)]="selectedCartera" (change)="onSelectCartera(selectedCartera!)">
+                        <option *ngFor="let cartera of carteras" [ngValue]="cartera">{{ cartera.nombre }}</option>
                     </select>
                 </div>
-                <div *ngIf="tasaOpcion === 'nominal' && periodoTasa">
-                    <label>Frecuencia de capitalización:</label>
-                    <select [(ngModel)]="frecuenciaCapitalizacion">
-                        <option value="diario">Diario</option>
-                        <option value="mensual">Mensual</option>
-                        <option value="anual">Anual</option>
+    
+                <div class="column" *ngIf="selectedCartera">
+                    <button (click)="loadDocumentos(selectedCartera!.idCartera)" class ="btn-primary">Seleccionar Documento</button>
+                    <select *ngIf="documentos.length > 0" [(ngModel)]="selectedDocumento" (change)="onSelectDocumento(selectedDocumento!)">
+                        <option *ngFor="let documento of documentos" [ngValue]="documento">{{ documento.tipoDocumento }}</option>
                     </select>
                 </div>
-                <div class="calculation-result">
-                    <button (click)="calcularTasa()">Calcular</button>
-                    <span *ngIf="tasaResultado !== null">
-                        Resultado de la Tasa: {{ tasaResultado }}
-                    </span>
+            </div>
+          
+            <!-- Fila de información seleccionada -->
+            <div class="row info-row">
+                <div class="report-card" *ngIf="bancoData">
+                    <h4>Banco Seleccionado</h4>
+                    <p><span>Nombre:</span> {{ bancoData.nombre }}</p>
+                    <p><span>Tasa Nominal:</span> {{ bancoData.tasaNomninal }}</p>
+                    <p><span>Tasa Efectiva:</span> {{ bancoData.tasaEfectiva }}</p>
+                    <p><span>Cosión Extra:</span> {{ bancoData.cosionExtra }}</p>
+                </div>
+    
+                <div class="report-card" *ngIf="carteraData">
+                    <h4>Cartera Seleccionada</h4>
+                    <p><span>Nombre:</span> {{ carteraData.nombre }}</p>
+                    <p><span>Fecha de Descuento:</span> {{ carteraData.fechaDescuento | date }}</p>
+                    <p><span>Empresa:</span> {{ carteraData.empresa?.nombre }}</p>
+                    <p><span>Moneda:</span> {{ carteraData.moneda }}</p>
+                </div>
+    
+                <div class="report-card" *ngIf="documentoData">
+                    <h4>Documento Seleccionado</h4>
+                    <p><span>Tipo de Documento:</span> {{ documentoData.tipoDocumento }}</p>
+                    <p><span>Valor del Documento:</span> {{ documentoData.valorDocumento }}</p>
+                    <p><span>Moneda:</span> {{ documentoData.currency }}</p>
+                    <p><span>Fecha de Emisión:</span> {{ documentoData.fechaEmision | date }}</p>
+                    <p><span>Fecha de Vencimiento:</span> {{ documentoData.fechaVencimiento | date }}</p>
                 </div>
             </div>
-
-            <div class="column date-difference-section">
-                <h3>Calcular Días entre Fechas</h3>
-                <button (click)="calcularDias()">Calcular Días</button>
-                <div *ngIf="diasDiferencia !== null">
-                    <p><strong>Fecha de Descuento:</strong> {{ fechaDescuento | date }}</p>
-                    <p><strong>Fecha de Vencimiento:</strong> {{ fechaVencimiento | date }}</p>
-                    <p><strong>Días entre las fechas:</strong> {{ diasDiferencia }} días</p>
+    
+            <!-- Fila de botón para generar contrato -->
+            <div class="row button-row">
+                <button [disabled]="!isFormComplete()" (click)="generarContrato()" class ="btn-secundary">
+                    {{ isFormComplete() ? 'Generar Contrato' : 'Seleccione todos los campos' }}
+                </button>
+            </div>
+            
+            <!-- Fila de cálculos adicionales -->
+            <div class="row calculation-row" *ngIf="showRateSelection && showSections">
+                <div class="column rate-selection">
+                    <h4>Seleccione la Opción de Tasa</h4>
+                    <div>
+                        <label>
+                            <input type="radio" name="tasa" value="efectiva" (change)="onSelectTasaOpcion('efectiva')" /> Tasa Efectiva
+                        </label>
+                        <label>
+                            <input type="radio" name="tasa" value="nominal" (change)="onSelectTasaOpcion('nominal')" /> Tasa Nominal
+                        </label>
+                    </div>
+                    <div *ngIf="tasaOpcion === 'efectiva'">
+                        <label>Periodo de la tasa efectiva:</label>
+                        <select [(ngModel)]="periodoTasa">
+                            <option value="diario">Diario</option>
+                            <option value="mensual">Mensual</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tasaOpcion === 'nominal'">
+                        <label>Periodo de la tasa nominal:</label>
+                        <select [(ngModel)]="periodoTasa">
+                            <option value="diario">Diario</option>
+                            <option value="mensual">Mensual</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tasaOpcion === 'nominal' && periodoTasa">
+                        <label>Frecuencia de capitalización:</label>
+                        <select [(ngModel)]="frecuenciaCapitalizacion">
+                            <option value="diario">Diario</option>
+                            <option value="mensual">Mensual</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+                    <div class="calculation-result">
+                        <button (click)="calcularTasa()" class ="btn-secundary">Calcular</button>
+                        <span *ngIf="tasaResultado !== null">
+                            Resultado de la Tasa: {{ tasaResultado }}
+                        </span>
+                    </div>
+                </div>
+    
+                <div class="column date-difference-section">
+                    <h4>Calcular Días entre Fechas</h4>
+                    <button (click)="calcularDias()" class ="btn-secundary">Calcular Días</button>
+                    <div *ngIf="diasDiferencia !== null">
+                        <p><strong>Fecha de Descuento:</strong> {{ fechaDescuento | date }}</p>
+                        <p><strong>Fecha de Vencimiento:</strong> {{ fechaVencimiento | date }}</p>
+                        <p><strong>Días entre las fechas:</strong> {{ diasDiferencia }} días</p>
+                    </div>
+                </div>
+    
+                <div class="column nominal-value-section">
+                    <h4>Calcular Valor Nominal del Documento</h4>
+                    <button (click)="calcularValorNominal()" class ="btn-secundary">Calcular Valor Nominal</button>
+                    <div *ngIf="valorNominal !== null">
+                        <p><strong>Valor Nominal del Documento:</strong> {{ valorNominal }}</p>
+                    </div>
+                </div>
+    
+                <div class="column net-value-section">
+                    <h4>Calcular Valor Neto del Documento</h4>
+                    <button (click)="calcularValorNeto()" class ="btn-secundary">Calcular Valor Neto</button>
+                    <div *ngIf="valorNeto !== null">
+                        <p><strong>Valor Neto del Documento:</strong> {{ valorNeto | number:'1.2-2' }}</p>
+                    </div>
+                </div>
+                <!-- Botón "Registrar Contrato" que aparece después de calcular el valor neto -->
+                <div class="row button-row" *ngIf="showRegisterButton">
+                    <button (click)="registrarContrato()" class="register-button btn-primary">Registrar Contrato</button>
                 </div>
             </div>
-
-            <div class="column nominal-value-section">
-                <h3>Calcular Valor Nominal del Documento</h3>
-                <button (click)="calcularValorNominal()">Calcular Valor Nominal</button>
-                <div *ngIf="valorNominal !== null">
-                    <p><strong>Valor Nominal del Documento:</strong> {{ valorNominal }}</p>
-                </div>
-            </div>
-
-            <div class="column net-value-section">
-                <h3>Calcular Valor Neto del Documento</h3>
-                <button (click)="calcularValorNeto()">Calcular Valor Neto</button>
-                <div *ngIf="valorNeto !== null">
-                    <p><strong>Valor Neto del Documento:</strong> {{ valorNeto | number:'1.2-2' }}</p>
-                </div>
-            </div>
-            <!-- Botón "Registrar Contrato" que aparece después de calcular el valor neto -->
-<div class="row button-row" *ngIf="showRegisterButton">
-    <button (click)="registrarContrato()" class="register-button">
-        Registrar Contrato
-    </button>
-</div>
         </div>
-        
     </div>
 </body>
 </html>
