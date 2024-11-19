@@ -181,13 +181,15 @@ export class CrearBetaComponent  implements OnInit{
   calcularTasa(): void {
     if (this.selectedBanco && this.tasaOpcion) {
       if (this.tasaOpcion === 'nominal') {
-        // Asigna la tasa nominal del banco
-        this.tasaResultado = this.selectedBanco.tasaNomninal;
-        console.log('Tasa Nominal Anual seleccionada:', this.tasaResultado);
+        // Conversión de Tasa Nominal Anual a Tasa Efectiva Periodal (Diaria)
+        const tasaNominal = this.selectedBanco.tasaNomninal/100; // Convertir porcentaje a decimal
+        const m = 360; // Capitalización diaria
+        // Calcular Tasa Efectiva Anual (TEA)
+        this.tasaResultado = (Math.pow(1 + tasaNominal / m, m) - 1) * 100; // Convertir a porcentaje
+        console.log('Tasa Nominal convertida a Tasa Efectiva (Diaria):', this.tasaResultado);
       } else if (this.tasaOpcion === 'efectiva') {
-        // Asigna la tasa efectiva del banco
-        this.onSelectTasaOpcion('efectiva')
-
+        // Directamente usa la tasa efectiva proporcionada por el banco
+        this.tasaResultado = this.selectedBanco.tasaEfectiva;
         console.log('Tasa Efectiva Anual seleccionada:', this.tasaResultado);
       }
     } else {
