@@ -133,6 +133,7 @@ export class CrearBetaComponent  implements OnInit{
           idDocumento: item.idDocumento,
           tipoDocumento: item.tipoDocumento,
           valorDocumento: item.valorDocumento,
+          estado: item.estado,
           currency: item.documentoCurrency,
           fechaEmision: item.fechaEmision,
           fechaVencimiento: item.fechaVencimiento
@@ -150,6 +151,8 @@ export class CrearBetaComponent  implements OnInit{
     this.documentoData = {
       tipoDocumento: documento.tipoDocumento,
       valorDocumento: documento.valorDocumento,
+      estado: documento.estado,
+
       currency: documento.currency,
       fechaEmision: documento.fechaEmision,
       fechaVencimiento: documento.fechaVencimiento
@@ -163,12 +166,16 @@ export class CrearBetaComponent  implements OnInit{
   }
 
   generarContrato(): void {
+    if (this.selectedDocumento?.estado === 'DESCONTADO') {
+      alert('El documento seleccionado ya está "DESCONTADO". No se puede generar un contrato.');
+      return;
+    }
+
     if (this.isFormComplete()) {
-      console.log('Contrato generado con éxito');
       this.showRateSelection = true;
       this.showSections = true;
     } else {
-      console.warn('Seleccione un banco, una cartera y un documento antes de generar el contrato');
+      alert('Complete todos los campos para generar el contrato.');
     }
   }
   calcularTasa(): void {
@@ -255,8 +262,6 @@ export class CrearBetaComponent  implements OnInit{
       this.showRegisterButton = false; // Deshabilitar el botón si faltan datos
     }
   }
-
-
 
   confirmChange(tipo: string): void {
     const confirmChange = confirm('¿Estás seguro de cambiar los datos?');

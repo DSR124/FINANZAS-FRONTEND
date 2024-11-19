@@ -51,6 +51,7 @@
     
                 <div class="report-card" *ngIf="documentoData">
                     <h4>Documento Seleccionado</h4>
+                    <p><strong>Estado:</strong> {{ documentoData.estado }}</p>
                     <p><span>Tipo de Documento:</span> {{ documentoData.tipoDocumento }}</p>
                     <p><span>Valor del Documento:</span> {{ documentoData.valorDocumento }}</p>
                     <p><span>Moneda:</span> {{ documentoData.currency }}</p>
