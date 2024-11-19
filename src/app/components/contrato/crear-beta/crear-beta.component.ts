@@ -133,6 +133,7 @@ export class CrearBetaComponent  implements OnInit{
           idDocumento: item.idDocumento,
           tipoDocumento: item.tipoDocumento,
           valorDocumento: item.valorDocumento,
+          estado: item.estado,
           currency: item.documentoCurrency,
           fechaEmision: item.fechaEmision,
           fechaVencimiento: item.fechaVencimiento
@@ -150,6 +151,8 @@ export class CrearBetaComponent  implements OnInit{
     this.documentoData = {
       tipoDocumento: documento.tipoDocumento,
       valorDocumento: documento.valorDocumento,
+      estado: documento.estado,
+
       currency: documento.currency,
       fechaEmision: documento.fechaEmision,
       fechaVencimiento: documento.fechaVencimiento
@@ -163,24 +166,30 @@ export class CrearBetaComponent  implements OnInit{
   }
 
   generarContrato(): void {
+    if (this.selectedDocumento?.estado === 'DESCONTADO') {
+      alert('El documento seleccionado ya está "DESCONTADO". No se puede generar un contrato.');
+      return;
+    }
+
     if (this.isFormComplete()) {
-      console.log('Contrato generado con éxito');
       this.showRateSelection = true;
       this.showSections = true;
     } else {
-      console.warn('Seleccione un banco, una cartera y un documento antes de generar el contrato');
+      alert('Complete todos los campos para generar el contrato.');
     }
   }
   calcularTasa(): void {
     if (this.selectedBanco && this.tasaOpcion) {
       if (this.tasaOpcion === 'nominal') {
-        // Asigna la tasa nominal del banco
-        this.tasaResultado = this.selectedBanco.tasaNomninal;
-        console.log('Tasa Nominal Anual seleccionada:', this.tasaResultado);
+        // Conversión de Tasa Nominal Anual a Tasa Efectiva Periodal (Diaria)
+        const tasaNominal = this.selectedBanco.tasaNomninal/100; // Convertir porcentaje a decimal
+        const m = 360; // Capitalización diaria
+        // Calcular Tasa Efectiva Anual (TEA)
+        this.tasaResultado = (Math.pow(1 + tasaNominal / m, m) - 1) * 100; // Convertir a porcentaje
+        console.log('Tasa Nominal convertida a Tasa Efectiva (Diaria):', this.tasaResultado);
       } else if (this.tasaOpcion === 'efectiva') {
-        // Asigna la tasa efectiva del banco
-        this.onSelectTasaOpcion('efectiva')
-
+        // Directamente usa la tasa efectiva proporcionada por el banco
+        this.tasaResultado = this.selectedBanco.tasaEfectiva;
         console.log('Tasa Efectiva Anual seleccionada:', this.tasaResultado);
       }
     } else {
@@ -256,8 +265,6 @@ export class CrearBetaComponent  implements OnInit{
     }
   }
 
-
-
   confirmChange(tipo: string): void {
     const confirmChange = confirm('¿Estás seguro de cambiar los datos?');
     if (confirmChange) {
@@ -326,6 +333,7 @@ export class CrearBetaComponent  implements OnInit{
             const documentoActualizado = { ...this.selectedDocumento, estado: 'DESCONTADO' }; // Crear una copia con el estado actualizado
             this.documentoService.modifyStatus(documentoActualizado).subscribe(
               () => {
+                alert('El registro se hizo correctamente');
                 console.log('Estado del documento actualizado a "DESCONTADO".');
               },
               (error) => {
