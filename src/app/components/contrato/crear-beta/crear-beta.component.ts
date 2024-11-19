@@ -331,6 +331,7 @@ export class CrearBetaComponent  implements OnInit{
             const documentoActualizado = { ...this.selectedDocumento, estado: 'DESCONTADO' }; // Crear una copia con el estado actualizado
             this.documentoService.modifyStatus(documentoActualizado).subscribe(
               () => {
+                alert('El registro se hizo correctamente');
                 console.log('Estado del documento actualizado a "DESCONTADO".');
               },
               (error) => {

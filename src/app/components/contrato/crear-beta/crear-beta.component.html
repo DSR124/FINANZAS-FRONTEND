@@ -7,6 +7,7 @@
 </head>
 <body>
     <div class="container">
+        <div><H1>REGISTRO DE CONTRATO</H1></div>
         <div class="formulario">
             <!-- Fila de selección -->
             <div class="row selection-row">
@@ -27,7 +28,7 @@
                 <div class="column" *ngIf="selectedCartera">
                     <button (click)="loadDocumentos(selectedCartera!.idCartera)" class ="btn-primary">Seleccionar Documento</button>
                     <select *ngIf="documentos.length > 0" [(ngModel)]="selectedDocumento" (change)="onSelectDocumento(selectedDocumento!)">
-                        <option *ngFor="let documento of documentos" [ngValue]="documento">{{ documento.tipoDocumento }}</option>
+                        <option *ngFor="let documento of documentos" [ngValue]="documento">{{ documento.idDocumento }} - {{ documento.tipoDocumento }}</option>
                     </select>
                 </div>
             </div>
@@ -121,7 +122,7 @@
             </div>
             <div class="column register-section" *ngIf="showRegisterButton">
                 <h4>Registrar Contrato</h4>
-                <button  class="btn-primary" (click)="registrarContrato()">Registrar Contrato</button>
+                <button  class="btn-primary" (click)="registrarContrato()" routerLink="/contrato/listar_contrato">Registrar Contrato</button>
             </div>
         </div>
     </div>
