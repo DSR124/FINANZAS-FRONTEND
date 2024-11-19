@@ -24,6 +24,13 @@ export class ContratoService {
     );
   }
 
+  // List contracts by username
+  listByUser(username: string): Observable<Contrato[]> {
+    return this.http.get<Contrato[]>(`${this.url}/ListarPorUsuario/${username}`).pipe(
+      catchError(this.handleError('fetching contracts by username'))
+    );
+  }
+
   // Insert a new contract
   insert(contrato: Contrato): Observable<any> {
     return this.http.post(`${this.url}/Registrar`, contrato).pipe(
@@ -77,6 +84,4 @@ export class ContratoService {
       return throwError(() => new Error(`Error ${operation}: ${error.message || 'Unknown error'}`));
     };
   }
-
-  
 }

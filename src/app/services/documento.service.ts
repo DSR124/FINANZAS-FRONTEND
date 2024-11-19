@@ -81,14 +81,16 @@ export class DocumentoService {
     );
   }
 
-  // Get documents by Cartera ID
+  // Obtener documentos por ID de cartera (incluyendo TEP)
   listByCarteraId(idCartera: number): Observable<DocumentoByCartera[]> {
-    return this.http.get<DocumentoByCartera[]>(`${this.url}/ListarporIDCartera/${idCartera}`).pipe(
-      catchError(error => {
-        console.error('Error fetching documents by cartera ID:', error);
-        throw error;
-      })
-    );
+    return this.http
+      .get<DocumentoByCartera[]>(`${this.url}/ListarporIDCartera/${idCartera}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching documents by cartera ID:', error);
+          throw error;
+        })
+      );
   }
 
   // Obtener documentos por nombre de usuario

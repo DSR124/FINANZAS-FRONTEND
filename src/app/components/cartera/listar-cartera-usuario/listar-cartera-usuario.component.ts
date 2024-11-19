@@ -92,9 +92,11 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
       this.dataSource.paginator.firstPage();
     }
   }
+
   onSelectCartera(row: CarteraResumenUsuario): void {
-    this.selectedCartera = row; // Asigna la cartera seleccionada
+    this.selectedCartera = row;
   }
+
   isButtonSelected(): boolean {
     return this.selectedCartera !== null;
   }
@@ -139,7 +141,7 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
       { label: 'ID Cartera:', value: this.selectedCartera.idCartera },
       { label: 'Nombre:', value: this.selectedCartera.nombreCartera },
       { label: 'Empresa:', value: this.selectedCartera.nombreEmpresa },
-      { label: 'TCEA:', value: `${this.selectedCartera.tcea}%` },
+      { label: 'TCEA:', value: `${this.selectedCartera.tcea || 0}%` },
       { label: 'Moneda:', value: this.selectedCartera.moneda },
       { label: 'Cantidad de Documentos:', value: this.selectedCartera.cantidadDocumentos },
       { label: 'Monto Total de la Cartera:', value: this.selectedCartera.montoTotalCartera?.toFixed(2) || '0.00' }
@@ -167,11 +169,11 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
           this.documentos = documentos;
           const documentosTableData = this.documentos.map(doc => [
             doc.idDocumento,
-            new Date(doc.fechaEmision).toLocaleDateString(),
-            new Date(doc.fechaVencimiento).toLocaleDateString(),
-            doc.valorDocumento.toFixed(2),
-            doc.clienteNombre,
-            doc.estado
+            doc.fechaEmision ? new Date(doc.fechaEmision).toLocaleDateString() : '',
+            doc.fechaVencimiento ? new Date(doc.fechaVencimiento).toLocaleDateString() : '',
+            doc.valorDocumento ? doc.valorDocumento.toFixed(2) : '0.00',
+            doc.clienteNombre || '',
+            doc.estado || ''
           ]);
 
           autoTable(doc, {
@@ -185,7 +187,7 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
             margin: { left: 15, right: 15 },
           });
 
-          const montoTotal = this.documentos.reduce((total, doc) => total + doc.valorDocumento, 0);
+          const montoTotal = this.documentos.reduce((total, doc) => total + (doc.valorDocumento || 0), 0);
           const finalY = (doc as any).autoTable.previous.finalY || currentY;
           doc.setFontSize(11);
           doc.setFont('helvetica', 'bold');
@@ -201,4 +203,5 @@ export class ListarCarteraUsuarioComponent  implements OnInit{
       console.error('Cartera ID is null or undefined');
     }
   }
+
 }
