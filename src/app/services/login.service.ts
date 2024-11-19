@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtRequest } from '../models/jwtRequest';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class LoginService {
   verificar() {
     let token = localStorage.getItem('token');
     return token != null;
+    
   }
 
   // Método para obtener el rol del usuario desde el token

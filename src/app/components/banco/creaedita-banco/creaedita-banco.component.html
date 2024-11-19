@@ -68,17 +68,6 @@
                 <span class="error-message" *ngIf="form.get('creationDate')?.hasError('required') && form.get('creationDate')?.touched">
                   Este campo es requerido.
                 </span>
-              </div>
-
-              <div class="form-field">
-                <label for="comisionExtra">Comisión Extra</label>
-                <input id="comisionExtra" type="number" formControlName="comisionExtra" placeholder="Ingrese la comisión extra" />
-                <span class="error-message" *ngIf="form.get('comisionExtra')?.hasError('required') && form.get('comisionExtra')?.touched">
-                  Este campo es requerido.
-                </span>
-                <span class="error-message" *ngIf="form.get('comisionExtra')?.hasError('valorNoValido') && form.get('comisionExtra')?.touched">
-                  El valor debe ser un número positivo.
-                </span>
               </div>  
               
               <div class="form-field image-column">

@@ -84,7 +84,7 @@ export class CreaeditaEmpresaComponent implements OnInit {
       Tipo: ['', Validators.required],
       Ruc: ['', [Validators.required, numeropositvo]],
       Direccion: ['', Validators.required],
-      usuario: [{ value: '', disabled: true }, Validators.required], // Campo deshabilitado
+      usuario: [{ value: '', disabled: false }, Validators.required], // Campo deshabilitado
     });
 
     // Obtén el username del usuario actual desde el token

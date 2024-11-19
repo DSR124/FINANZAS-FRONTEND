@@ -79,7 +79,12 @@
       <th mat-header-cell *matHeaderCellDef> Tipo de Documento </th>
       <td mat-cell *matCellDef="let doc"> {{ doc.tipoDocumento }} </td>
     </ng-container>
-      <!-- Columna para el botón de eliminación -->
+
+    <!-- Columna del TEP -->
+    <ng-container matColumnDef="tep">
+      <th mat-header-cell *matHeaderCellDef> TEP </th>
+      <td mat-cell *matCellDef="let doc"> {{ doc.tep }} % </td>
+    </ng-container>
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

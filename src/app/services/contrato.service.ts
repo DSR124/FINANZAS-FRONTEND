@@ -24,11 +24,18 @@ export class ContratoService {
     );
   }
 
+  // List contracts by username
+  listByUser(username: string): Observable<Contrato[]> {
+    return this.http.get<Contrato[]>(`${this.url}/ListarPorUsuario/${username}`).pipe(
+      catchError(this.handleError('fetching contracts by username'))
+    );
+  }
+
   // Insert a new contract
   insert(contrato: Contrato): Observable<any> {
     return this.http.post(`${this.url}/Registrar`, contrato).pipe(
-      tap(() => this.refreshList()),
-      catchError(this.handleError('registering contract'))
+      tap(() => this.refreshList()), // Refresca la lista de contratos después del registro
+      catchError(this.handleError('registering contract')) // Manejo de errores
     );
   }
 
@@ -77,6 +84,4 @@ export class ContratoService {
       return throwError(() => new Error(`Error ${operation}: ${error.message || 'Unknown error'}`));
     };
   }
-
-  
 }

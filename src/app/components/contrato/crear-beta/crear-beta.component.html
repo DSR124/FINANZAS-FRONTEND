@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Contrato</title>
-    <link rel="stylesheet" href="crear-beta.component.css">
 </head>
 <body>
     <div class="container">
@@ -38,16 +37,15 @@
                 <div class="report-card" *ngIf="bancoData">
                     <h4>Banco Seleccionado</h4>
                     <p><span>Nombre:</span> {{ bancoData.nombre }}</p>
-                    <p><span>Tasa Nominal:</span> {{ bancoData.tasaNomninal }}</p>
-                    <p><span>Tasa Efectiva:</span> {{ bancoData.tasaEfectiva }}</p>
-                    <p><span>Cosión Extra:</span> {{ bancoData.cosionExtra }}</p>
+                    <p><span>Tasa Nominal Anual:</span> {{ bancoData.tasaNomninal }}</p>
+                    <p><span>Tasa Efectiva Anual:</span> {{ bancoData.tasaEfectiva }}</p>
+                    <p><span>cambio a dolares:</span> {{ bancoData.balance }}</p>
                 </div>
     
                 <div class="report-card" *ngIf="carteraData">
                     <h4>Cartera Seleccionada</h4>
                     <p><span>Nombre:</span> {{ carteraData.nombre }}</p>
                     <p><span>Fecha de Descuento:</span> {{ carteraData.fechaDescuento | date }}</p>
-                    <p><span>Empresa:</span> {{ carteraData.empresa?.nombre }}</p>
                     <p><span>Moneda:</span> {{ carteraData.moneda }}</p>
                 </div>
     
@@ -70,45 +68,19 @@
             
             <!-- Fila de cálculos adicionales -->
             <div class="row calculation-row" *ngIf="showRateSelection && showSections">
-                <div class="column rate-selection">
-                    <h4>Seleccione la Opción de Tasa</h4>
-                    <div>
-                        <label>
-                            <input type="radio" name="tasa" value="efectiva" (change)="onSelectTasaOpcion('efectiva')" /> Tasa Efectiva
-                        </label>
+                <div class="row rate-selection-row" *ngIf="selectedBanco">
+                    <div class="column">
+                        <h4>Seleccione la Opción de Tasa</h4>
                         <label>
                             <input type="radio" name="tasa" value="nominal" (change)="onSelectTasaOpcion('nominal')" /> Tasa Nominal
                         </label>
-                    </div>
-                    <div *ngIf="tasaOpcion === 'efectiva'">
-                        <label>Periodo de la tasa efectiva:</label>
-                        <select [(ngModel)]="periodoTasa">
-                            <option value="diario">Diario</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
-                        </select>
-                    </div>
-                    <div *ngIf="tasaOpcion === 'nominal'">
-                        <label>Periodo de la tasa nominal:</label>
-                        <select [(ngModel)]="periodoTasa">
-                            <option value="diario">Diario</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
-                        </select>
-                    </div>
-                    <div *ngIf="tasaOpcion === 'nominal' && periodoTasa">
-                        <label>Frecuencia de capitalización:</label>
-                        <select [(ngModel)]="frecuenciaCapitalizacion">
-                            <option value="diario">Diario</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
-                        </select>
-                    </div>
-                    <div class="calculation-result">
-                        <button (click)="calcularTasa()" class ="btn-secundary">Calcular</button>
-                        <span *ngIf="tasaResultado !== null">
-                            Resultado de la Tasa: {{ tasaResultado }}
-                        </span>
+                        <label>
+                            <input type="radio" name="tasa" value="efectiva" (change)="onSelectTasaOpcion('efectiva')" /> Tasa Efectiva
+                        </label>
+                        <button (click)="calcularTasa()" class="btn-secundary">Calcular</button>
+                        <div *ngIf="tasaResultado !== null">
+                            <p><strong>Resultado de la Tasa:</strong> {{ tasaResultado }}</p>
+                        </div>
                     </div>
                 </div>
     
@@ -129,18 +101,26 @@
                         <p><strong>Valor Nominal del Documento:</strong> {{ valorNominal }}</p>
                     </div>
                 </div>
-    
                 <div class="column net-value-section">
                     <h4>Calcular Valor Neto del Documento</h4>
-                    <button (click)="calcularValorNeto()" class ="btn-secundary">Calcular Valor Neto</button>
+                    <button (click)="calcularDescuentoEfectivo()" class ="btn-secundary">Calcular Valor Neto</button>
                     <div *ngIf="valorNeto !== null">
                         <p><strong>Valor Neto del Documento:</strong> {{ valorNeto | number:'1.2-2' }}</p>
+                        <p><strong>Descuento:</strong> {{ (valorNominal || 0) - (valorNeto || 0) | number:'1.2-2' }}</p>
                     </div>
                 </div>
                 <!-- Botón "Registrar Contrato" que aparece después de calcular el valor neto -->
-                <div class="row button-row" *ngIf="showRegisterButton">
-                    <button (click)="registrarContrato()" class="register-button btn-primary">Registrar Contrato</button>
+                <div class="column tcea-calculation-section" *ngIf="showTCEASection">
+                    <h4>Calcular Tasa de Costo Efectiva Anual (TCEA)</h4>
+                    <button (click)="calcularTCEA()" class="btn-secundary">Calcular TCEA</button>
+                    <div *ngIf="TCEAResultado !== null">
+                        <p><strong>TCEA Calculada:</strong> {{ TCEAResultado * 100 | number:'1.2-2' }}%</p>
+                    </div>
                 </div>
+            </div>
+            <div class="column register-section" *ngIf="showRegisterButton">
+                <h4>Registrar Contrato</h4>
+                <button  class="btn-primary" (click)="registrarContrato()">Registrar Contrato</button>
             </div>
         </div>
     </div>

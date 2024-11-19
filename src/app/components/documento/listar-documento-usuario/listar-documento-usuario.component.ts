@@ -51,8 +51,8 @@ export class ListarDocumentoUsuarioComponent {
     'documentoCurrency',
     'estado',
     'tipoDocumento',
+    'tep' // Agregado el campo TEP
   ];
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 

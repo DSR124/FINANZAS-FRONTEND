@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { Contrato } from '../../../models/contrato';
 import { ContratoService } from '../../../services/contrato.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-listar-contrato',
@@ -35,7 +36,6 @@ export class ListarContratoComponent implements OnInit{
     'id',
     'currency',
     'valorNominal',
-    'tasaDescontada',
     'valorRecibido',
     'dias',
     'tep',
@@ -43,25 +43,36 @@ export class ListarContratoComponent implements OnInit{
     'valorTasa',
     'estado',
     'documento',
-    'banco'
+    'banco',
   ];
   dataSource: MatTableDataSource<Contrato> = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private contratoService: ContratoService) {}
+  constructor(
+    private contratoService: ContratoService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
-    this.contratoService.list().subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    const username = this.loginService.getUsername(); // Obtener el username desde el token
 
-    this.contratoService.getList().subscribe((data) => {
-      this.dataSource.data = data;
-    });
+    if (username) {
+      // Llamar al servicio para obtener contratos por usuario
+      this.contratoService.listByUser(username).subscribe(
+        (data) => {
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        (error) => {
+          console.error('Error al obtener contratos por usuario:', error);
+        }
+      );
+    } else {
+      console.error('No se pudo obtener el nombre de usuario del token.');
+    }
   }
 
   applyFilter(event: Event) {

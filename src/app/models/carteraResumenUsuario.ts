@@ -1,28 +1,11 @@
-// cartera-resumen-usuario.ts
-import { Empresa } from "./empresa";
-
 export class CarteraResumenUsuario {
-  idCartera: number | null = null;
-  nombreCartera: string = '';
-  fechaCreacion: Date | null = null;
-  fechaDescuento: Date | null = null;
-  nombreEmpresa: string = '';
-  tcea: number | null = null;
-  moneda: string = '';
-  cantidadDocumentos: number | null = null;
-  montoTotalCartera: number | null = null;
-
-  constructor(data?: Partial<CarteraResumenUsuario>) {
-    if (data) {
-      this.idCartera = data.idCartera ?? null;
-      this.nombreCartera = data.nombreCartera ?? '';
-      this.fechaCreacion = data.fechaCreacion ? new Date(data.fechaCreacion) : null;
-      this.fechaDescuento = data.fechaDescuento ? new Date(data.fechaDescuento) : null;
-      this.nombreEmpresa = data.nombreEmpresa ?? '';
-      this.tcea = data.tcea ?? null;
-      this.moneda = data.moneda ?? '';
-      this.cantidadDocumentos = data.cantidadDocumentos ?? null;
-      this.montoTotalCartera = data.montoTotalCartera ?? null;
-    }
-  }
+  idCartera: number | null = null; // Identificador de la cartera, puede ser nulo si aún no se asigna
+  nombreCartera: string = ''; // Nombre de la cartera
+  fechaCreacion: Date = new Date(); // Fecha de creación de la cartera
+  fechaDescuento: Date = new Date(); // Fecha de descuento, inicializada como nula
+  nombreEmpresa: string = ''; // Nombre de la empresa asociada
+  tcea: number = 0; // TCEA promedio de los documentos asociados
+  moneda: string = ''; // Moneda de la cartera (e.g., PEN, USD)
+  cantidadDocumentos: number = 0; // Cantidad total de documentos en la cartera
+  montoTotalCartera: number = 0; // Monto total de los documentos asociados
 }

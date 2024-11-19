@@ -35,13 +35,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Nominal </th>
                 <td mat-cell *matCellDef="let contrato"> {{ contrato.valorNominal | currency }} </td>
               </ng-container>
-        
-              <!-- Tasa Descontada Column -->
-              <ng-container matColumnDef="tasaDescontada">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tasa Descontada (%) </th>
-                <td mat-cell *matCellDef="let contrato"> {{ contrato.tasaDescontada }} </td>
-              </ng-container>
-        
+
               <!-- Valor Recibido Column -->
               <ng-container matColumnDef="valorRecibido">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Recibido </th>
