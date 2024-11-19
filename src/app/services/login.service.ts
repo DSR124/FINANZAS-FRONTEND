@@ -21,6 +21,7 @@ export class LoginService {
   verificar() {
     let token = localStorage.getItem('token');
     return token != null;
+    
   }
 
   // Método para obtener el rol del usuario desde el token

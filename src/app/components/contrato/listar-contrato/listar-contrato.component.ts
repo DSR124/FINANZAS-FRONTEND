@@ -35,7 +35,6 @@ export class ListarContratoComponent implements OnInit{
     'id',
     'currency',
     'valorNominal',
-    'tasaDescontada',
     'valorRecibido',
     'dias',
     'tep',

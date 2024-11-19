@@ -27,8 +27,8 @@ export class ContratoService {
   // Insert a new contract
   insert(contrato: Contrato): Observable<any> {
     return this.http.post(`${this.url}/Registrar`, contrato).pipe(
-      tap(() => this.refreshList()),
-      catchError(this.handleError('registering contract'))
+      tap(() => this.refreshList()), // Refresca la lista de contratos después del registro
+      catchError(this.handleError('registering contract')) // Manejo de errores
     );
   }
 

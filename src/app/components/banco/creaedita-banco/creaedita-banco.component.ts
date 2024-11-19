@@ -69,7 +69,6 @@ export class CreaeditaBancoComponent  implements OnInit{
       balance: ['', [Validators.required, numeroPositivo]],
       tasaNomninal: ['', [Validators.required, numeroPositivo]],
       tasaEfectiva: ['', [Validators.required, numeroPositivo]],
-      comisionExtra: ['', [Validators.required, numeroPositivo]],
       creationDate: [{ value: today, disabled: false }, Validators.required], // Deshabilita el campo y asigna la fecha actual
     });
   
@@ -88,7 +87,6 @@ export class CreaeditaBancoComponent  implements OnInit{
           balance: data.balance,
           tasaNomninal: data.tasaNomninal,
           tasaEfectiva: data.tasaEfectiva,
-          comisionExtra: data.cosionExtra,
           creationDate: data.creationDate,
         });
         this.imageSelected = data.imageUrl;

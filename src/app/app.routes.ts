@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { segGuard } from './guard/seguridad.guard';
 import { SingInComponent } from './components/sing-in/sing-in.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { HomeComponent } from './components/home/home.component';
@@ -17,13 +16,13 @@ import { CarteraComponent } from './components/cartera/cartera.component';
 import { CreaeditaCarteraComponent } from './components/cartera/creaedita-cartera/creaedita-cartera.component';
 import { ListarCarteraComponent } from './components/cartera/listar-cartera/listar-cartera.component';
 import { ContratoComponent } from './components/contrato/contrato.component';
-import { CreaeditaContratoComponent } from './components/contrato/creaedita-contrato/creaedita-contrato.component';
 import { ListarContratoComponent } from './components/contrato/listar-contrato/listar-contrato.component';
 import { CreaRolComponent } from './components/sing-in/crea-rol/crea-rol.component';
 import { EmpresasUsuarioComponent } from './components/empresa/empresas-usuario/empresas-usuario.component';
 import { ListarCarteraUsuarioComponent } from './components/cartera/listar-cartera-usuario/listar-cartera-usuario.component';
 import { ListarBancoUsuarioComponent } from './components/banco/listar-banco-usuario/listar-banco-usuario.component';
 import { CrearBetaComponent } from './components/contrato/crear-beta/crear-beta.component';
+import { PublicGuard } from './guard/seguridad.guard';
 
 export const routes: Routes = [
 
@@ -36,21 +35,26 @@ export const routes: Routes = [
   {
     path: 'landing',
     component: LoadingComponent,
+    canActivate: [PublicGuard], 
   },
 
 {
     
     path: 'homes',
     component: HomeComponent,
-    canActivate: [segGuard], // solo construcciones, se debe agregar a cada uno
+    canActivate: [PublicGuard], // solo construcciones, se debe agregar a cada uno
   },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [PublicGuard], // solo construcciones, se debe agregar a cada uno
+
   },
   {
     path: 'registrar',
     component: SingInComponent,
+    canActivate: [PublicGuard], // solo construcciones, se debe agregar a cada uno
+
   },
 
   {
@@ -139,10 +143,7 @@ export const routes: Routes = [
         path: 'listar_contrato',
         component: ListarContratoComponent,
       },
-      {
-        path: 'listar-contrato/ediciones/:id',
-        component: CreaeditaContratoComponent,
-      }
+  
     ],
   },
 
