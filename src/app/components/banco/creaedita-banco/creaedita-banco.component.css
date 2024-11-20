@@ -22,7 +22,10 @@ body {
   gap: 20px;
 }
 
-
+.image-column img{
+  max-width: 340px;
+  margin-top: 15px;
+}
 
 
 

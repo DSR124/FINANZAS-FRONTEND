@@ -5,68 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
 </head>
-<body>
+<body class="register-body">
     <!-- Barra de navegación -->
     <div class="navbar">
-        <div class="logo">GESTIÓN EMPRESARIAL</div>
-        <div class="nav-links">
-            <button mat-button color="primary" [routerLink]="['/landing']">INICIO</button>
-            <button mat-button color="primary" [routerLink]="['/login']">LOGIN</button>
-            <button mat-button color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+        <div class="container">
+            <div class="logo"><a href="/#"><img src="/assets/Logo.png" alt=""></a></div>
+            <div class="nav-links">
+                <button  [routerLink]="['/landing']">INICIO</button>
+                <button [routerLink]="['/login']">LOGIN</button>
+                <button  [routerLink]="['/registrar']">SIGN IN</button>
+            </div>
         </div>
     </div>
 
     <div class="register-container">
-        <h2>Registro de Usuario</h2>
+        <h4>Registro de Usuario</h4>
 
         <form [formGroup]="form" (ngSubmit)="registrar()" class="register-form">
             <!-- Nombre -->
-            <mat-form-field appearance="fill">
-                <mat-label>Nombre</mat-label>
-                <input matInput formControlName="nombre" />
-                <mat-error *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched">
-                    Nombre es requerido
-                </mat-error>
-            </mat-form-field>
+            <div class="form-field">
+                <input id="nombre" formControlName="nombre" placeholder="Ingrese su nombre" />
+                <span class="error-message" *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">
+                  Este campo es requerido.
+                </span>
+              </div>
 
             <!-- Apellido -->
-            <mat-form-field appearance="fill">
-                <mat-label>Apellido</mat-label>
-                <input matInput formControlName="apellido" />
-                <mat-error *ngIf="form.get('apellido')?.invalid && form.get('apellido')?.touched">
-                    Apellido es requerido
-                </mat-error>
-            </mat-form-field>
+            <div class="form-field">
+                <input id="apellido" formControlName="apellido" placeholder="Ingrese su apellido" />
+                <span class="error-message" *ngIf="form.get('apellido')?.hasError('required') && form.get('apellido')?.touched">
+                  Este campo es requerido.
+                </span>
+              </div>              
 
             <!-- Correo -->
-            <mat-form-field appearance="fill">
-                <mat-label>Correo Electrónico</mat-label>
-                <input matInput formControlName="correo" type="email" />
-                <mat-error *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched">
-                    Ingrese un correo válido
-                </mat-error>
-            </mat-form-field>
+            <div class="form-field">
+                <input id="correo" formControlName="correo" type="email" placeholder="Ingrese su correo electrónico" />
+                <span class="error-message" *ngIf="form.get('correo')?.hasError('email') && form.get('correo')?.touched">
+                  Ingrese un correo válido.
+                </span>
+              </div>
 
             <!-- Nombre de Usuario -->
-            <mat-form-field appearance="fill">
-                <mat-label>Nombre de Usuario</mat-label>
-                <input matInput formControlName="username" />
-                <mat-error *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
-                    Nombre de usuario es requerido
-                </mat-error>
-            </mat-form-field>
+            <div class="form-field">
+                <input id="username" formControlName="username" placeholder="Ingrese su nombre de usuario" />
+                <span class="error-message" *ngIf="form.get('username')?.hasError('required') && form.get('username')?.touched">
+                  Nombre de usuario es requerido.
+                </span>
+            </div>              
 
             <!-- Contraseña -->
-            <mat-form-field appearance="fill">
-                <mat-label>Contraseña</mat-label>
-                <input matInput formControlName="password" type="password" />
-                <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
-                    La contraseña debe tener al menos 6 caracteres
-                </mat-error>
-            </mat-form-field>
+            <div class="form-field">
+                <input id="password" formControlName="password" type="password" placeholder="Ingrese su contraseña" />
+                <span class="error-message" *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.touched">
+                  La contraseña debe tener al menos 6 caracteres.
+                </span>
+            </div>
+              
 
             <!-- Botón de Registro -->
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Registrarse</button>
+            <button mat-raised-button class="btn-primary" type="submit" [disabled]="form.invalid">Registrarse</button>
         </form>
     </div>
 </body>
