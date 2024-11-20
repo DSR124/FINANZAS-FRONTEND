@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Documento } from '../models/documento';
 import { Observable, Subject } from 'rxjs';
@@ -71,11 +71,33 @@ export class DocumentoService {
     );
   }
 
-  // Get documents by Cartera ID
-  listByCarteraId(idCartera: number): Observable<DocumentoByCartera[]> {
-    return this.http.get<DocumentoByCartera[]>(`${this.url}/ListarporIDCartera/${idCartera}`).pipe(
+  // Modify document status
+  modifyStatus(documento: Documento): Observable<any> {
+    return this.http.put(`${this.url}/ModificarEstado`, documento).pipe(
       catchError(error => {
-        console.error('Error fetching documents by cartera ID:', error);
+        console.error('Error modifying document status:', error);
+        throw error;
+      })
+    );
+  }
+
+  // Obtener documentos por ID de cartera (incluyendo TEP)
+  listByCarteraId(idCartera: number): Observable<DocumentoByCartera[]> {
+    return this.http
+      .get<DocumentoByCartera[]>(`${this.url}/ListarporIDCartera/${idCartera}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching documents by cartera ID:', error);
+          throw error;
+        })
+      );
+  }
+
+  // Obtener documentos por nombre de usuario
+  listByUsername(username: string): Observable<Documento[]> {
+    return this.http.get<Documento[]>(`${this.url}/ListarPorUsuario/${username}`).pipe(
+      catchError(error => {
+        console.error('Error al obtener documentos por nombre de usuario:', error);
         throw error;
       })
     );
@@ -94,5 +116,15 @@ export class DocumentoService {
   // Get the observable list of documents
   getList(): Observable<Documento[]> {
     return this.listaCambio.asObservable();
+  }
+
+  eliminarDocumento(id: number, username: string): Observable<any> {
+    const url = `${this.url}/Eliminar2/${id}?username=${encodeURIComponent(username)}`;
+    return this.http.delete<any>(url).pipe(
+      catchError(error => {
+        console.error('Error al eliminar el documento:', error);
+        throw error;
+      })
+    );
   }
 }

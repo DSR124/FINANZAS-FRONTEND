@@ -6,38 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body class="rol-container">
     <div class="navbar">
-        <div class="logo">GESTIÓN EMPRESARIAL</div>
-        <div class="nav-links">
-          <button mat-button color="primary" [routerLink]="['/landing']">INICIO</button>
-          <button mat-button color="primary" [routerLink]="['/login']">LOGIN</button>
-          <button mat-button color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+        <div class="container">
+            <div class="logo"><a href="/#"><img src="/assets/Logo.png" alt=""></a></div>
+            <div class="nav-links">
+                <button  color="primary" [routerLink]="['/landing']">INICIO</button>
+                <button  color="primary" [routerLink]="['/login']">LOGIN</button>
+                <button  color="primary" [routerLink]="['/registrar']">SIGN IN</button>
+            </div>
         </div>
       </div>
-      <div class="register-role-container">
-        <h2>Asignar Rol al Usuario</h2>
-    
-        <form [formGroup]="form" (ngSubmit)="register()" class="register-role-form">
-            <mat-form-field appearance="fill">
-                <mat-label>Seleccionar Rol</mat-label>
-                <mat-select formControlName="seleccion" required>
-                    <mat-option *ngFor="let role of roles" [value]="role.value">
+      <div class="container-form">
+        <div class="register-role-container">
+            <h4>Asignar Rol al Usuario</h4>
+        
+            <form [formGroup]="form" (ngSubmit)="register()" class="register-role-form">
+                <div class="form-field">
+                    <label for="seleccion">Seleccionar Rol</label>
+                    <select id="seleccion" formControlName="seleccion" required>
+                      <option *ngFor="let role of roles" [value]="role.value">
                         {{ role.viewValue }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="form.controls['seleccion'].hasError('required')">
-                    Seleccione un rol.
-                </mat-error>
-            </mat-form-field>
-    
-            <div class="button-group">
-                <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Guardar Rol</button>
-                <button mat-button type="button" routerLink="/usuarios">Cancelar</button>
-            </div>
-    
-        </form>
-    </div>
+                      </option>
+                    </select>
+                    <span class="error-message" *ngIf="form.get('seleccion')?.hasError('required') && form.get('seleccion')?.touched">
+                      Seleccione un rol.
+                    </span>
+                </div>                  
+        
+                <div class="button-group">
+                    <button class="btn-primary" type="submit" [disabled]="form.invalid">Guardar Rol</button>
+                    <button class="btn-secundary" type="button" routerLink="/usuarios">Cancelar</button>
+                </div>
+        
+            </form>
+        </div>
+      </div>
+      
 </body>
 </html>
 

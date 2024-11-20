@@ -8,7 +8,7 @@ import { tap, catchError } from 'rxjs/operators';
 const base_url = environment.base;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BancoService {
   private url = `${base_url}/Banco`;
@@ -19,7 +19,7 @@ export class BancoService {
   // Listar todos los bancos
   list(): Observable<Banco[]> {
     return this.http.get<Banco[]>(`${this.url}/Listar`).pipe(
-      tap(data => this.setList(data)),
+      tap((data) => this.setList(data)),
       catchError(this.handleError('fetching banks list'))
     );
   }
@@ -57,7 +57,7 @@ export class BancoService {
 
   // Refrescar la lista de bancos
   private refreshList() {
-    this.list().subscribe(data => this.setList(data));
+    this.list().subscribe((data) => this.setList(data));
   }
 
   // Configurar la lista de bancos y notificar a los suscriptores
@@ -74,6 +74,8 @@ export class BancoService {
   private sortList(list: Banco[]): Banco[] {
     return list.sort((a, b) => a.idBanco - b.idBanco);
   }
+
+
 
   // Manejador de errores para las operaciones HTTP
   private handleError(operation: string) {

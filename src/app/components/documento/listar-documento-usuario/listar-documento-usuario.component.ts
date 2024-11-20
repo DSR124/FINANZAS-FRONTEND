@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DocumentoByCartera } from '../../../models/DocumentobyCartera';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatOptionModule } from '@angular/material/core';
+import { EliminarDocComponent } from '../eliminar-doc/eliminar-doc.component';
 
 @Component({
   selector: 'app-listar-documento-usuario',
@@ -50,16 +51,16 @@ export class ListarDocumentoUsuarioComponent {
     'documentoCurrency',
     'estado',
     'tipoDocumento',
-    'acciones' // Columna para las acciones (como eliminar)
+    'tep' // Agregado el campo TEP
   ];
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     public dialogRef: MatDialogRef<ListarDocumentoUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public documentos: DocumentoByCartera[],
-    private documentoService: DocumentoService // Inyección del servicio DocumentoService
+    private documentoService: DocumentoService,
+    private dialog: MatDialog // Inyección del servicio DocumentoService
   ) {
     this.dataSource = new MatTableDataSource(documentos);
   }
@@ -73,20 +74,4 @@ export class ListarDocumentoUsuarioComponent {
     this.dialogRef.close();
   }
 
-  // Método para eliminar un documento
-  eliminarDocumento(documento: DocumentoByCartera): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este documento?')) {
-      this.documentoService.delete(documento.idDocumento).subscribe(
-        () => {
-          // Actualiza la tabla eliminando el documento localmente
-          this.dataSource.data = this.dataSource.data.filter(d => d.idDocumento !== documento.idDocumento);
-          alert('Documento eliminado correctamente');
-        },
-        (error) => {
-          console.error('Error al eliminar el documento:', error);
-          alert('Hubo un error al intentar eliminar el documento');
-        }
-      );
-    }
-  }
 }

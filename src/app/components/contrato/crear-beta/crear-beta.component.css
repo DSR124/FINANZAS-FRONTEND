@@ -3,21 +3,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f0f2f5;
+    min-height: 100vh;
     margin: 0;
     color: #333;
 }
 
 /* Contenedor del formulario */
-.container {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    width: auto;
-    max-width: 80%;
-}
+
 
 /* Estilos de filas y columnas */
 .row {
@@ -25,53 +17,33 @@ body {
     gap: 20px;
     margin-bottom: 20px;
 }
-
+::ng-deep mat-sidenav-content {
+    background-color: #D9E7EF !important;
+  }
 .column {
     flex: 1;
     min-width: 220px;
+    
+}
+.container{
+    padding-bottom: 90px;
+    position: relative;
+    padding-top: 50px;
+    margin-bottom: 30px;
+}
+.column h4{
+    color: var(--green)
 }
 
-/* Estilos para los botones y selectores */
-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+.container .formulario{
+    max-width: initial;
 }
 
-button:disabled {
-    background-color: #cccccc;
-    color: #666666;
+.btn-secundary[disabled]{
     cursor: not-allowed;
 }
 
-button:not(:disabled) {
-    background-color: #007bff;
-    color: #ffffff;
-}
 
-button:not(:disabled):hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
-}
-
-select:hover, select:focus {
-    border-color: #007bff;
-}
 
 /* Estilos para la información seleccionada */
 .info-row {
@@ -101,54 +73,18 @@ select:hover, select:focus {
     margin-bottom: 8px;
 }
 
-/* Estilos para el botón de generar contrato */
-.button-row {
-    text-align: center;
+.calculation-row .column {
+    position: relative !important; 
+    padding-bottom: 90px;
 }
-
-.button-row button {
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.button-row button:hover:enabled {
-    background-color: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
 /* Estilos para las secciones de cálculo */
 .calculation-row {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
 }
-
-.rate-selection,
-.date-difference-section,
-.nominal-value-section,
-.net-value-section {
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    flex: 1;
-    min-width: 200px;
-    transition: box-shadow 0.3s ease;
-}
-
-.rate-selection:hover,
-.date-difference-section:hover,
-.nominal-value-section:hover,
-.net-value-section:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.calculation-row p , .calculation-row strong , .calculation-row span{ 
+    color: #fff !important;
 }
 
 h3 {
@@ -161,43 +97,34 @@ h3 {
 }
 
 .calculation-result button {
-    padding: 10px 18px;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.calculation-result button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
 
+.column input{
+    display: inline-block;
+    width: auto;
+    margin-right: 8px;
+}
 .calculation-result span {
     display: block;
     margin-top: 8px;
-    font-weight: bold;
-    color: #333;
+}
+
+.calculation-row button{
+    position: absolute;
+    bottom: 0;
 }
 /* Estilos para el botón de "Registrar Contrato" */
 .register-button {
     width: 100%;
     padding: 12px;
     font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #ff5722;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
+    left: 50%;
+    max-width: 300px;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    transform: translateX(-50%);
 }
 
-.register-button:hover {
-    background-color: #e64a19;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}

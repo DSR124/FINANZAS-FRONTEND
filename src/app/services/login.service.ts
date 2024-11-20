@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtRequest } from '../models/jwtRequest';
-
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+const base_url = environment.base; // Base URL for the API
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   private helper = new JwtHelperService();
-
+  private url = `${base_url}/login`;
   constructor(private http: HttpClient) {}
 
   // Método para iniciar sesión y almacenar el token en localStorage
   login(request: JwtRequest) {
-    return this.http.post('http://localhost:8080/login', request);
+    return this.http.post(this.url, request);
   }
 
   // Método para verificar si el usuario está autenticado
   verificar() {
     let token = localStorage.getItem('token');
     return token != null;
+    
   }
 
   // Método para obtener el rol del usuario desde el token

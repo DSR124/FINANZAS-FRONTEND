@@ -1,20 +1,17 @@
 import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
 import { LoginService } from "../services/login.service";
 // import { LoginService } from "../services/login.service";
 // 
 
-export const segGuard = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-    const lService=inject(LoginService)
+export const PublicGuard: CanActivateFn = () => {
+  const router = inject(Router);
+  const token = localStorage.getItem('token');
 
-    const router=inject(Router)
-    const rpta=lService.verificar();
-    if(!rpta){
-      router.navigate(['/login']);
-      return false;
-    }
-    return rpta;
+  if (token) {
+    router.navigateByUrl('/empresa/listar_empresa');
+    return false;
+  }
+
+  return true;
 };

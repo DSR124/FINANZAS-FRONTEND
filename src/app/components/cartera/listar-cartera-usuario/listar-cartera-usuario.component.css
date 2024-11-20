@@ -1,79 +1,81 @@
 
 /* Contenedor principal */
 body {
-    height: 100vh;
-  }
-  
-    
-    .selected {
-      background-color: #f1f1f1; /* Light gray background for the selected row */
-    }
-/* Estilos generales */
+  height: 100vh;
+}
 
   
-  /* Campo de búsqueda */
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 20px;
+  .selected {
+    background-color: #f1f1f1; /* Light gray background for the selected row */
   }
-  
-  .mat-form-field input {
-    padding: 10px;
-  }
-  
-  /* Tabla */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
- 
-  
-  td.mat-cell, th.mat-header-cell {
-    padding: 12px;
-    text-align: left;
-  }
-  
-  .mat-sort-header-container {
-    align-items: center;
-  }
-  
-  /* Estilos de los botones */
-  .export-pdf-button, .export-excel-button {
-    margin: 10px 5px;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .export-pdf-button mat-icon,
-  .export-excel-button mat-icon {
-    margin-right: 5px;
-  }
-  
-  .export-pdf-button {
-    background-color: #f44336;
-    color: #ffffff;
-  }
-  
-  .export-excel-button {
-    background-color: #2196f3;
-    color: #ffffff;
-  }
-  
-  .export-pdf-button:hover {
-    background-color: #d32f2f;
-  }
-  
-  .export-excel-button:hover {
-    background-color: #1976d2;
-  }
-  
- 
-  
-  button:disabled {
-    opacity: 0.8;
-    cursor: not-allowed;
-  }
-  
+/* Estilos generales */
+
+
+::ng-deep mat-sidenav-content {
+  background-color: #D9E7EF !important;
+}
+.mat-form-field input {
+  padding: 10px;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+td.mat-cell, th.mat-header-cell {
+  padding: 12px;
+  text-align: left;
+}
+
+.mat-sort-header-container {
+  align-items: center;
+}
+
+/* Estilos de los botones */
+.export-pdf-button, .export-excel-button {
+  margin: 10px 5px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.export-pdf-button mat-icon,
+.export-excel-button mat-icon {
+  margin-right: 5px;
+}
+
+.export-pdf-button {
+  background-color: #f44336;
+  color: #ffffff;
+}
+
+.export-excel-button {
+  background-color: #2196f3;
+  color: #ffffff;
+}
+
+.export-pdf-button:hover {
+  background-color: #d32f2f;
+}
+
+.export-excel-button:hover {
+  background-color: #1976d2;
+}
+
+
+
+button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
 .btn-primary{
-  font-size: 11px !important;
+font-size: 11px !important;
+}
+/* Cambiar color de la fila seleccionada */
+.selected {
+background-color: #e0f7fa; /* Azul claro */
+transition: background-color 0.3s ease;
 }
