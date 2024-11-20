@@ -25,11 +25,11 @@ body {
 }
 
 
+
 .navbar .nav-links {
     display: flex;
     gap: 15px;
 }
-
 
 .container-form {
     position: relative;
@@ -74,7 +74,6 @@ body {
     width: 50%;
     border: none;
 }
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
