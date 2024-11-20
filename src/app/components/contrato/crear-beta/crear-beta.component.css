@@ -4,7 +4,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f0f2f5;
+
     margin: 0;
     color: #333;
 }
@@ -24,6 +24,11 @@ body {
     min-width: 220px;
     
 }
+
+::ng-deep mat-sidenav-content {
+    background-color: #D9E7EF !important;
+  }
+  
 .container{
     padding-bottom: 90px;
     position: relative;
