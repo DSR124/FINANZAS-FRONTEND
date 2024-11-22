@@ -42,6 +42,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 })
 export class AppComponent {
    title = 'TF-FINANZAS-FRONT';
+   currentRole: string = ''; // Cambiar 'role' a 'currentRole'
   role: string = '';
   username: string | null = ''; // Cambié el valor inicial a una cadena vacía
   cantidadEnCarrito: number = 0;
@@ -49,7 +50,7 @@ export class AppComponent {
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void { 
-    this.role = this.loginService.showRole() ;
+    this.currentRole = this.loginService.showRole() || ''; // Usar 'currentRole'
     this.username = this.loginService.getUsername(); // Fallback por si no se obtiene
     console.log('Rol del usuario:', this.role);
     console.log('Nombre de usuario:', this.username); // Añadido para depurar
@@ -60,6 +61,9 @@ export class AppComponent {
   }
 
   cerrar() {
+    this.loginService.removeToken();
+    this.currentRole = ''; // Actualizar 'currentRole'
+    this.username = null;
     localStorage.clear();
   }
 }
