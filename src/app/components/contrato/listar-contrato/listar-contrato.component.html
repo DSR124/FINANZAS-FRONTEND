@@ -75,13 +75,13 @@
               <!-- Documento Column -->
               <ng-container matColumnDef="documento">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
-                <td mat-cell *matCellDef="let contrato"> {{ contrato.documento.idDocumento.tipoDocumento }} </td>
+                <td mat-cell *matCellDef="let contrato"> {{ contrato.documento.tipoDocumento }} </td>
               </ng-container>
         
               <!-- Banco Column -->
               <ng-container matColumnDef="banco">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Banco </th>
-                <td mat-cell *matCellDef="let contrato"> {{ contrato.banco.idBanco.nombre }} </td>
+                <td mat-cell *matCellDef="let contrato"> {{ contrato.banco.nombre }} </td>
               </ng-container>
         
               <!-- Table Header and Row Declarations -->
