@@ -65,4 +65,5 @@ export class LoginService {
   removeToken() {
     localStorage.removeItem('token');
   }
+  
 }

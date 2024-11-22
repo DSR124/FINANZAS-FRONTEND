@@ -1,6 +1,6 @@
 
 
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" >
     <!-- Barra de navegación lateral con *ngIf="verificar()" -->
     <mat-sidenav mode="side" opened class="sidenav" *ngIf="verificar()">
       <div class="container-logo"></div>
@@ -48,7 +48,7 @@
               <mat-icon>account_balance</mat-icon> Bancos
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <button mat-list-item routerLink="/banco/registrar_banco" class="btn">Registrar Banco</button>
+          <button *ngIf="role === 'ADMINISTRADOR'" mat-list-item routerLink="/banco/registrar_banco" class="btn">Registrar Banco</button>
           <button mat-list-item routerLink="/banco/listar_banco_usuario" class="btn">Listar Bancos</button>
         </mat-expansion-panel>
   

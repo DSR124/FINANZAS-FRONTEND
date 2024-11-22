@@ -49,8 +49,8 @@ export class AppComponent {
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void { 
-    this.role = this.loginService.showRole() || '';
-    this.username = this.loginService.getUsername() || 'Usuario'; // Fallback por si no se obtiene
+    this.role = this.loginService.showRole() ;
+    this.username = this.loginService.getUsername(); // Fallback por si no se obtiene
     console.log('Rol del usuario:', this.role);
     console.log('Nombre de usuario:', this.username); // Añadido para depurar
   }
