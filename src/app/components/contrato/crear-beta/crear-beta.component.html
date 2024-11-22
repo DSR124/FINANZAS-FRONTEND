@@ -115,7 +115,7 @@
                     <h4>Calcular Tasa de Costo Efectiva Anual (TCEA)</h4>
                     <button (click)="calcularTCEA()" class="btn-secundary">Calcular TCEA</button>
                     <div *ngIf="TCEAResultado !== null">
-                        <p><strong>TCEA Calculada:</strong> {{ TCEAResultado * 100 | number:'1.2-2' }}%</p>
+                        <p><strong>TCEA Calculada:</strong> {{ TCEAResultado | number:'1.2-2' }}%</p>
                     </div>
                 </div>
             </div>

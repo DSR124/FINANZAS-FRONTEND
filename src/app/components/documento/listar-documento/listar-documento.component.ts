@@ -61,7 +61,6 @@ export class ListarDocumentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.loginService.getUsername() || '';
-
     this.documentoService.listByUsername(this.username).subscribe(
       (data) => {
         this.dataSource.data = data;

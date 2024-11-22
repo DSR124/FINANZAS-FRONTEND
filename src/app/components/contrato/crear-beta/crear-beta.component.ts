@@ -50,6 +50,8 @@ export class CrearBetaComponent  implements OnInit{
 
   valorNominal: number | null = null;
   valorNeto: number | null = null;
+  descuento: number | null = null;
+  tasadiarai: number | null = null;
   TCEAResultado: number | null = null;
 
   constructor(
@@ -186,10 +188,13 @@ export class CrearBetaComponent  implements OnInit{
         const m = 360; // Capitalización diaria
         // Calcular Tasa Efectiva Anual (TEA)
         this.tasaResultado = (Math.pow(1 + tasaNominal / m, m) - 1) * 100; // Convertir a porcentaje
+        this.calcularDescuentoEfectivo(); // Calcula el descuento automáticamente
+
         console.log('Tasa Nominal convertida a Tasa Efectiva (Diaria):', this.tasaResultado);
       } else if (this.tasaOpcion === 'efectiva') {
         // Directamente usa la tasa efectiva proporcionada por el banco
         this.tasaResultado = this.selectedBanco.tasaEfectiva;
+        this.calcularDescuentoEfectivo(); // Calcula el descuento automáticamente
         console.log('Tasa Efectiva Anual seleccionada:', this.tasaResultado);
       }
     } else {
@@ -201,8 +206,11 @@ export class CrearBetaComponent  implements OnInit{
   
     if (this.selectedBanco) {
       if (opcion === 'nominal') {
-
-
+        const tasaNominal = this.selectedBanco.tasaNomninal/100; // Convertir porcentaje a decimal
+        const m = 360; // Capitalización diaria
+        // Calcular Tasa Efectiva Anual (TEA)
+        this.tasaResultado = (Math.pow(1 + tasaNominal / m, m) - 1) * 100; // Convertir a porcentaje
+        this.calcularDescuentoEfectivo(); // Calcula el descuento automáticamente
 
       } else if (opcion === 'efectiva') {
         this.tasaResultado = this.selectedBanco.tasaEfectiva; // Asigna la tasa efectiva del banco
@@ -232,16 +240,18 @@ export class CrearBetaComponent  implements OnInit{
       this.tasaResultado !== null &&
       this.diasDiferencia !== null
     ) {
-      const tasaDiaria = Math.pow(1 + this.tasaResultado / 100, 1 / 360) - 1;
-      this.valorNeto = this.valorNominal / Math.pow(1 + tasaDiaria, this.diasDiferencia);
-      const descuento = this.valorNominal - this.valorNeto;
+      this.tasaResultado = this.tasaResultado/100
+      this.tasadiarai= Math.pow(1 + this.tasaResultado, this.diasDiferencia/360) - 1;
+      this.descuento =   this.tasadiarai / (1 + this.tasadiarai)
+      this.valorNeto = this.valorNominal* (1- this.descuento);
   
       // Habilitar la sección de TCEA
       this.showTCEASection = true;
   
       console.log('Valor Nominal:', this.valorNominal);
+      console.log('Descuento:', this.descuento);
       console.log('Valor Neto:', this.valorNeto);
-      console.log('Descuento:', descuento);
+
     } else {
       console.warn('Faltan datos para calcular el descuento.');
       this.showTCEASection = false; // Asegurar que no se muestre si no hay cálculo
@@ -251,10 +261,8 @@ export class CrearBetaComponent  implements OnInit{
     if (this.valorNeto !== null && this.valorNominal !== null && this.diasDiferencia !== null) {
       // Aplicar la fórmula para calcular la TCEA
       const TCEA = Math.pow(this.valorNominal / this.valorNeto, 360 / this.diasDiferencia) - 1;
-  
-      // Asignar el resultado
-      this.TCEAResultado = TCEA;
-  
+      this. TCEAResultado = TCEA * 100
+
       // Habilitar el botón de registro
       this.showRegisterButton = true;
   
@@ -307,16 +315,18 @@ export class CrearBetaComponent  implements OnInit{
       this.valorNeto !== null &&
       this.diasDiferencia !== null &&
       this.TCEAResultado !== null && // Ahora incluye la TCEA
-      this.tasaResultado !== null
+      this.tasaResultado !== null &&
+      this.descuento !== null 
+
     ) {
       // Crear una instancia de Contrato
       const contrato = new Contrato();
       contrato.currency = this.selectedDocumento.currency || ''; // Moneda del documento
       contrato.valorNominal = this.valorNominal; // Valor nominal del contrato
-      contrato.valorDescontado = this.valorNominal - this.valorNeto; // Diferencia entre valor nominal y neto
+      contrato.valorDescontado =  this.descuento; // Diferencia entre valor nominal y neto
       contrato.valorRecibido = this.valorNeto; // Valor neto recibido
       contrato.dias = this.diasDiferencia; // Días de la operación
-      contrato.tep = this.TCEAResultado * 100; // TCEA calculada
+      contrato.tep = this.TCEAResultado; // TCEA calculada
       contrato.tipoTasa = this.tasaOpcion === 'efectiva' ? 'Efectiva' : 'Nominal'; // Tipo de tasa seleccionada
       contrato.valorTasa = this.tasaResultado; // Valor de la tasa seleccionada
       contrato.estado = 'FIRMADO'; // Estado inicial del contrato
