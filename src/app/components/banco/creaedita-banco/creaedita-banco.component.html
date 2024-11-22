@@ -25,7 +25,7 @@
               </div>          
       
               <div class="form-field">
-                <label for="balance">Balance</label>
+                <label for="balance">Balance de cambio</label>
                 <input id="balance" type="number" formControlName="balance" placeholder="Ingrese el balance" />
                 <span class="error-message" *ngIf="form.get('balance')?.hasError('required') && form.get('balance')?.touched">
                   Este campo es requerido.
@@ -36,7 +36,7 @@
               </div>
 
               <div class="form-field">
-                <label for="tasaNomninal">Tasa Nominal</label>
+                <label for="tasaNomninal">Tasa Nominal Anual</label>
                 <input id="tasaNomninal" type="number" formControlName="tasaNomninal" placeholder="Ingrese la tasa nominal" />
                 <span class="error-message" *ngIf="form.get('tasaNomninal')?.hasError('required') && form.get('tasaNomninal')?.touched">
                   Este campo es requerido.
@@ -47,7 +47,7 @@
               </div>
               
               <div class="form-field">
-                <label for="tasaEfectiva">Tasa Efectiva</label>
+                <label for="tasaEfectiva">Tasa Efectiva Anual</label>
                 <input id="tasaEfectiva" type="number" formControlName="tasaEfectiva" placeholder="Ingrese la tasa efectiva" />
                 <span class="error-message" *ngIf="form.get('tasaEfectiva')?.hasError('required') && form.get('tasaEfectiva')?.touched">
                   Este campo es requerido.
